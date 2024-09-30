@@ -5,6 +5,8 @@ import { Jost } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import React from "react";
 
+import SessionProvider from "@/components/SessionProvider";
+
 export const metadata: Metadata = {
     title: "Verivote - Polls That Satisfy",
     description: "With Verivote, you can create polls using alternative voting systems, making it easier to reach a " +
@@ -28,7 +30,9 @@ export default function RootLayout({
                     attribute="data-color-scheme"
                     enableSystem={true}
                 >
-                    {children}
+                    <SessionProvider>
+                        {children}
+                    </SessionProvider>
                 </ThemeProvider>
             </body>
         </html>

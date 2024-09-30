@@ -3,7 +3,7 @@ import React from "react";
 import BlockLink from "@/components/BlockLink";
 import ThemeToggle from "@/components/ThemeToggle";
 
-export default function Home() {
+export default async function Home() {
     return (
         <div>
             Hello, world!
