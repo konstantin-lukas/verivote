@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    font-size: 18px;
+    --dark-font: rgb(38 38 38);
+    --light-font: rgb(229 229 229);
+    color: var(--dark-font);
+}
+
+:root[data-color-scheme="dark"] * {
+    color: var(--light-font);
+}

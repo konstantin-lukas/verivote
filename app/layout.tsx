@@ -5,6 +5,7 @@ import { Jost } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import React from "react";
 
+import Header from "@/components/Header";
 import SessionProvider from "@/components/SessionProvider";
 
 export const metadata: Metadata = {
@@ -31,7 +32,10 @@ export default function RootLayout({
                     enableSystem={true}
                 >
                     <SessionProvider>
-                        {children}
+                        <Header/>
+                        <main>
+                            {children}
+                        </main>
                     </SessionProvider>
                 </ThemeProvider>
             </body>
