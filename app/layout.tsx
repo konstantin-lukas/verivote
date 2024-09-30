@@ -1,4 +1,8 @@
+import "./global.css";
+
 import type { Metadata } from "next";
+import { Jost } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import React from "react";
 
 export const metadata: Metadata = {
@@ -7,15 +11,25 @@ export const metadata: Metadata = {
         "decision that reflects everyone's preferences.",
 };
 
+const jost = Jost({
+    subsets: ["latin"],
+    display: "swap",
+});
+
 export default function RootLayout({
     children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body>
-                {children}
+        <html lang="en" suppressHydrationWarning={true} className={jost.className}>
+            <body className="bg-neutral-100 dark:bg-neutral-900">
+                <ThemeProvider
+                    attribute="data-color-scheme"
+                    enableSystem={true}
+                >
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );
