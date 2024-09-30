@@ -1,0 +1,34 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "next/core-web-vitals",
+        "next/typescript",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:import/recommended",
+        "plugin:jsx-a11y/recommended"
+    ],
+    "plugins": [
+        "@stylistic/js",
+        "simple-import-sort"
+    ],
+    "rules": {
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "@stylistic/js/comma-dangle": ["error", "always-multiline"],
+        "@stylistic/js/indent": ["error", 4],
+        "@stylistic/js/brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+        "@stylistic/js/semi": ["error", "always"],
+        "@stylistic/js/quotes": ["error", "double", { "avoidEscape": true, "allowTemplateLiterals": true }],
+        "@stylistic/js/object-curly-spacing": ["error", "always", {
+            "arraysInObjects": false,
+            "objectsInObjects": false
+        }],
+        "@stylistic/js/array-bracket-spacing": ["error", "never"],
+        "@stylistic/js/comma-spacing": ["error", {
+            "before": false,
+            "after": true
+        }],
+        "@typescript-eslint/consistent-type-imports": "error"
+    }
+}
