@@ -21,7 +21,7 @@
         color: white;
     }
 
-    :focus {
+    :focus-visible {
         outline: 4px outset #12d4ae;
     }
 }
