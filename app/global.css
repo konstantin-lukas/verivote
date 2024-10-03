@@ -2,13 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    font-size: 18px;
-    --dark-font: rgb(38 38 38);
-    --light-font: rgb(229 229 229);
-    color: var(--dark-font);
-}
+@layer base {
+    :root {
+        font-size: 18px;
+        --dark-font: rgb(38 38 38);
+        --light-font: rgb(229 229 229);
+        --header-height: 6rem;
+        --main-height: calc(100dvh - var(--header-height));
+        color: var(--dark-font);
+    }
 
-:root[data-color-scheme="dark"] * {
-    color: var(--light-font);
+    :root[data-color-scheme="dark"] {
+        color: var(--light-font);
+    }
+
+    ::selection {
+        background: #12d4ae;
+        color: white;
+    }
+
+    :focus {
+        outline: 4px outset #12d4ae;
+    }
 }

@@ -17,10 +17,6 @@ export default function ThemeToggle({ className }: { className?: string }) {
             onClick={() => {
                 setTheme(resolvedTheme === "dark" ? "light" : "dark");
             }}
-            onKeyDown={(e) => {
-                if (e.key !== "Enter") return;
-                setTheme(resolvedTheme === "dark" ? "light" : "dark");
-            }}
         >
             {
                 resolvedTheme === "dark"

@@ -7,6 +7,10 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            colors: {
+                "verivote-turquoise": "#12d4ae",
+                "verivote-cyan": "#129dd4",
+            },
             boxShadow: {
                 "3d": "-0.16rem -0.16rem 0.16rem 0.16rem #fff, 0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.1)",
                 "3d-inset": "-0.16rem -0.16rem 0.16rem 0.16rem #fff, " +

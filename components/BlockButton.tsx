@@ -8,11 +8,6 @@ export default function ButtonLink({ children, onPress }: {
     return (
         <button
             onClick={onPress as MouseEventHandler}
-            onKeyDown={e => {
-                if (e.key === "Enter") {
-                    (onPress as KeyboardEventHandler)(e);
-                }
-            }}
             className="group inline-block rounded-full bg-neutral-100 px-10 py-2
             font-medium shadow-3d transition-shadow hover:shadow-3d-inset
             dark:bg-neutral-900 dark:shadow-dark-3d dark:hover:shadow-dark-3d-inset"
