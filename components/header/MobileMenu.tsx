@@ -87,7 +87,7 @@ export default function MobileMenu() {
                 onClick={() => {
                     setIsOpen(!isOpen);
                 }}
-                className="fixed left-6 top-6 size-10 rounded-full bg-[var(--hu-blue)]"
+                className="fixed left-6 top-6 size-10"
             >
                 <CSSTransition
                     in={isOpen}
@@ -99,7 +99,7 @@ export default function MobileMenu() {
                     <span ref={closeIconRef} className="absolute left-0 top-0">
                         <MdArrowBack
                             size="2.5rem"
-                            className="fill-[var(--dark-font)] dark:fill-[var(--light-font)]"
+                            className="fill-dark-font dark:fill-light-font"
                         />
                     </span>
                 </CSSTransition>
@@ -114,7 +114,7 @@ export default function MobileMenu() {
                     <span ref={openIconRef} className="absolute left-0 top-0">
                         <RiMenu5Fill
                             size="2.5rem"
-                            className="fill-[var(--dark-font)] dark:fill-[var(--light-font)]"
+                            className="fill-dark-font dark:fill-light-font"
                         />
                     </span>
                 </CSSTransition>

@@ -7,7 +7,7 @@
         font-size: 18px;
         --dark-font: theme("colors.dark-font");
         --light-font: theme("colors.light-font");
-        --header-height: 6rem;
+        --header-height: theme("height.header");
         --main-height: calc(100dvh - var(--header-height));
         --verivote-turquoise: theme("colors.verivote-turquoise");
         --verivote-cyan: theme("colors.verivote-cyan");

@@ -32,6 +32,9 @@ const config: Config = {
                     "raw": "(min-width: 1024px) and (min-height: 640px)",
                 },
             },
+            height: {
+                "header": "6rem",
+            },
         },
     },
     darkMode: [
