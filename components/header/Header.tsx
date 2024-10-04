@@ -6,11 +6,11 @@ import React, { useEffect, useState } from "react";
 import { MdLogin, MdLogout } from "react-icons/md";
 import resolveConfig from "tailwindcss/resolveConfig";
 
-import BlockButton from "@/components/BlockButton";
-import Logo from "@/components/Logo";
-import MobileMenu from "@/components/MobileMenu";
-import ThemeToggle from "@/components/ThemeToggle";
-import Wrapper from "@/components/Wrapper";
+import MobileMenu from "@/components/header/MobileMenu";
+import ThemeToggle from "@/components/header/ThemeToggle";
+import BlockButton from "@/components/shared/BlockButton";
+import Logo from "@/components/shared/Logo";
+import Wrapper from "@/components/shared/Wrapper";
 import tailwindConfig from "@/tailwind.config";
 
 const fullConfig = resolveConfig(tailwindConfig);
@@ -70,7 +70,7 @@ export default function Header() {
                         <ThemeToggle className="mr-8 size-10"/>
                         <BlockButton onClick={!session?.user ? () => signIn() : () => signOut()}>
                             <span className="flex items-center justify-center">
-                                {!session?.user ? <MdLogin className="inline"/> : <MdLogout className="inline"/>}
+                                {!session?.user ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
                                 <span className="ml-1">{!session?.user ? "Sign In" : "Sign Out"}</span>
                             </span>
                         </BlockButton>

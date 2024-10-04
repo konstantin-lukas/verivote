@@ -9,10 +9,10 @@ import { MdArrowBack, MdLogin, MdLogout } from "react-icons/md";
 import { RiMenu5Fill } from "react-icons/ri";
 import { CSSTransition } from "react-transition-group";
 
-import BlockButton from "@/components/BlockButton";
-import BlockLink from "@/components/BlockLink";
-import Logo from "@/components/Logo";
-import ThemeToggle from "@/components/ThemeToggle";
+import ThemeToggle from "@/components/header/ThemeToggle";
+import BlockButton from "@/components/shared/BlockButton";
+import BlockLink from "@/components/shared/BlockLink";
+import Logo from "@/components/shared/Logo";
 
 function MenuLink({ href, children, closeMenu }: { href: string, children: ReactNode, closeMenu: () => void }) {
     return (
@@ -61,17 +61,17 @@ export default function MobileMenu() {
                     <nav className="w-full">
                         <ul className="flex w-full flex-col items-center">
                             <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create">
-                                <LuBrush className="inline"/>
+                                <LuBrush className="inline" size="1rem"/>
                                 <span className="ml-1">Create</span>
                             </MenuLink>
-                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/">
-                                <HiOutlineCog6Tooth className="inline"/>
+                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/public">
+                                <HiOutlineCog6Tooth className="inline" size="1rem"/>
                                 <span className="ml-1">Manage</span>
                             </MenuLink>
                             <li className="group mt-8 flex size-full items-center justify-center [@media(max-height:400px)]:mt-6">
                                 <BlockButton onClick={!session?.user ? () => signIn() : () => signOut()}>
                                     <span className="flex w-24 items-center justify-center transition-all">
-                                        {!session?.user ? <MdLogin className="inline"/> : <MdLogout className="inline"/>}
+                                        {!session?.user ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
                                         <span className="ml-1">{!session?.user ? "Sign In" : "Sign Out"}</span>
                                     </span>
                                 </BlockButton>
@@ -96,12 +96,12 @@ export default function MobileMenu() {
                     classNames="menu-icon-close"
                     unmountOnExit
                 >
-                    <div ref={closeIconRef} className="absolute left-0 top-0">
+                    <span ref={closeIconRef} className="absolute left-0 top-0">
                         <MdArrowBack
                             size="2.5rem"
                             className="fill-[var(--dark-font)] dark:fill-[var(--light-font)]"
                         />
-                    </div>
+                    </span>
                 </CSSTransition>
 
                 <CSSTransition
@@ -111,12 +111,12 @@ export default function MobileMenu() {
                     classNames="menu-icon-open"
                     unmountOnExit
                 >
-                    <div ref={openIconRef} className="absolute left-0 top-0">
+                    <span ref={openIconRef} className="absolute left-0 top-0">
                         <RiMenu5Fill
                             size="2.5rem"
                             className="fill-[var(--dark-font)] dark:fill-[var(--light-font)]"
                         />
-                    </div>
+                    </span>
                 </CSSTransition>
             </button>
         </div>
