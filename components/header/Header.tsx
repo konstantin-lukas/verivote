@@ -59,7 +59,7 @@ export default function Header() {
                                             </Link>
                                         </li>
                                         <li className="leading-none">
-                                            <Link href="/" className="inline-link mr-8">
+                                            <Link href="/manage" className="inline-link mr-8">
                                                 Manage
                                             </Link>
                                         </li>

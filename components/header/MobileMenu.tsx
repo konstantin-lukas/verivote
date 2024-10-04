@@ -64,7 +64,7 @@ export default function MobileMenu() {
                                 <LuBrush className="inline" size="1rem"/>
                                 <span className="ml-1">Create</span>
                             </MenuLink>
-                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/public">
+                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/manage">
                                 <HiOutlineCog6Tooth className="inline" size="1rem"/>
                                 <span className="ml-1">Manage</span>
                             </MenuLink>

@@ -27,6 +27,10 @@
         outline: 4px outset var(--verivote-turquoise);
     }
 
+    .inline-link-resting {
+        text-decoration: underline;
+    }
+
     .inline-link {
         background-image: linear-gradient(
                 to right,

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 const jost = Jost({
     subsets: ["latin"],
     display: "swap",
+    weight: ["400", "700"],
 });
 
 export default function RootLayout({
