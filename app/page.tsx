@@ -10,7 +10,7 @@ export default async function Page() {
         <Wrapper>
             <div className="flex min-h-[var(--main-height)] items-center">
                 <div className="w-1/2">
-                    <Image src={illustration} alt="Illustration of a woman casting a vote."/>
+                    <Image src={illustration} alt="Illustration of a woman casting a vote." className="pr-8" priority/>
                 </div>
                 <div className="w-1/2">
                     <MainHeading>Because Voting Matters</MainHeading>

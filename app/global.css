@@ -25,3 +25,69 @@
         outline: 4px outset #12d4ae;
     }
 }
+
+.menu-icon-open-enter {
+    opacity: 0;
+    transform: rotateY(-90deg) translateX(-100%);
+}
+
+.menu-icon-open-enter-active {
+    opacity: 1;
+    transform: none;
+    transition: opacity 200ms, transform 200ms;
+}
+
+.menu-icon-open-exit {
+    opacity: 1;
+    transform: none;
+}
+
+.menu-icon-open-exit-active {
+    opacity: 0;
+    transform: rotateY(-90deg) translateX(-100%);
+    transition: opacity 200ms, transform 200ms;
+}
+
+.menu-icon-close-enter {
+    opacity: 0;
+    transform: rotateY(90deg) translateX(100%);
+}
+
+.menu-icon-close-enter-active {
+    opacity: 1;
+    transform: none;
+    transition: opacity 200ms, transform 200ms;
+}
+
+.menu-icon-close-exit {
+    opacity: 1;
+    transform: none;
+}
+
+.menu-icon-close-exit-active {
+    opacity: 0;
+    transform: rotateY(90deg) translateX(100%);
+    transition: opacity 200ms, transform 200ms;
+}
+
+.menu-enter {
+    opacity: 0;
+    transform: scale(125%);
+}
+
+.menu-enter-active {
+    opacity: 1;
+    transform: none;
+    transition: opacity 200ms, transform 200ms;
+}
+
+.menu-exit {
+    opacity: 1;
+    transform: none;
+}
+
+.menu-exit-active {
+    opacity: 0;
+    transform: scale(125%);
+    transition: opacity 200ms, transform 200ms;
+}

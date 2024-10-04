@@ -2,15 +2,42 @@
 
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import resolveConfig from "tailwindcss/resolveConfig";
 
 import BlockButton from "@/components/BlockButton";
 import Logo from "@/components/Logo";
+import MobileMenu from "@/components/MobileMenu";
 import ThemeToggle from "@/components/ThemeToggle";
 import Wrapper from "@/components/Wrapper";
+import tailwindConfig from "@/tailwind.config";
+
+const fullConfig = resolveConfig(tailwindConfig);
 
 export default function Header() {
     const { data: session } = useSession();
+    const [isDesktop, setIsDesktop] = useState(true);
+    useEffect(() => {
+        setIsDesktop(
+            window
+                .matchMedia(`(min-width: ${fullConfig.theme.screens.lg}) and (min-height: ${fullConfig.theme.screens.sm})`)
+                .matches,
+        );
+        if (typeof window !== "undefined") {
+            const handleChange = (e: MediaQueryListEvent) => {
+                setIsDesktop(e.matches);
+            };
+            window
+                .matchMedia(`(min-width: ${fullConfig.theme.screens.lg}) and (min-height: ${fullConfig.theme.screens.sm})`)
+                .addEventListener("change", handleChange);
+            return window
+                .matchMedia(`(min-width: ${fullConfig.theme.screens.lg}) and (min-height: ${fullConfig.theme.screens.sm})`)
+                .removeEventListener("change", handleChange);
+        }
+    }, []);
+
+    if (!isDesktop) return <MobileMenu/>;
+
     return (
         <header className="flex h-[var(--header-height)] justify-center shadow-header dark:shadow-dark-header">
             <Wrapper>
@@ -32,7 +59,7 @@ export default function Header() {
                                         </li>
                                         <li className="leading-none">
                                             <Link href="/" className="mr-8">
-                                                Polls
+                                                Manage
                                             </Link>
                                         </li>
                                     </ul>
