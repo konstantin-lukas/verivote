@@ -13,7 +13,7 @@ export default function Card({ heading, children, href, pros, cons }: {
     cons: ReactNode,
 }) {
     return (
-        <div className="stretch flex flex-col justify-between">
+        <div className="flex flex-col justify-between">
             <div>
                 <H2>
                     {heading}
