@@ -1,25 +1,30 @@
 import { useCooldownState as useToggle } from "anzol";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 import type { ReactNode } from "react";
 import React, { useRef } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { LuBrush } from "react-icons/lu";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdLogin, MdLogout } from "react-icons/md";
 import { RiMenu5Fill } from "react-icons/ri";
 import { CSSTransition } from "react-transition-group";
 
+import BlockButton from "@/components/BlockButton";
 import BlockLink from "@/components/BlockLink";
 import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
 
-function MenuLink({ href, children, closeMenu }: { href: string, children: string | ReactNode, closeMenu: () => void }) {
+function MenuLink({ href, children, closeMenu }: { href: string, children: ReactNode, closeMenu: () => void }) {
     return (
-        <li className="group mt-8 flex h-full items-center justify-center first:mt-12">
+        <li
+            className="group mt-8 flex size-full items-center justify-center first:mt-12 [@media(max-height:400px)]:mt-6
+            [@media(max-height:400px)]:first:mt-8"
+        >
             <BlockLink
                 href={href}
                 onClick={closeMenu}
             >
-                <div className="transition-all">
+                <div className="flex w-24 items-center justify-center transition-all">
                     {children}
                 </div>
             </BlockLink>
@@ -32,6 +37,7 @@ export default function MobileMenu() {
     const openIconRef = useRef(null);
     const closeIconRef = useRef(null);
     const menuRef = useRef(null);
+    const { data: session } = useSession();
     return (
         <div className="z-50">
             <CSSTransition
@@ -53,13 +59,23 @@ export default function MobileMenu() {
                         <Logo className="size-auto h-full w-[60dvmin]"/>
                     </Link>
                     <nav className="w-full">
-                        <ul className="flex flex-col items-center">
+                        <ul className="flex w-full flex-col items-center">
                             <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create">
-                                <LuBrush className="inline"/> Create
+                                <LuBrush className="inline"/>
+                                <span className="ml-1">Create</span>
                             </MenuLink>
                             <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/">
-                                <HiOutlineCog6Tooth className="inline"/> Manage
+                                <HiOutlineCog6Tooth className="inline"/>
+                                <span className="ml-1">Manage</span>
                             </MenuLink>
+                            <li className="group mt-8 flex size-full items-center justify-center [@media(max-height:400px)]:mt-6">
+                                <BlockButton onPress={!session?.user ? () => signIn() : () => signOut()}>
+                                    <span className="flex w-24 items-center justify-center transition-all">
+                                        {!session?.user ? <MdLogin className="inline"/> : <MdLogout className="inline"/>}
+                                        <span className="ml-1">{!session?.user ? "Sign In" : "Sign Out"}</span>
+                                    </span>
+                                </BlockButton>
+                            </li>
                         </ul>
                     </nav>
                     <div className="absolute right-6 top-6">

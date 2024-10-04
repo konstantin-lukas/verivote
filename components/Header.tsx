@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
+import { MdLogin, MdLogout } from "react-icons/md";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 import BlockButton from "@/components/BlockButton";
@@ -68,7 +69,10 @@ export default function Header() {
                         }
                         <ThemeToggle className="mr-8 size-10"/>
                         <BlockButton onPress={!session?.user ? () => signIn() : () => signOut()}>
-                            {!session?.user ? "Sign In" : "Sign Out"}
+                            <span className="flex items-center justify-center">
+                                {!session?.user ? <MdLogin className="inline"/> : <MdLogout className="inline"/>}
+                                <span className="ml-1">{!session?.user ? "Sign In" : "Sign Out"}</span>
+                            </span>
                         </BlockButton>
                     </div>
                 </div>
