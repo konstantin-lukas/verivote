@@ -5,10 +5,12 @@
 @layer base {
     :root {
         font-size: 18px;
-        --dark-font: rgb(38 38 38);
-        --light-font: rgb(229 229 229);
+        --dark-font: theme("colors.dark-font");
+        --light-font: theme("colors.light-font");
         --header-height: 6rem;
         --main-height: calc(100dvh - var(--header-height));
+        --verivote-turquoise: theme("colors.verivote-turquoise");
+        --verivote-cyan: theme("colors.verivote-cyan");
         color: var(--dark-font);
     }
 
@@ -17,12 +19,43 @@
     }
 
     ::selection {
-        background: #12d4ae;
+        background: rgba(18,212,174,.5);
         color: white;
     }
 
     :focus-visible {
-        outline: 4px outset #12d4ae;
+        outline: 4px outset var(--verivote-turquoise);
+    }
+
+    .inline-link {
+        background-image: linear-gradient(
+                to right,
+                var(--verivote-turquoise),
+                var(--verivote-cyan) 50%,
+                var(--dark-font) 50%
+        );
+        user-select: none;
+        background-size: 200% 100%;
+        background-position: 100%;
+        display: inline-block;
+        padding: 5px 0;
+        position: relative;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: background-position 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    :root[data-color-scheme="dark"] .inline-link {
+        background-image: linear-gradient(
+                to right,
+                var(--verivote-turquoise),
+                var(--verivote-cyan) 50%,
+                var(--light-font) 50%
+        );
+    }
+
+    .inline-link:hover {
+        background-position: 0;
     }
 }
 

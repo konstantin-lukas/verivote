@@ -13,15 +13,15 @@ export default function ThemeToggle({ className }: { className?: string }) {
 
     return (
         <button
-            className={className}
+            className={className + " group"}
             onClick={() => {
                 setTheme(resolvedTheme === "dark" ? "light" : "dark");
             }}
         >
             {
                 resolvedTheme === "dark"
-                    ? <CiSun className="size-full fill-[color:var(--light-font)]"/>
-                    : <CiCloudMoon className="size-full fill-[color:var(--dark-font)]"/>
+                    ? <CiSun className="size-full fill-light-font transition-all group-hover:scale-110"/>
+                    : <CiCloudMoon className="size-full fill-dark-font transition-all group-hover:scale-110"/>
             }
         </button>
     );

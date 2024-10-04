@@ -54,12 +54,12 @@ export default function Header() {
                                 <nav className="flex items-center">
                                     <ul className="flex">
                                         <li className="leading-none">
-                                            <Link href="/create" className="mr-8">
+                                            <Link href="/create" className="inline-link mr-8">
                                                 Create
                                             </Link>
                                         </li>
                                         <li className="leading-none">
-                                            <Link href="/" className="mr-8">
+                                            <Link href="/" className="inline-link mr-8">
                                                 Manage
                                             </Link>
                                         </li>
@@ -68,7 +68,7 @@ export default function Header() {
                             )
                         }
                         <ThemeToggle className="mr-8 size-10"/>
-                        <BlockButton onPress={!session?.user ? () => signIn() : () => signOut()}>
+                        <BlockButton onClick={!session?.user ? () => signIn() : () => signOut()}>
                             <span className="flex items-center justify-center">
                                 {!session?.user ? <MdLogin className="inline"/> : <MdLogout className="inline"/>}
                                 <span className="ml-1">{!session?.user ? "Sign In" : "Sign Out"}</span>
