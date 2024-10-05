@@ -3,6 +3,7 @@ import "./global.css";
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import type { ReactNode } from "react";
 import React from "react";
 
 import Header from "@/components/header/Header";
@@ -23,7 +24,7 @@ const jost = Jost({
 export default function RootLayout({
     children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
     return (
         <html lang="en" suppressHydrationWarning={true} className={jost.className}>

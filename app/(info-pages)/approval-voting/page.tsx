@@ -1,5 +1,11 @@
 import React from "react";
 
+import InfoCard from "@/components/routes/(info-pages)/InfoCard";
+import type { VotingMethod } from "@/data/types";
+import { votingMethods } from "@/data/votingMethods";
+
 export default async function Page() {
-    return <>Approval Voting</>;
+    return (
+        <InfoCard votingMethod={votingMethods.find(x => x.name === "Approval Voting") as VotingMethod}/>
+    );
 }
