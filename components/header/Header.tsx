@@ -16,7 +16,7 @@ import tailwindConfig from "@/tailwind.config";
 const fullConfig = resolveConfig(tailwindConfig);
 
 export default function Header() {
-    const { data: session } = useSession();
+    const { status } = useSession();
     const [isDesktop, setIsDesktop] = useState(true);
     useEffect(() => {
         setIsDesktop(
@@ -50,7 +50,7 @@ export default function Header() {
                     </nav>
                     <div className="flex">
                         {
-                            !session?.user || (
+                            status !== "authenticated" || (
                                 <nav className="flex items-center">
                                     <ul className="flex">
                                         <li className="leading-none">
@@ -68,10 +68,10 @@ export default function Header() {
                             )
                         }
                         <ThemeToggle className="mr-8 size-10"/>
-                        <BlockButton onClick={!session?.user ? () => signIn() : () => signOut()}>
+                        <BlockButton onClick={status !== "authenticated" ? () => signIn() : () => signOut()}>
                             <span className="flex items-center justify-center">
-                                {!session?.user ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
-                                <span className="ml-1">{!session?.user ? "Sign In" : "Sign Out"}</span>
+                                {status !== "authenticated" ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
+                                <span className="ml-1">{status !== "authenticated" ? "Sign In" : "Sign Out"}</span>
                             </span>
                         </BlockButton>
                     </div>
