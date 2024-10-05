@@ -34,33 +34,37 @@ export default async function Page() {
                     <ScrollDownButton/>
                 </div>
             </div>
-            <div className="min-h-dvh py-12 desktop:min-h-[calc(100dvh-var(--header-height))]">
+            <div className="my-[20dvh] min-h-dvh desktop:min-h-[calc(100dvh-var(--header-height))]">
                 <div className="grid grid-cols-1 gap-x-16 gap-y-24 xl:grid-cols-2">
-                    <Card
-                        heading="Positional Voting"
-                        href="/create/positional"
-                        pros={"Provides a balanced reflection of voter preferences across all candidates, not just the favorite."}
-                        cons={"Can still lead to tactical voting, as the point system may encourage voters to manipulate rankings."}
-                    >
-                        In Positional Voting, voters rank candidates, and each position on the ballot is assigned a
-                        specific point value. Candidates earn points based on their ranking, and the candidate with the
-                        highest total wins.
-                    </Card>
                     <Card
                         heading="Instant-Runoff Voting"
                         href="/create/runoff"
+                        tag="Recommended"
+                        bestFor="Groups of any size where majority support is essential, and preferences between candidates are clear."
                         pros={<>Eliminates the <Link href="https://en.wikipedia.org/wiki/Spoiler_effect" className="inline-link inline-link-resting">spoiler effect</Link> by redistributing votes, ensuring the winner has broad support.</>}
-                        cons={"Complex to count manually and may result in longer voting processes."}
+                        cons={"The vote counting process is complex and thus less transparent than other methods."}
                     >
                         Instant-Runoff Voting allows voters to rank candidates by preference. If no candidate secures a
                         majority in the first round, the lowest-ranked candidate is eliminated, and their votes are
                         redistributed to the next preference, continuing until one candidate wins by majority.
                     </Card>
                     <Card
+                        heading="Positional Voting"
+                        href="/create/positional"
+                        bestFor="Medium-sized polls (5-20 people) with multiple choices, where detailed preferences matter."
+                        pros={"Provides a balanced reflection of voter preferences across all candidates, not just the favorite."}
+                        cons={<>Can still lead to <Link href="https://en.wikipedia.org/wiki/Strategic_voting" className="inline-link inline-link-resting">tactical voting</Link>, as the point system may encourage voters to manipulate rankings.</>}
+                    >
+                        In Positional Voting, voters rank candidates, and each position on the ballot is assigned a
+                        specific point value. Candidates earn points based on their ranking, and the candidate with the
+                        highest total wins.
+                    </Card>
+                    <Card
                         heading="Score Voting"
                         href="/create/positional/score"
+                        bestFor="Medium-sized groups (5-20 people) who want more flexibility to express their intensity of preference."
                         pros={"Allows voters to express varying levels of support for each candidate, offering a nuanced reflection of preferences."}
-                        cons={"Can be prone to strategic voting if voters inflate or deflate scores to influence outcomes."}
+                        cons={<>Can be prone to <Link href="https://en.wikipedia.org/wiki/Strategic_voting" className="inline-link inline-link-resting">strategic voting</Link> if voters inflate or deflate scores to influence outcomes which is why it is not good for large groups.</>}
                     >
                         In Score Voting, voters rate each candidate on a numerical scale. The candidate with the
                         highest total score across all ballots is declared the winner.
@@ -68,8 +72,9 @@ export default async function Page() {
                     <Card
                         heading="Approval Voting"
                         href="/create/positional/approval"
-                        pros={"Simple to understand and count, and it allows voters to support multiple candidates without splitting the vote."}
-                        cons={"Does not account for the strength of preference, which can lead to less nuanced results."}
+                        bestFor="Small to medium-sized groups (up to 20 people) who want a quick, simple poll and don’t have extreme preferences between options."
+                        pros={<>Simple to understand and count, and it allows voters to support multiple candidates without <Link href="https://en.wikipedia.org/wiki/Spoiler_effect" className="inline-link inline-link-resting">splitting the vote</Link>.</>}
+                        cons={"Does not account for the strength of preference, which can lead to less nuanced results than with score voting."}
                     >
                         Approval Voting lets voters select as many candidates as they approve of, without ranking them.
                         The candidate with the most approvals wins.
@@ -77,10 +82,11 @@ export default async function Page() {
                     <Card
                         heading="Plurality Voting"
                         href="/create/positional/plurality"
-                        pros={"Straightforward and easy to implement, especially for large elections."}
-                        cons={`Can result in "spoiler" candidates, where the winner lacks majority support, and doesn't reflect the full spectrum of voter preferences.`}
+                        bestFor="Small groups (less than 10 people) when simplicity is most important, and the group is likely to have a clear favorite candidate or option."
+                        pros={"Straightforward and easy to implement, especially for large elections. Everyone understands how it works."}
+                        cons={<>Can result in <Link href="https://en.wikipedia.org/wiki/Spoiler_effect" className="inline-link inline-link-resting">"spoiler" candidates</Link>, where the winner lacks majority support, and doesn't reflect the full spectrum of voter preferences.</>}
                     >
-                        In Plurality Voting, voters choose only one candidate, and the candidate with the most votes wins.
+                        In Plurality Voting, voters choose only one candidate, and the candidate with the most votes wins. This is the typical voting system we're all familiar with.
                     </Card>
                 </div>
             </div>
