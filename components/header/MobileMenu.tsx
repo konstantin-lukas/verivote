@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import React, { useRef } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { LuBrush } from "react-icons/lu";
-import { MdArrowBack, MdLogin, MdLogout } from "react-icons/md";
+import { MdArrowBack, MdLogin, MdLogout, MdOutlinePersonOutline } from "react-icons/md";
 import { RiMenu5Fill } from "react-icons/ri";
 import { CSSTransition } from "react-transition-group";
 
@@ -17,8 +17,7 @@ import Logo from "@/components/shared/Logo";
 function MenuLink({ href, children, closeMenu }: { href: string, children: ReactNode, closeMenu: () => void }) {
     return (
         <li
-            className="group mt-8 flex size-full items-center justify-center first:mt-12 [@media(max-height:400px)]:mt-6
-            [@media(max-height:400px)]:first:mt-8"
+            className="group mt-8 flex size-full items-center justify-center first:mt-12 landscape:mt-0 landscape:first:mt-0"
         >
             <BlockLink
                 href={href}
@@ -59,7 +58,11 @@ export default function MobileMenu() {
                         <Logo className="size-auto h-full w-[60dvmin]"/>
                     </Link>
                     <nav className="w-full">
-                        <ul className="flex w-full flex-col items-center">
+                        <ul className="flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 landscape:grid landscape:w-96 landscape:grid-cols-2 landscape:gap-6">
+                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account">
+                                <MdOutlinePersonOutline className="inline" size="1rem"/>
+                                <span className="ml-1">Account</span>
+                            </MenuLink>
                             <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create">
                                 <LuBrush className="inline" size="1rem"/>
                                 <span className="ml-1">Create</span>
@@ -68,7 +71,7 @@ export default function MobileMenu() {
                                 <HiOutlineCog6Tooth className="inline" size="1rem"/>
                                 <span className="ml-1">Manage</span>
                             </MenuLink>
-                            <li className="group mt-8 flex size-full items-center justify-center [@media(max-height:400px)]:mt-6">
+                            <li className="group mt-8 flex size-full items-center justify-center landscape:mt-0">
                                 <BlockButton onClick={!session?.user ? () => signIn() : () => signOut()}>
                                     <span className="flex w-24 items-center justify-center transition-all">
                                         {!session?.user ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}

@@ -54,6 +54,11 @@ export default function Header() {
                                 <nav className="flex items-center">
                                     <ul className="flex">
                                         <li className="leading-none">
+                                            <Link href="/account" className="inline-link mr-8">
+                                                Account
+                                            </Link>
+                                        </li>
+                                        <li className="leading-none">
                                             <Link href="/create" className="inline-link mr-8">
                                                 Create
                                             </Link>

@@ -26,7 +26,7 @@ export default async function Page() {
                 <div className="grid grid-cols-1 gap-x-16 gap-y-24 md:grid-cols-2 xl:grid-cols-3">
                     <Card
                         heading="Instant-Runoff"
-                        href="/create/runoff"
+                        href="/instant-runoff-voting"
                         tag="Recommended"
                         illustration={illustrationRunoff}
                         illustrationAlt="Illustration of a man running with a coffe cup in his hand."
@@ -37,7 +37,7 @@ export default async function Page() {
                     </Card>
                     <Card
                         heading="Positional Voting"
-                        href="/create/positional"
+                        href="/positional-voting"
                         illustration={illustrationPositional}
                         illustrationAlt="Illustration of a man ranking choices on a screen."
                         bestFor="Medium-sized polls (5-20 people) with multiple choices, where detailed preferences matter."
@@ -46,7 +46,7 @@ export default async function Page() {
                     </Card>
                     <Card
                         heading="Score Voting"
-                        href="/create/positional/score"
+                        href="/score-voting"
                         illustration={illustrationScore}
                         illustrationAlt="Illustration of a man expressing his opinion with a star rating system."
                         bestFor="Medium-sized groups (5-20 people) who want more flexibility to express their intensity of preference."
@@ -55,7 +55,7 @@ export default async function Page() {
                     </Card>
                     <Card
                         heading="Approval Voting"
-                        href="/create/positional/approval"
+                        href="/approval-voting"
                         illustration={illustrationApproval}
                         illustrationAlt="Illustration of a woman holding up like and dislike signs."
                         bestFor="Small to medium-sized groups (up to 20 people) who want a simple poll and don’t have strong preferences."
@@ -64,7 +64,7 @@ export default async function Page() {
                     </Card>
                     <Card
                         heading="Plurality Voting"
-                        href="/create/positional/plurality"
+                        href="/plurality-voting"
                         illustration={illustrationPlurality}
                         illustrationAlt="Illustration of a woman casting a ballot at a poll station."
                         bestFor="Small groups (less than 10 people) when simplicity important and there likely is a favorite candidate."
