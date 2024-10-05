@@ -27,7 +27,7 @@ export default function Logo({ className }: { className?: string }) {
 
     return (
         <Image
-            className={className}
+            className={"select-none " + className}
             src={src}
             alt="Verivote Logo"
             priority

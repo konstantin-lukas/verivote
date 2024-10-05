@@ -21,7 +21,7 @@ export default function Card({ heading, children, href, pros, cons }: {
                 <p className="mb-4">
                     {children}
                 </p>
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
                     <div className="border-l-2 border-dark-font pl-4 dark:border-light-font">
                         <span className="relative -top-1.5 bg-gradient-to-r from-verivote-turquoise to-verivote-cyan bg-clip-text text-xl font-bold uppercase text-transparent">
                             Pros

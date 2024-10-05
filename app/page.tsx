@@ -13,7 +13,13 @@ export default async function Page() {
         <Wrapper>
             <div className="flex min-h-dvh items-center desktop:min-h-[calc(100dvh-var(--header-height))]">
                 <div className="w-1/2">
-                    <Image src={illustration} alt="Illustration of a woman casting a vote." className="pr-8" priority/>
+                    <Image
+                        src={illustration}
+                        alt="Illustration of a woman casting a vote."
+                        className="select-none pr-8"
+                        draggable={false}
+                        priority
+                    />
                 </div>
                 <div className="w-1/2">
                     <H1>Because Voting Matters</H1>
@@ -21,7 +27,7 @@ export default async function Page() {
                         Most voting systems in use today are imperfect and often leave people feeling unsatisfied.
                         They limit you to casting a single vote, without considering your full preferences.
                         Verivote aims to educate people about alternative voting methods, offering a way to explore
-                        different systems with small polls among friends. It's a simple, interactive way to learn how
+                        different systems with small polls among friends. It&#39;s a simple, interactive way to learn how
                         these alternative voting and counting methods work, providing a more accurate reflection of
                         group preferences.
                     </p>
@@ -29,7 +35,7 @@ export default async function Page() {
                 </div>
             </div>
             <div className="min-h-dvh py-12 desktop:min-h-[calc(100dvh-var(--header-height))]">
-                <div className="grid grid-cols-2 gap-x-16 gap-y-24">
+                <div className="grid grid-cols-1 gap-x-16 gap-y-24 xl:grid-cols-2">
                     <Card
                         heading="Positional Voting"
                         href="/create/positional"

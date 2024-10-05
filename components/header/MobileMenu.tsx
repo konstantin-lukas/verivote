@@ -39,7 +39,7 @@ export default function MobileMenu() {
     const menuRef = useRef(null);
     const { data: session } = useSession();
     return (
-        <div className="z-50">
+        <header className="relative z-50">
             <CSSTransition
                 in={isOpen}
                 timeout={200}
@@ -119,6 +119,6 @@ export default function MobileMenu() {
                     </span>
                 </CSSTransition>
             </button>
-        </div>
+        </header>
     );
 }
