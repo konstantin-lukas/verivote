@@ -4,6 +4,7 @@ const config: Config = {
     content: [
         "./components/**/*.{ts,tsx}",
         "./app/**/*.{ts,tsx}",
+        "./data/votingMethods.tsx",
     ],
     theme: {
         extend: {

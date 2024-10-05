@@ -61,6 +61,10 @@
     }
 }
 
+b {
+    font-weight: 600;
+}
+
 .menu-icon-open-enter {
     opacity: 0;
     transform: rotateY(-90deg) translateX(-100%);
