@@ -8,7 +8,9 @@
         --dark-font: theme("colors.dark-font");
         --light-font: theme("colors.light-font");
         --header-height: theme("height.header");
-        --main-height: calc(100dvh - var(--header-height));
+        --footer-height: theme("height.footer");
+        --main-height: calc(100dvh - var(--header-height) - var(--footer-height));
+        --main-height-mobile: calc(100dvh - var(--footer-height));
         --verivote-turquoise: theme("colors.verivote-turquoise");
         --verivote-cyan: theme("colors.verivote-cyan");
         color: var(--dark-font);

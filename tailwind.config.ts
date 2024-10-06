@@ -37,6 +37,7 @@ const config: Config = {
             },
             height: {
                 "header": "6rem",
+                "footer": "3rem",
             },
         },
     },
