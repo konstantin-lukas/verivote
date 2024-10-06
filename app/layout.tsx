@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
 import React from "react";
 
+import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import SessionProvider from "@/components/SessionProvider";
 
@@ -38,6 +39,7 @@ export default function RootLayout({
                         <main>
                             {children}
                         </main>
+                        <Footer/>
                     </SessionProvider>
                 </ThemeProvider>
             </body>
