@@ -1,0 +1,36 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import type { ReactNode } from "react";
+import React from "react";
+
+import H1 from "@/components/shared/H1";
+import H2 from "@/components/shared/H2";
+import Wrapper from "@/components/shared/Wrapper";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy - Verivote",
+};
+
+function P({ children }: { children: ReactNode }) {
+    return <p className="mb-4">{children}</p>;
+}
+
+export default function Page() {
+    return (
+        <Wrapper>
+            <div className="my-24">
+                <H1>Impressum</H1>
+                <P>
+                    {process.env.LEGAL_RESPONSIBLE_ENTITY}<br/>
+                    {process.env.LEGAL_STREET}<br/>
+                    {process.env.LEGAL_ZIP_AND_CITY}
+                </P>
+                <H2>Contact Information</H2>
+                <P>
+                    Phone: {process.env.LEGAL_PHONE}<br/>
+                    Email: <Link href={"mailto:" + process.env.LEGAL_EMAIL} className="inline-link inline-link-resting">{process.env.LEGAL_EMAIL}</Link><br/>
+                </P>
+            </div>
+        </Wrapper>
+    );
+}
