@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import React from "react";
 import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
 import { LuBrush } from "react-icons/lu";
+import { RiExternalLinkLine } from "react-icons/ri";
 
 import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
@@ -44,11 +45,11 @@ export default function InfoCard({ votingMethod }: { votingMethod: VotingMethod 
                     <H2>
                         How It Works
                     </H2>
-                    <div className="mt-6 border-t-2 border-neutral-300 pt-4">
+                    <div className="mt-4 border-t-2 border-neutral-300 pt-4 dark:border-neutral-700">
                         <Image
                             src={votingMethod.illustration}
                             alt={votingMethod.illustrationAlt}
-                            className="mb-8 h-auto w-full select-none"
+                            className="mx-auto mb-8 mt-4 h-auto w-full select-none md:w-1/2 xl:w-full"
                             draggable={false}
                             priority
                         />
@@ -58,17 +59,13 @@ export default function InfoCard({ votingMethod }: { votingMethod: VotingMethod 
                         <p>
                             <b className="font-bold">Best for:</b> {votingMethod.bestFor}
                         </p>
-                        <BlockLink href={votingMethod.createPage} className="mt-8 flex justify-center">
-                            <LuBrush className="relative top-[-.1rem] inline" size="1rem"/>
-                            <span className="ml-1">Create</span>
-                        </BlockLink>
                     </div>
                 </div>
                 <div>
                     <H2>
                         Trade-offs
                     </H2>
-                    <div className="mt-4 border-t-2 border-neutral-300 pt-4">
+                    <div className="mt-4 border-t-2 border-neutral-300 pt-4 dark:border-neutral-700">
                         <List heading="Advantages">
                             {votingMethod.pros}
                         </List>
@@ -77,6 +74,16 @@ export default function InfoCard({ votingMethod }: { votingMethod: VotingMethod 
                         </List>
                     </div>
                 </div>
+            </div>
+            <div className="mt-16 flex flex-col justify-center gap-8 border-t-2 border-neutral-300 pt-16 sm:flex-row dark:border-neutral-700">
+                <BlockLink href={votingMethod.createPage} className="inline-flex w-full justify-center sm:w-auto">
+                    <LuBrush className="relative top-[-.1rem] inline" size="1rem"/>
+                    <span className="ml-1">Start a poll</span>
+                </BlockLink>
+                <BlockLink href={votingMethod.learnMoreLink} className="inline-flex w-full justify-center sm:w-auto" target={"_blank"}>
+                    <RiExternalLinkLine className="relative top-[-.1rem] inline" size="1rem"/>
+                    <span className="ml-1">Learn More</span>
+                </BlockLink>
             </div>
         </div>
     );

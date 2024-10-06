@@ -1,11 +1,12 @@
 import Link from "next/link";
 import React from "react";
 
-export default function BlockLink({ children, href, className, onClick }: {
+export default function BlockLink({ children, href, className, onClick, target }: {
     children: React.ReactNode,
     href: string,
     className?: string,
-    onClick?: () => void
+    onClick?: () => void,
+    target?: string,
 }) {
     return (
         <Link
@@ -14,6 +15,7 @@ export default function BlockLink({ children, href, className, onClick }: {
                 font-medium shadow-3d transition-shadow hover:shadow-3d-both dark:bg-neutral-900 dark:shadow-dark-3d 
                 dark:hover:shadow-dark-3d-both ${className ?? ""}`}
             onClick={onClick}
+            target={target}
         >
             <span className="m-0 inline-block font-medium transition-transform group-hover:scale-95">
                 {children}

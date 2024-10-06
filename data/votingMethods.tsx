@@ -54,6 +54,7 @@ export const votingMethods: VotingMethod[] = [
             </li>,
         ],
         tag: "Recommended",
+        learnMoreLink: "https://en.wikipedia.org/wiki/Instant-runoff_voting",
     }, {
         name: "Positional Voting",
         shortDescription: "Voters rank candidates which receive points based on their rank. The candidate with the " +
@@ -97,6 +98,7 @@ export const votingMethods: VotingMethod[] = [
             </li>,
         ],
         tag: "Recommended",
+        learnMoreLink: "https://en.wikipedia.org/wiki/Positional_voting",
     }, {
         name: "Score Voting",
         shortDescription: "Voters rate candidates on a point scale, points are accumulated and the candidate with " +
@@ -139,6 +141,7 @@ export const votingMethods: VotingMethod[] = [
                 <b>Unclear winner legitimacy:</b> A candidate could win without being anyone’s top choice if they receive consistently middling scores from many voters.
             </li>,
         ],
+        learnMoreLink: "https://en.wikipedia.org/wiki/Score_voting",
     }, {
         name: "Approval Voting",
         shortDescription: "Voters select as many candidates as they want, without ranking them. The candidate with " +
@@ -181,6 +184,7 @@ export const votingMethods: VotingMethod[] = [
                 <b>Difficult for polarized groups:</b> In situations where voters have strong preferences, this system may fail to reflect the deep divide in preferences.
             </li>,
         ],
+        learnMoreLink: "https://en.wikipedia.org/wiki/Approval_voting",
     }, {
         name: "Plurality Voting",
         shortDescription: "Voters choose only one candidate, and the candidate with the most votes wins. This is the " +
@@ -220,5 +224,6 @@ export const votingMethods: VotingMethod[] = [
                 <b>Fails to ensure majority support:</b> A candidate can win without having the majority of the vote, which might not reflect the true will of the group.
             </li>,
         ],
+        learnMoreLink: "https://en.wikipedia.org/wiki/Plurality_voting",
     },
 ];

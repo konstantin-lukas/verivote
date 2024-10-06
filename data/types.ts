@@ -13,4 +13,5 @@ export interface VotingMethod {
     pros: ReactNode[],
     cons: ReactNode[],
     tag?: string,
+    learnMoreLink: string,
 }
