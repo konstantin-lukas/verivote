@@ -16,12 +16,14 @@ const config: Config = {
             },
             boxShadow: {
                 "3d": "-0.16rem -0.16rem 0.16rem 0.16rem #fff, 0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.1)",
-                "3d-inset": "-0.16rem -0.16rem 0.16rem 0.16rem #fff, " +
+                "3d-inset": "inset -0.1rem -0.1rem 0.1rem 0.1rem #fff, inset 0.1rem 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.1)",
+                "3d-both": "-0.16rem -0.16rem 0.16rem 0.16rem #fff, " +
                     "0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.1), " +
                     "inset -0.16rem -0.16rem 0.16rem 0.16rem #fff, " +
                     "inset 0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.1)",
                 "dark-3d": "-0.16rem -0.16rem 0.16rem 0.16rem rgba(255, 255, 255, 0.1), 0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.5)",
-                "dark-3d-inset": "-0.16rem -0.16rem 0.16rem 0.16rem rgba(255, 255, 255, 0.1), " +
+                "dark-3d-inset": "inset -0.1rem -0.1rem 0.1rem 0.1rem rgba(255, 255, 255, 0.1), inset 0.1rem 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.5)",
+                "dark-3d-both": "-0.16rem -0.16rem 0.16rem 0.16rem rgba(255, 255, 255, 0.1), " +
                     "0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.5), " +
                     "inset -0.16rem -0.16rem 0.16rem 0.16rem rgba(255, 255, 255, 0.1), " +
                     "inset 0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.5)",

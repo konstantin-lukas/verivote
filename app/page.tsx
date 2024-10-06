@@ -8,7 +8,7 @@ import { votingMethods } from "@/data/votingMethods";
 export default async function Page() {
     return (
         <Wrapper>
-            <div className="mt-24">
+            <div className="mb-2 mt-24">
                 <H1>Because Voting Matters</H1>
             </div>
             <p>

@@ -13,9 +13,13 @@ export const votingMethods: VotingMethod[] = [
         name: "Instant-Runoff",
         shortDescription: "Voters rank candidates, the lowest-ranked candidate is eliminated and their votes " +
             "redistributed until a majority emerges.",
-        longDescription: "Instant-Runoff Voting allows voters to rank candidates. If no candidate secures a " +
-            "majority, the lowest-ranked candidate is eliminated, and their votes are redistributed to the next " +
-            "preference until a candidate wins by majority.",
+        longDescription: "Instant-Runoff Voting (IRV), also known as Ranked-Choice Voting (RCV), asks voters to rank " +
+            "the candidates by preference. In the first round of counting, only the first-choice votes are considered. " +
+            "If one candidate receives more than 50% of the first-choice votes, they are declared the winner. However, " +
+            "if no candidate reaches this majority, the candidate with the fewest votes is eliminated, and their votes " +
+            "are redistributed to the remaining candidates based on the voters' next-ranked preference. This process " +
+            "continues, eliminating the lowest-ranked candidates one by one and redistributing their votes, until a " +
+            "candidate achieves a majority of the votes.",
         infoPage: "/instant-runoff-voting",
         createPage: "/create?type=irv",
         illustration: illustrationRunoff,
@@ -26,7 +30,7 @@ export const votingMethods: VotingMethod[] = [
                 <b>Majority support guaranteed:</b> The winner is more likely to have broad support since the system eliminates the lowest-ranked candidates progressively.
             </li>,
             <li key={1}>
-                <b>Reduces "wasted votes":</b> Allows voters to support less popular candidates without fear of wasting their vote, as their vote is transferred if their first choice is eliminated.
+                <b>Reduces &#34;wasted votes&#34;:</b> Allows voters to support less popular candidates without fear of wasting their vote, as their vote is transferred if their first choice is eliminated.
             </li>,
             <li key={2}>
                 <b>Discourages tactical voting:</b> Since votes are transferred, voters are less likely to vote strategically for a less-preferred candidate just to block another candidate.
@@ -54,9 +58,11 @@ export const votingMethods: VotingMethod[] = [
         name: "Positional Voting",
         shortDescription: "Voters rank candidates which receive points based on their rank. The candidate with the " +
             "most points wins.",
-        longDescription: "In Positional Voting, voters rank candidates, and each position on the ballot is assigned " +
-            "a specific point value. Candidates earn points based on their ranking, and the candidate with the " +
-            "highest total wins.",
+        longDescription: "In Positional Voting, voters rank candidates in order of preference, and each position on " +
+            "the ballot is assigned a specific point value. For example, in a 5-candidate election, the top-ranked " +
+            "candidate might receive 5 points, the second choice gets 4 points, and so on, down to the last-ranked " +
+            "candidate who would receive just 1 point. The points from each voter’s ranking are then added up for all " +
+            "candidates, and the candidate with the highest total score wins the election.",
         infoPage: "/positional-voting",
         createPage: "/create?type=pos",
         illustration: illustrationPositional,
@@ -64,7 +70,7 @@ export const votingMethods: VotingMethod[] = [
         bestFor: "Medium-sized polls (5-20 people) with multiple choices, where detailed preferences matter.",
         pros: [
             <li key={0}>
-                <b>Reflects detailed preferences:</b> It captures not only the voters' top choice but also their preferences for all other options.
+                <b>Reflects detailed preferences:</b> It captures not only the voters&#39; top choice but also their preferences for all other options.
             </li>,
             <li key={1}>
                 <b>Fairer than single-choice systems:</b> Voters can express support for multiple candidates, reducing the likelihood of strategic voting for just the top choice.
@@ -72,8 +78,8 @@ export const votingMethods: VotingMethod[] = [
             <li key={2}>
                 <b>Encourages more engagement:</b> Voters need to think about their rankings, leading to more informed decisions.
             </li>,
-            <li>
-                <b>Can prevent spoilers:</b> Ranking multiple candidates reduces the chances that a third-party or less popular candidate <Link href="https://en.wikipedia.org/wiki/Spoiler_effect" className="inline-link inline-link-resting">"spoils"</Link> the election.
+            <li key={3}>
+                <b>Can prevent spoilers:</b> Ranking multiple candidates reduces the chances that a third-party or less popular candidate <Link href="https://en.wikipedia.org/wiki/Spoiler_effect" className="inline-link inline-link-resting">&#34;spoils&#34;</Link> the election.
             </li>,
         ],
         cons: [
@@ -83,7 +89,7 @@ export const votingMethods: VotingMethod[] = [
             <li key={1}>
                 <b>Susceptible to strategic voting:</b> Voters might <Link href="https://en.wikipedia.org/wiki/Strategic_voting" className="inline-link inline-link-resting">deliberately</Link> rank a weaker candidate higher to push down a stronger rival.
             </li>,
-            <li>
+            <li key={2}>
                 <b>Points can distort results:</b> The point distribution may not perfectly reflect voter sentiment, as some positions may carry disproportionate weight.
             </li>,
             <li key={3}>
@@ -95,8 +101,11 @@ export const votingMethods: VotingMethod[] = [
         name: "Score Voting",
         shortDescription: "Voters rate candidates on a point scale, points are accumulated and the candidate with " +
             "the most points wins.",
-        longDescription: "In Score Voting, voters rate each candidate on a numerical scale. The candidate with the" +
-            "highest total score across all ballots is declared the winner.",
+        longDescription: "Score Voting, also known as Range Voting, allows voters to rate each candidate on a " +
+            "numerical scale. For instance, voters might rate each candidate on a scale of 1 to 5, or 0 to 10, " +
+            "depending on the system in use. Each voter assigns a score to every candidate based on their preference. " +
+            "After all votes are cast, the scores for each candidate are summed, and the candidate with the highest " +
+            "total score wins the election.",
         infoPage: "/score-voting",
         createPage: "/create?type=scr",
         illustration: illustrationScore,
@@ -134,8 +143,11 @@ export const votingMethods: VotingMethod[] = [
         name: "Approval Voting",
         shortDescription: "Voters select as many candidates as they want, without ranking them. The candidate with " +
             "the most approvals wins.",
-        longDescription: "Approval Voting lets voters select as many candidates as they approve of, without ranking " +
-            "them. The candidate with the most approvals wins.",
+        longDescription: "Approval Voting is a simpler method where voters are not required to rank or score " +
+            "candidates but are instead asked to approve or disapprove of each candidate. Each voter can select " +
+            "(approve) as many candidates as they wish. For example, in an election with five candidates, a voter " +
+            "might choose to approve of two candidates they find acceptable and leave the others unmarked. The " +
+            "candidate with the most approvals at the end of voting wins the election.",
         infoPage: "/approval-voting",
         createPage: "/create?type=apr",
         illustration: illustrationApproval,
@@ -173,8 +185,11 @@ export const votingMethods: VotingMethod[] = [
         name: "Plurality Voting",
         shortDescription: "Voters choose only one candidate, and the candidate with the most votes wins. This is the " +
             "typical voting system.",
-        longDescription: "In Plurality Voting, voters choose only one candidate, and the candidate with the most " +
-            "votes wins. This is the typical voting system we're all familiar with.",
+        longDescription: "Plurality Voting, also known as \"first-past-the-post,\" is one of the simplest and most " +
+            "commonly used voting systems. In this system, voters are asked to select only one candidate, and the " +
+            "candidate who receives the most votes wins the election, regardless of whether they secure a majority. " +
+            "If there are multiple candidates, the winner may only have a plurality (the most votes) rather than a " +
+            "majority (over 50%).",
         infoPage: "/plurality-voting",
         createPage: "/create?type=plu",
         illustration: illustrationPlurality,
@@ -199,7 +214,7 @@ export const votingMethods: VotingMethod[] = [
                 <b>Spoiler effect:</b> A third-party candidate can <Link href="https://en.wikipedia.org/wiki/Spoiler_effect" className="inline-link inline-link-resting">cause a candidate</Link> to win with only a small plurality, even without majority support.
             </li>,
             <li key={3}>
-                <b>Encourages tactical voting:</b> Voters often vote for the <Link href="https://en.wikipedia.org/wiki/Strategic_voting" className="inline-link inline-link-resting">"lesser of two evils"</Link> instead of their true favorite to avoid wasting their vote.
+                <b>Encourages tactical voting:</b> Voters often vote for the <Link href="https://en.wikipedia.org/wiki/Strategic_voting" className="inline-link inline-link-resting">&#34;lesser of two evils&#34;</Link> instead of their true favorite to avoid wasting their vote.
             </li>,
             <li key={4}>
                 <b>Fails to ensure majority support:</b> A candidate can win without having the majority of the vote, which might not reflect the true will of the group.
