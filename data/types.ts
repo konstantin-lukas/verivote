@@ -15,3 +15,7 @@ export interface VotingMethod {
     tag?: string,
     learnMoreLink: string,
 }
+
+export interface CreationFormState {
+    method: string,
+}

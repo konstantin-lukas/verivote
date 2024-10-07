@@ -13,6 +13,9 @@ const authOptions = {
             clientSecret: process.env.DISCORD_SECRET ?? "",
         }),
     ],
+    pages: {
+        signIn: "/signin",
+    },
 };
 
 const handler = NextAuth(authOptions);
