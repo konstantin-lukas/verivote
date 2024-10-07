@@ -18,4 +18,5 @@ export interface VotingMethod {
 
 export interface CreationFormState {
     method: string,
+    name: string,
 }

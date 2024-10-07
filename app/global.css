@@ -27,7 +27,7 @@
     }
 
     :focus-visible {
-        outline: 4px outset var(--verivote-turquoise);
+        outline: 4px solid var(--verivote-turquoise);
     }
 
     .inline-link-resting {

@@ -4,15 +4,6 @@ import { useClickOutside } from "anzol";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { BiExpandVertical } from "react-icons/bi";
 
-
-/**
- * @brief A fully custom dropdown menu that allows selecting a single value from a list of values
- * @param options - An array of strings to display as selectable options
- * @param defaultOption - Index of the option in the options array to be selected by default
- * @param getValue - A setState function from the parent component
- * @param ariaLabel - The aria-label to use
- * The dropdown uses this function to return the currently selected index on change
- */
 function Dropdown({ options, defaultOption, getValue, ariaLabel }: {
     options: string[],
     defaultOption: number,
@@ -53,7 +44,7 @@ function Dropdown({ options, defaultOption, getValue, ariaLabel }: {
     const ref = useClickOutside(() => setIsOpen(false));
 
     return (
-        <div ref={ref} role="listbox" aria-label={ariaLabel} className="inline-block">
+        <div ref={ref} role="listbox" aria-label={ariaLabel} className="relative inline-block">
             <div
                 onClick={() => setIsOpen(!isOpen)}
                 onKeyDown={(e) => {
@@ -61,7 +52,7 @@ function Dropdown({ options, defaultOption, getValue, ariaLabel }: {
                 }}
                 role="option"
                 className={
-                    "mb-6 min-w-64 flex cursor-pointer items-center justify-between rounded-full px-10 py-2 transition-all "
+                    "mb-6 min-w-60 flex cursor-pointer items-center justify-between rounded-full px-10 py-2 transition-all "
                     + (isOpen ? "shadow-3d-both dark:shadow-dark-3d-both" : "shadow-3d dark:shadow-dark-3d")
                 }
                 aria-selected="true"
@@ -73,7 +64,7 @@ function Dropdown({ options, defaultOption, getValue, ariaLabel }: {
                 <BiExpandVertical className="ml-2"/>
             </div>
             {isOpen && (
-                <div className={"rounded-3xl p-4 shadow-3d dark:shadow-dark-3d"}>
+                <div className="absolute w-full rounded-3xl bg-neutral-100 p-4 shadow-3d dark:bg-neutral-900 dark:shadow-dark-3d">
                     {elements}
                 </div>)
             }
