@@ -40,7 +40,7 @@ export default function Header() {
     if (!isDesktop) return <MobileMenu/>;
 
     return (
-        <header className="relative flex h-header justify-center shadow-header dark:shadow-dark-header">
+        <header className="relative flex h-header justify-center bg-neutral-100 shadow-header dark:bg-neutral-900 dark:shadow-dark-header">
             <Wrapper>
                 <div className="flex h-full items-center justify-between">
                     <nav className="flex h-full items-center">

@@ -11,7 +11,7 @@ import Header from "@/components/header/Header";
 import SessionProvider from "@/components/SessionProvider";
 
 export const metadata: Metadata = {
-    title: "Verivote - Polls That Satisfy",
+    title: "Verivote - Decide Together",
     description: "With Verivote, you can create polls using alternative voting systems, making it easier to reach a " +
         "decision that reflects everyone's preferences.",
 };

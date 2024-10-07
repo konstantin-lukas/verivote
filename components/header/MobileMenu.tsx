@@ -37,6 +37,7 @@ export default function MobileMenu() {
     const closeIconRef = useRef(null);
     const menuRef = useRef(null);
     const { data: session } = useSession();
+    const buttonsClass = `landscape:grid-cols-${session?.user ? 2 : 1}`;
     return (
         <header className="relative z-50">
             <CSSTransition
@@ -58,8 +59,9 @@ export default function MobileMenu() {
                         <Logo className="size-auto h-full w-[60dvmin]"/>
                     </Link>
                     <nav className="w-full">
-                        <ul className="flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 landscape:grid landscape:w-96 landscape:grid-cols-2 landscape:gap-6">
-                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account">
+                        <ul className={`flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 
+                        landscape:grid landscape:w-96 landscape:gap-6 ` + buttonsClass}>
+                            {session?.user ? (<><MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account">
                                 <MdOutlinePersonOutline className="inline" size="1rem"/>
                                 <span className="ml-1">Account</span>
                             </MenuLink>
@@ -70,7 +72,7 @@ export default function MobileMenu() {
                             <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/manage">
                                 <HiOutlineCog6Tooth className="inline" size="1rem"/>
                                 <span className="ml-1">Manage</span>
-                            </MenuLink>
+                            </MenuLink></>) : ""}
                             <li className="group mt-8 flex size-full items-center justify-center landscape:mt-0">
                                 <BlockButton onClick={!session?.user ? () => signIn() : () => signOut()}>
                                     <span className="flex w-24 items-center justify-center transition-all">
