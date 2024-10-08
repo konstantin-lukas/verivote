@@ -1,7 +1,7 @@
 "use client";
 
 import { useClickOutside } from "anzol";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { BiExpandVertical } from "react-icons/bi";
 
 function Dropdown({ options, defaultOption, getValue, ariaLabel }: {
@@ -52,19 +52,22 @@ function Dropdown({ options, defaultOption, getValue, ariaLabel }: {
                 }}
                 role="option"
                 className={
-                    "mb-6 min-w-60 flex cursor-pointer items-center justify-between rounded-full px-10 py-2 transition-all "
+                    "mb-6 min-w-60 cursor-pointer rounded-full px-10 py-2 transition-all "
                     + (isOpen ? "shadow-3d-both dark:shadow-dark-3d-both" : "shadow-3d dark:shadow-dark-3d")
                 }
                 aria-selected="true"
                 tabIndex={0}
             >
-                <div data-nosnippet="true">
-                    {options[selectedOption]}
+                <div className={"flex items-center transition-transform justify-between " + (isOpen ? "scale-95" : "")}>
+                    <div data-nosnippet="true">
+                        {options[selectedOption]}
+                    </div>
+                    <BiExpandVertical className="ml-2"/>
                 </div>
-                <BiExpandVertical className="ml-2"/>
             </div>
             {isOpen && (
-                <div className="absolute w-full rounded-3xl bg-neutral-100 p-4 shadow-3d dark:bg-neutral-900 dark:shadow-dark-3d">
+                <div
+                    className="absolute z-20 w-full rounded-3xl bg-neutral-100 p-4 shadow-3d dark:bg-neutral-900 dark:shadow-dark-3d">
                     {elements}
                 </div>)
             }
