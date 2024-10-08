@@ -1,10 +1,14 @@
-<div align="center" style="margin: 50px 0">
+<div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="public/verivote_logo_dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="public/verivote_logo.svg">
     <img src="public/verivote_logo.svg" alt="" width="50%" height="50%">
   </picture>
 </div>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 
 Verivote is a free open source website that offers a hands-on approach for educating people about
 alternative voting systems. You are welcome to deploy this website yourself or fork it and make it your own.
