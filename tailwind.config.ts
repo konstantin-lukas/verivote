@@ -8,6 +8,52 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            keyframes: {
+                "ltr-checkbox": {
+                    "0%": {
+                        width: "50%",
+                        left: "0",
+                        right: "auto",
+                    },
+                    "50%": {
+                        width: "100%",
+                        left: "0",
+                        right: "auto",
+                    },
+                    "51%": {
+                        width: "100%",
+                        right: "0",
+                        left: "auto",
+                    },
+                    "100%": {
+                        width: "50%",
+                        right: "0",
+                        left: "auto",
+                    },
+                },
+                "rtl-checkbox": {
+                    "0%": {
+                        width: "50%",
+                        right: "0",
+                        left: "auto",
+                    },
+                    "50%": {
+                        width: "100%",
+                        left: "auto",
+                        right: "0",
+                    },
+                    "51%": {
+                        width: "100%",
+                        left: "0",
+                        right: "auto",
+                    },
+                    "100%": {
+                        width: "50%",
+                        left: "0",
+                        right: "auto",
+                    },
+                },
+            },
             colors: {
                 "verivote-turquoise": "#12d4ae",
                 "verivote-cyan": "#129dd4",

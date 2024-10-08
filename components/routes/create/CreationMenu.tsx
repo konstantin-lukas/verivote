@@ -7,17 +7,18 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import React, { useReducer } from "react";
 
-import Dropdown from "@/components/shared/Dropdown";
-import Input from "@/components/shared/Input";
+import Checkbox from "@/components/form/Checkbox";
+import Dropdown from "@/components/form/Dropdown";
+import Input from "@/components/form/Input";
 import type { CreationFormState } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
 
-function reducer(state: CreationFormState, action: {type: string; value: string}) {
-    if (action.type === "method") return { ...state, method: action.value };
-    if (action.type === "name") return { ...state, name: action.value };
-    if (action.type === "date") {
-        if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(action.value)) return { ...state, date: action.value };
-    }
+function reducer(state: CreationFormState, action: {type: string; value: string | boolean}) {
+    if (action.type === "method") return { ...state, method: action.value as string };
+    if (action.type === "name") return { ...state, name: action.value as string };
+    if (action.type === "date") return { ...state, date: action.value as string };
+    if (action.type === "majority") return { ...state, needsMajority: action.value as boolean };
+
     return { ...state };
 }
 
@@ -26,6 +27,7 @@ export default function CreationMenu() {
         method: votingMethods[0].name,
         name: "",
         date: (new Date()).toISOString().split("T")[0],
+        needsMajority: false,
     });
 
     return (
@@ -49,24 +51,23 @@ export default function CreationMenu() {
                     onChange={(e) => dispatch({ type: "date", value: e?.toISOString() ?? new Date().toISOString() })}
                 />
             </LocalizationProvider>
-            {/*<DatePicker
-                id="date"
-                selected={new Date(state.date)}
-                onKeyDown={(e) => {
-                    e.preventDefault();
-                }}
-                showTimeInput
-                showTimeSelect
-                showTimeCaption
-                dateFormat="dd/MM/YYYY HH:mm:ss"
-                timeIntervals={15}
-                minDate={new Date()}
-                customInput={
-                    <input type="text" className="rounded-full bg-neutral-100 px-10 py-2 shadow-3d-inset
-                    dark:bg-neutral-900 dark:shadow-dark-3d-inset" disabled/>
-                }
-                onChange={(e) => dispatch({type: "date", value: e?.toISOString() ?? new Date().toISOString()})}
-            />*/}
+            <Checkbox
+                onChange={(e) => dispatch({ type: "majority", value: e.target.checked })}
+                checked={state.needsMajority}
+                label="Winner needs majority: "
+            />
+            <Input
+                value={""}
+                setValue={() => {}}
+                placeholder="Option 1"
+                className="mt-4"
+            />
+            <Input
+                value={""}
+                setValue={() => {}}
+                placeholder="Option 2"
+                className="mt-4"
+            />
         </div>
     );
 }
