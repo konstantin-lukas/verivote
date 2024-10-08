@@ -5,11 +5,10 @@
     <img src="public/verivote_logo.svg" alt="" width="50%" height="50%">
   </picture>
 </div>
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-
+<br>
+<br>
+<br>
+<br>
 Verivote is a free open source website that offers a hands-on approach for educating people about
 alternative voting systems. You are welcome to deploy this website yourself or fork it and make it your own.
 
@@ -23,7 +22,6 @@ The above is an example architecture. You can of course deploy the project howev
 Using the provided Docker compose config is just a quick way to get the project set up and just requires connecting the
 frontend and backend containers to your http(s) port for instance by using Nginx. It is strongly
 recommended to enforce https. You can look up `certbot` for easily managing free TLS certificates.
-
 
 
 ## Authorization
