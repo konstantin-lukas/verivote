@@ -37,7 +37,7 @@ export default function MobileMenu() {
     const closeIconRef = useRef(null);
     const menuRef = useRef(null);
     const { data: session } = useSession();
-    const buttonsClass = `landscape:grid-cols-${session?.user ? 2 : 1}`;
+    const buttonsClass = `landscape:grid-cols-${session ? 2 : 1}`;
     return (
         <header className="relative z-50">
             <CSSTransition
@@ -61,7 +61,7 @@ export default function MobileMenu() {
                     <nav className="w-full">
                         <ul className={`flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 
                         landscape:grid landscape:w-96 landscape:gap-6 ` + buttonsClass}>
-                            {session?.user ? (<><MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account">
+                            {session ? (<><MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account">
                                 <MdOutlinePersonOutline className="inline" size="1rem"/>
                                 <span className="ml-1">Account</span>
                             </MenuLink>
@@ -74,10 +74,10 @@ export default function MobileMenu() {
                                 <span className="ml-1">Manage</span>
                             </MenuLink></>) : ""}
                             <li className="group mt-8 flex size-full items-center justify-center landscape:mt-0">
-                                <BlockButton onClick={!session?.user ? () => signIn() : () => signOut()}>
+                                <BlockButton onClick={!session ? () => signIn() : () => signOut()}>
                                     <span className="flex w-24 items-center justify-center transition-all">
-                                        {!session?.user ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
-                                        <span className="ml-1">{!session?.user ? "Sign In" : "Sign Out"}</span>
+                                        {!session ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
+                                        <span className="ml-1">{!session ? "Sign In" : "Sign Out"}</span>
                                     </span>
                                 </BlockButton>
                             </li>

@@ -1,3 +1,4 @@
+import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
@@ -15,6 +16,12 @@ const authOptions = {
     ],
     pages: {
         signIn: "/signin",
+    },
+    callbacks: {
+        async session({ session }: { session: Session }) {
+            delete session.user;
+            return session;
+        },
     },
 };
 
