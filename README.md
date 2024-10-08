@@ -1,5 +1,4 @@
-# Verivote
-<div align="center">
+<div align="center" style="margin: 50px 0">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="public/verivote_logo_dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="public/verivote_logo.svg">
@@ -11,10 +10,10 @@ Verivote is a free open source website that offers a hands-on approach for educa
 alternative voting systems. You are welcome to deploy this website yourself or fork it and make it your own.
 
 
-## General Information 
+# General Information 
 
 
-### Architecture
+## Architecture
 ![alt text](architecture.svg)
 The above is an example architecture. You can of course deploy the project however you like.
 Using the provided Docker compose config is just a quick way to get the project set up and just requires connecting the
@@ -23,7 +22,7 @@ recommended to enforce https. You can look up `certbot` for easily managing free
 
 
 
-### Authorization
+## Authorization
 This project uses OAuth to sign in user and issues encrypted JSON Web Tokens (JWE) stored as HTTP only cookies for 
 authorization. The Next.js app issues the tokens and the backend consuming them has to share the same secret.
 Otherwise, the backend won't be able to decrypt the tokens. If you are new to IT-security and are currently working on 
@@ -36,15 +35,15 @@ steals a user's JWT, they won't be able to access your user information (Name, E
 frontend or by the API and can't be read from the JWT because it is encrypted.
 
 
-### Legal Notices
+## Legal Notices
 The included legal notices serve as placeholders. You are solely responsible for providing a proper
 legal notice and privacy policy for your jurisdiction.
 
 
-## Deploying the app yourself
+# Deploying the app yourself
 
 
-### Setting Up OAuth
+## Setting Up OAuth
 To use an OAuth provider, you need to register the app in the developer portal of each provider you
 would like to use and make sure it is registered in `@/app/api/auth/[...nextauth]/route.ts`. Since the login page has
 custom styling, you will also need to add a button for each provider you use. You can add this buttons in 
