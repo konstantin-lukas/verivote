@@ -1,6 +1,5 @@
 <br>
 <br>
-<br>
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="public/verivote_logo_dark.svg">
@@ -8,7 +7,6 @@
     <img src="public/verivote_logo.svg" alt="" width="50%" height="50%">
   </picture>
 </div>
-<br>
 <br>
 <br>
 Verivote is a free open source website that offers a hands-on approach for educating people about
