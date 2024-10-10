@@ -1,14 +1,15 @@
 "use client";
 
 import { useClickOutside } from "anzol";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { BiExpandVertical } from "react-icons/bi";
 
-function Dropdown({ options, defaultOption, getValue, ariaLabel }: {
+function Dropdown({ options, defaultOption, getValue, ariaLabel, disabled }: {
     options: string[],
     defaultOption: number,
     getValue: (val: number) => void,
-    ariaLabel: string
+    ariaLabel: string,
+    disabled?: boolean,
 }) {
     const [selectedOption, setSelectedOption] = useState(defaultOption);
     const [isOpen, setIsOpen] = useState(false);
@@ -43,26 +44,31 @@ function Dropdown({ options, defaultOption, getValue, ariaLabel }: {
 
     const ref = useClickOutside(() => setIsOpen(false));
 
+    useEffect(() => {
+        if (disabled) setIsOpen(false);
+    }, [disabled]);
+
     return (
         <div ref={ref} role="listbox" aria-label={ariaLabel} className="relative inline-block">
             <div
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => { if (!disabled) setIsOpen(!isOpen); }}
                 onKeyDown={(e) => {
                     if (e.key === " " || e.key === "Enter") setIsOpen(!isOpen);
                 }}
                 role="option"
                 className={
-                    "mb-6 min-w-60 cursor-pointer rounded-full px-10 py-2 transition-all "
-                    + (isOpen ? "shadow-3d-both dark:shadow-dark-3d-both" : "shadow-3d dark:shadow-dark-3d")
+                    "mb-6 min-w-60 rounded-full px-10 py-2 transition-all "
+                    + (isOpen ? "shadow-3d-both dark:shadow-dark-3d-both " : "shadow-3d dark:shadow-dark-3d ")
+                    + (disabled ? "cursor-not-allowed" : "cursor-pointer")
                 }
                 aria-selected="true"
                 tabIndex={0}
             >
                 <div className={"flex items-center transition-transform justify-between " + (isOpen ? "scale-95" : "")}>
-                    <div data-nosnippet="true">
+                    <div data-nosnippet="true" className={disabled ? "text-[gray]" : ""}>
                         {options[selectedOption]}
                     </div>
-                    <BiExpandVertical className="ml-2"/>
+                    <BiExpandVertical className={"ml-2" + (disabled ? " text-[gray]" : "")}/>
                 </div>
             </div>
             {isOpen && (

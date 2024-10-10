@@ -75,6 +75,8 @@ const config: Config = {
                     "inset 0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.5)",
                 "header": "0 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.1)",
                 "dark-header": "0 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.5)",
+                "vague": "0 0 2rem rgba(0, 0, 0, 0.2)",
+                "dark-vague": "0 0 2rem rgba(255, 255, 255, 0.15)",
             },
             screens: {
                 "desktop": {

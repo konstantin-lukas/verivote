@@ -62,11 +62,17 @@
     .inline-link:hover {
         background-position: 0;
     }
+
+    b {
+        font-weight: 600;
+    }
+
+    :disabled {
+        cursor: not-allowed;
+        color: gray;
+    }
 }
 
-b {
-    font-weight: 600;
-}
 
 .menu-icon-open-enter {
     opacity: 0;
