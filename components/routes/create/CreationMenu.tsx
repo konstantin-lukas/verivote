@@ -77,6 +77,7 @@ export default function CreationMenu() {
                             className="group absolute right-4 top-1/2 -translate-y-1/2"
                             onClick={() => dispatch({ type: "optionsDelete", index: i })}
                             disabled={disableForm}
+                            type="button"
                         >
                             <IoMdClose className="size-6 transition-colors group-hover:text-rose-500"/>
                         </button>
@@ -91,7 +92,7 @@ export default function CreationMenu() {
     return (
         <form
             method="POST"
-            className="relative mx-auto mb-24 mt-12 inline-flex flex-col"
+            className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-auto"
             onSubmit={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -103,8 +104,6 @@ export default function CreationMenu() {
                     return;
                 }
 
-
-                setDisableForm(true);
                 const apiOrigin = process.env.NEXT_PUBLIC_API_ORIGIN;
                 if (!apiOrigin) {
                     setDisableForm(false);
@@ -114,6 +113,8 @@ export default function CreationMenu() {
                         </Modal>,
                     );
                 }
+
+                setDisableForm(true);
                 //const result = fetch();
             }}
         >

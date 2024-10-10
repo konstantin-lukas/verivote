@@ -18,8 +18,8 @@ export default function Modal({ children, closeButtonText, onClose }: {
         <dialog
             ref={dialog}
             onClose={onClose}
-            className="flex max-w-96 flex-col items-center justify-center rounded-2xl
-            border-none bg-neutral-100 p-8 shadow-vague dark:bg-neutral-900 dark:shadow-dark-vague"
+            className="flex max-w-[85dvw] flex-col items-center justify-center rounded-2xl border-none
+            bg-neutral-100 p-8 shadow-vague sm:max-w-96 dark:bg-neutral-900 dark:shadow-dark-vague"
         >
             <p className="mb-6 text-center">
                 {children}

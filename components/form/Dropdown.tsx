@@ -57,7 +57,7 @@ function Dropdown({ options, defaultOption, getValue, ariaLabel, disabled }: {
                 }}
                 role="option"
                 className={
-                    "mb-6 min-w-60 rounded-full px-10 py-2 transition-all "
+                    "mb-6 sm:min-w-60 rounded-full px-10 py-2 transition-all "
                     + (isOpen ? "shadow-3d-both dark:shadow-dark-3d-both " : "shadow-3d dark:shadow-dark-3d ")
                     + (disabled ? "cursor-not-allowed" : "cursor-pointer")
                 }
