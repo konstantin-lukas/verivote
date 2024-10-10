@@ -18,7 +18,7 @@ function P({ children }: { children: ReactNode }) {
 export default function Page() {
     return (
         <Wrapper>
-            <div className="my-24">
+            <div className="min-h-[calc(100dvh-var(--footer-height))] py-24 desktop:min-h-[calc(100dvh-var(--header-height)-var(--footer-height))]">
                 <H1>Impressum</H1>
                 <P>
                     {process.env.LEGAL_RESPONSIBLE_ENTITY}<br/>
