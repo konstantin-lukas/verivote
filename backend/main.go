@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/lestrrat-go/jwx/v2/jwa"
@@ -15,19 +14,6 @@ import (
 	"os"
 	"time"
 )
-
-type album struct {
-	ID     string  `json:"id"`
-	Title  string  `json:"title"`
-	Artist string  `json:"artist"`
-	Price  float64 `json:"price"`
-}
-
-var albums = []album{
-	{ID: "1", Title: "Blue Train", Artist: "John Coltrane", Price: 56.99},
-	{ID: "2", Title: "Jeru", Artist: "Gerry Mulligan", Price: 17.99},
-	{ID: "3", Title: "Sarah Vaughan and Clifford Brown", Artist: "Sarah Vaughan", Price: 39.99},
-}
 
 func valid(email string) bool {
 	_, err := mail.ParseAddress(email)
@@ -114,12 +100,23 @@ func CORS(next http.Handler) http.Handler {
 	})
 }
 
-func getAlbums(w http.ResponseWriter, _ *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	err := json.NewEncoder(w).Encode(albums)
+func getAlbums(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
 	if err != nil {
+		http.Error(w, "Unable to parse form data", http.StatusBadRequest)
 		return
 	}
+
+	form := r.PostForm
+	for key, values := range form {
+		fmt.Printf("len: %s\n", len(values))
+		for _, value := range values {
+			fmt.Printf("%s: %s\n", key, value)
+		}
+	}
+
+	time.Sleep(3 * time.Second)
+	http.Redirect(w, r, fmt.Sprintf("%s/poll/23985723897632908", os.Getenv("ORIGIN")), http.StatusFound)
 }
 
 func main() {
@@ -127,7 +124,7 @@ func main() {
 	if err != nil {
 		panic("Error loading .env file")
 	}
-	http.Handle("/api/albums", CORS(authorize(http.HandlerFunc(getAlbums))))
+	http.Handle("/api/poll", CORS(authorize(http.HandlerFunc(getAlbums))))
 	err = http.ListenAndServe(":4000", nil)
 	if err != nil {
 		panic(fmt.Sprintf("Error starting server: %s", err))

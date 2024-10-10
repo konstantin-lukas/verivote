@@ -25,7 +25,7 @@ export default function Modal({ children, closeButtonText, onClose }: {
                 {children}
             </p>
             <div>
-                <BlockButton onClick={() => {
+                <BlockButton type="button" onClick={() => {
                     if (!dialog.current) return;
                     dialog.current.style.display = "none";
                     dialog.current.close();
