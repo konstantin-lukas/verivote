@@ -34,7 +34,7 @@ export default function RootLayout({
                     attribute="data-color-scheme"
                     enableSystem={true}
                 >
-                    <SessionProvider>
+                    <SessionProvider basePath="/auth">
                         <Header/>
                         <main>
                             {children}

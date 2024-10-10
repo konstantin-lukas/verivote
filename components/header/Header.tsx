@@ -73,7 +73,7 @@ export default function Header() {
                             )
                         }
                         <ThemeToggle className="mr-8 size-10"/>
-                        <BlockButton onClick={status !== "authenticated" ? () => signIn() : () => signOut()}>
+                        <BlockButton onClick={status !== "authenticated" ? () => signIn() : () => signOut({ callbackUrl: "/" })}>
                             <span className="flex items-center justify-center">
                                 {status !== "authenticated" ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
                                 <span className="ml-1">{status !== "authenticated" ? "Sign In" : "Sign Out"}</span>

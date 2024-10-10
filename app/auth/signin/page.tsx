@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { RiDiscordLine, RiGithubLine } from "react-icons/ri";
 
-import SignInButton from "@/components/routes/(auth)/SignInButton";
+import SignInButton from "@/components/routes/auth/SignInButton";
 import Wrapper from "@/components/shared/Wrapper";
 
 

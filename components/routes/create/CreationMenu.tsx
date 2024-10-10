@@ -114,7 +114,10 @@ export default function CreationMenu({ defaultMethod }: { defaultMethod?: string
                 }
 
                 setDisableForm(true);
-                //const result = fetch();
+                /*const results = await fetch(apiOrigin + "/api/poll", {
+                    method: "POST",
+                    credentials: "include",
+                });*/
             }}
         >
             {modal}

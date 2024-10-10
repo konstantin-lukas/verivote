@@ -74,7 +74,7 @@ export default function MobileMenu() {
                                 <span className="ml-1">Manage</span>
                             </MenuLink></>) : ""}
                             <li className="group mt-8 flex size-full items-center justify-center landscape:mt-0">
-                                <BlockButton onClick={!session ? () => signIn() : () => signOut()}>
+                                <BlockButton onClick={!session ? () => signIn() : () => signOut({ callbackUrl: "/" })}>
                                     <span className="flex w-24 items-center justify-center transition-all">
                                         {!session ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
                                         <span className="ml-1">{!session ? "Sign In" : "Sign Out"}</span>
