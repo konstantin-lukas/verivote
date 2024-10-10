@@ -1,10 +1,11 @@
 "use client";
 
-import "./CreationMenu.css";
+import "./CreationForm.css";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
+import { addDays } from "date-fns";
 import React, { useMemo, useReducer, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
@@ -14,11 +15,8 @@ import Checkbox from "@/components/form/Checkbox";
 import Dropdown from "@/components/form/Dropdown";
 import Input from "@/components/form/Input";
 import BlockButton from "@/components/shared/BlockButton";
-import Modal from "@/components/shared/Modal";
 import type { CreationFormState } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
-import { useModal } from "@/hooks";
-
 
 function reducer(
     state: CreationFormState,
@@ -49,12 +47,12 @@ function reducer(
 
 
 
-export default function CreationMenu({ defaultMethod }: { defaultMethod?: string }) {
+export default function CreationForm({ defaultMethod }: { defaultMethod?: string }) {
     const [state, dispatch] = useReducer(reducer, {
         method: defaultMethod ?? votingMethods[0].name,
         name: "",
-        date: (new Date()).toUTCString(),
-        needsMajority: false,
+        date: (addDays(new Date(), 1)).toUTCString(),
+        needsMajority: true,
         options: ["", ""],
     });
 
@@ -68,6 +66,8 @@ export default function CreationMenu({ defaultMethod }: { defaultMethod?: string
                         value={o}
                         disabled={disableForm}
                         className="w-full"
+                        name={"options[]"}
+                        required={true}
                         setValue={value => dispatch({ type: "optionsChange", value, index: i })}
                         placeholder={"Option " + (i + 1)}
                     />
@@ -86,41 +86,21 @@ export default function CreationMenu({ defaultMethod }: { defaultMethod?: string
         });
     }, [state, disableForm]);
 
-    const [modal, setModal] = useModal();
-
     return (
         <form
-            method="POST"
+            method="post"
+            action={process.env.NEXT_PUBLIC_API_ORIGIN + "/poll"}
             className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-auto"
             onSubmit={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-
-                if (state.name === "" || state.options.find(o => o === "") !== undefined) {
-                    setModal(<Modal closeButtonText="Got it">
-                        Please provide a name for the poll and every poll option.
-                    </Modal>);
-                    return;
-                }
-
-                const apiOrigin = process.env.NEXT_PUBLIC_API_ORIGIN;
-                if (!apiOrigin) {
-                    setDisableForm(false);
-                    setModal(
-                        <Modal closeButtonText="Got it">
-                            The api origin wasn&#39;t set by the developer. Cannot submit form.
-                        </Modal>,
-                    );
-                }
-
                 setDisableForm(true);
-                /*const results = await fetch(apiOrigin + "/api/poll", {
-                    method: "POST",
-                    credentials: "include",
-                });*/
+                (e.target as HTMLFormElement).submit();
             }}
         >
-            {modal}
+            {/* UTC Date String */}
+            <input type="hidden" name="date" value={state.date}/>
+            <input type="hidden" name="votingMethod" value={state.method}/>
             <Dropdown
                 options={votingMethods.map(m => m.name)}
                 defaultOption={votingMethods.findIndex(v => v.name === (defaultMethod ?? votingMethods[0].name))}
@@ -130,6 +110,8 @@ export default function CreationMenu({ defaultMethod }: { defaultMethod?: string
             />
             <Input
                 value={state.name}
+                name="name"
+                required={true}
                 disabled={disableForm}
                 setValue={value => dispatch({ type: "name", value })}
                 placeholder="Poll name"
@@ -148,6 +130,7 @@ export default function CreationMenu({ defaultMethod }: { defaultMethod?: string
                 checked={state.needsMajority}
                 label="Winner needs majority: "
                 disabled={disableForm}
+                name="majority"
             />
             {options}
             <div className="mt-6 flex gap-6">

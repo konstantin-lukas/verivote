@@ -1,19 +1,34 @@
-import type { ChangeEventHandler } from "react";
-import React from "react";
+"use client";
 
-export default function Checkbox({ onChange, checked, label, disabled }: {
+import type { ChangeEventHandler } from "react";
+import React, { useEffect, useRef } from "react";
+
+export default function Checkbox({ onChange, checked, label, disabled, name }: {
     onChange: ChangeEventHandler<HTMLInputElement>
     checked: boolean,
     label: string,
     disabled?: boolean,
+    name?: string,
 }) {
+    const ref = useRef(null);
+    useEffect(() => {
+        console.log(checked);
+    }, [checked]);
     return (
         <label
             className="mt-4 flex items-center justify-between"
             style={{ cursor: disabled ? "not-allowed" : "pointer" }}
         >
             <span className="mr-4">{label}</span>
-            <input type="checkbox" disabled={disabled} onChange={onChange} checked={checked} className="peer hidden"/>
+            <input
+                ref={ref}
+                type="checkbox"
+                disabled={disabled}
+                onChange={onChange}
+                checked={checked}
+                className="peer hidden"
+                name={name}
+            />
             <span
                 className="relative h-10 w-28 overflow-hidden rounded-full border-2 border-rose-500 bg-rose-500
                 transition-colors peer-checked:border-verivote-turquoise peer-checked:bg-verivote-turquoise
@@ -22,6 +37,13 @@ export default function Checkbox({ onChange, checked, label, disabled }: {
                 style={{
                     backgroundColor: disabled ? "gray" : undefined,
                     borderColor: disabled ? "gray" : undefined,
+                }}
+                role="checkbox"
+                tabIndex={0}
+                aria-checked={checked}
+                onKeyDown={(e) => {
+                    if (e.key !== "Enter" || !ref.current) return;
+                    (ref.current as HTMLInputElement).checked = !(ref.current as HTMLInputElement).checked;
                 }}
             >
                 <span
