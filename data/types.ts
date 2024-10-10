@@ -21,4 +21,5 @@ export interface CreationFormState {
     name: string,
     date: string,
     needsMajority: boolean,
+    options: string[],
 }
