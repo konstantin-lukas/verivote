@@ -44,9 +44,70 @@ legal notice and privacy policy for your jurisdiction.
 
 # Deploying the app yourself
 
-
 ## Setting Up OAuth
 To use an OAuth provider, you need to register the app in the developer portal of each provider you
-would like to use and make sure it is registered in `@/app/api/auth/[...nextauth]/route.ts`. Since the login page has
+would like to use and make sure it is registered in `@/app/auth/[...nextauth]/route.ts`. Since the login page has
 custom styling, you will also need to add a button for each provider you use. You can add this buttons in 
-`@/app/(auth)/signin/page.tsx`.You can find more information about providers [here](https://next-auth.js.org/configuration/providers/oauth#built-in-providers).
+`@/app/auth/signin/page.tsx`.You can find more information about providers 
+[here](https://next-auth.js.org/configuration/providers/oauth#built-in-providers).
+Providers require you to specify an Authorization callback URL like `http://localhost:3000/auth/callback/github`.
+Make sure to replace `http://localhost:3000` with the origin of your deployed website and `github` with the respective
+provider.
+
+## Environment Variables
+To deploy the project successfully you need to set all environment variables correctly. Here's an explanation of all
+environment variables that need to be set. The environment variables are shared by the frontend and backend by default.
+If you write your own backend, make sure to share the same secret for JWTs. If you add more OAuth providers, you may
+want to define your own environment variables and use them in your code.
+The frontend and backend try to read from `.env.local` by default, so create that file and add these variables:
+
+```javascript
+// This is the ID from the GitHub developer portal used for OAuth
+GITHUB_ID=""
+
+// This is the ID from the GitHub developer portal used for OAuth
+GITHUB_SECRET=""
+
+// This is the ID from the Discord developer portal used for OAuth
+DISCORD_ID=""
+
+// This is the ID from the Discord developer portal used for OAuth
+DISCORD_SECRET=""
+
+// This is the secret used for JWT encryption/decryption used by both the Next server and the backend server
+NEXTAUTH_SECRET=""
+
+// Use your own origin here but make sure to keep the auth
+NEXTAUTH_URL="http://localhost:3000/auth"
+
+// The origin where the next server is reachable
+ORIGIN="http://localhost:3000"
+
+// The origins to allow for CORS on the backend
+CORS_ALLOW_ORIGIN="http://localhost:3000"
+
+// The origin where the backend server is reachable
+NEXT_PUBLIC_API_ORIGIN="http://localhost:4000/api"
+
+// The amount of poll options you want to allow users to create
+NEXT_PUBLIC_MAX_OPTIONS_PER_POLL="20"
+
+
+
+// ENV VARS PREFIXED WITH "LEGAL" ARE NOT NECESSARY IF YOU DECIDE TO IMPLEMENT YOUR OWN LEGAL PAGES
+
+// This is used in the example legal pages - The person responsible for the site (free format)
+LEGAL_RESPONSIBLE_ENTITY=""
+
+// This is used in the example legal pages - The street name of the person responsible for the site (free format)
+LEGAL_STREET=""
+
+// This is used in the example legal pages - The zip code and city of the person responsible for the site (free format)
+LEGAL_ZIP_AND_CITY=""
+
+// This is used in the example legal pages - The phone number of the person responsible for the site (free format)
+LEGAL_PHONE=""
+
+// This is used in the example legal pages - The email address of the person responsible for the site (free format)
+LEGAL_EMAIL=""
+```
