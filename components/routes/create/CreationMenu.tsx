@@ -5,6 +5,7 @@ import "./CreationMenu.css";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
+import type { ReactNode } from "react";
 import React, { useMemo, useReducer, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
@@ -14,6 +15,7 @@ import Checkbox from "@/components/form/Checkbox";
 import Dropdown from "@/components/form/Dropdown";
 import Input from "@/components/form/Input";
 import BlockButton from "@/components/shared/BlockButton";
+import Modal from "@/components/shared/Modal";
 import type { CreationFormState } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
 
@@ -62,6 +64,7 @@ export default function CreationMenu() {
                     <Input
                         value={o}
                         disabled={disableForm}
+                        className="w-full"
                         setValue={value => dispatch({ type: "optionsChange", value, index: i })}
                         placeholder={"Option " + (i + 1)}
                     />
@@ -79,6 +82,8 @@ export default function CreationMenu() {
         });
     }, [state, disableForm]);
 
+    const [modal, setModal] = useState<ReactNode>(null);
+
     return (
         <form
             method="POST"
@@ -87,13 +92,19 @@ export default function CreationMenu() {
                 e.preventDefault();
                 setDisableForm(true);
                 const apiOrigin = process.env.NEXT_PUBLIC_API_ORIGIN;
-                console.log(apiOrigin);
                 if (!apiOrigin) {
                     setDisableForm(false);
+                    setModal(
+                        <Modal
+                            onClose={() => setModal(null)}
+                            closeButtonText="Got it"
+                        >The api origin wasn&#39;t set by the developer. Cannot submit form.</Modal>,
+                    );
                 }
                 //const result = fetch();
             }}
         >
+            {modal}
             <Dropdown
                 options={votingMethods.map(m => m.name)}
                 defaultOption={0}
