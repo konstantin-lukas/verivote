@@ -21,7 +21,7 @@ export const votingMethods: VotingMethod[] = [
             "continues, eliminating the lowest-ranked candidates one by one and redistributing their votes, until a " +
             "candidate achieves a majority of the votes.",
         infoPage: "/instant-runoff-voting",
-        createPage: "/create?type=irv",
+        shorthand: "irv",
         illustration: illustrationRunoff,
         illustrationAlt: "Illustration of a man running with a coffe cup in his hand.",
         bestFor: "Groups of any size where majority support is essential, and preferences between candidates are clear.",
@@ -65,7 +65,7 @@ export const votingMethods: VotingMethod[] = [
             "candidate who would receive just 1 point. The points from each voter’s ranking are then added up for all " +
             "candidates, and the candidate with the highest total score wins the election.",
         infoPage: "/positional-voting",
-        createPage: "/create?type=pos",
+        shorthand: "pos",
         illustration: illustrationPositional,
         illustrationAlt: "Illustration of a man ranking choices on a screen.",
         bestFor: "Medium-sized polls (5-20 people) with multiple choices, where detailed preferences matter.",
@@ -109,7 +109,7 @@ export const votingMethods: VotingMethod[] = [
             "After all votes are cast, the scores for each candidate are summed, and the candidate with the highest " +
             "total score wins the election.",
         infoPage: "/score-voting",
-        createPage: "/create?type=scr",
+        shorthand: "scr",
         illustration: illustrationScore,
         illustrationAlt: "Illustration of a man expressing his opinion with a star rating system.",
         bestFor: "Medium-sized groups (5-20 people) who want more flexibility to express their intensity of preference.",
@@ -152,7 +152,7 @@ export const votingMethods: VotingMethod[] = [
             "might choose to approve of two candidates they find acceptable and leave the others unmarked. The " +
             "candidate with the most approvals at the end of voting wins the election.",
         infoPage: "/approval-voting",
-        createPage: "/create?type=apr",
+        shorthand: "apr",
         illustration: illustrationApproval,
         illustrationAlt: "Illustration of a woman holding up like and dislike signs.",
         bestFor: "Small to medium-sized groups (up to 20 people) who want a simple poll and don’t have strong preferences.",
@@ -195,7 +195,7 @@ export const votingMethods: VotingMethod[] = [
             "If there are multiple candidates, the winner may only have a plurality (the most votes) rather than a " +
             "majority (over 50%).",
         infoPage: "/plurality-voting",
-        createPage: "/create?type=plu",
+        shorthand: "plu",
         illustration: illustrationPlurality,
         illustrationAlt: "Illustration of a woman casting a ballot at a polling station.",
         bestFor: "Small groups (less than 10 people) when simplicity important and there likely is a favorite candidate.",

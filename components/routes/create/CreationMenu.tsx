@@ -20,14 +20,13 @@ import { votingMethods } from "@/data/votingMethods";
 import { useModal } from "@/hooks";
 
 
-
 function reducer(
     state: CreationFormState,
-    { type, value, index }: {type: string; value?: string | boolean, index?: number},
+    { type, value, index }: {type: string; value?: string | boolean | Date, index?: number},
 ) {
     if (type === "method") return { ...state, method: value as string };
     if (type === "name") return { ...state, name: value as string };
-    if (type === "date") return { ...state, date: value as string };
+    if (type === "date") return { ...state, date: (value as Date).toUTCString() };
     if (type === "majority") return { ...state, needsMajority: value as boolean };
     if (type === "optionsChange") {
         const copy = { ...state, options: [...state.options]};
@@ -50,11 +49,11 @@ function reducer(
 
 
 
-export default function CreationMenu() {
+export default function CreationMenu({ defaultMethod }: { defaultMethod?: string }) {
     const [state, dispatch] = useReducer(reducer, {
-        method: votingMethods[0].name,
+        method: defaultMethod ?? votingMethods[0].name,
         name: "",
-        date: (new Date()).toISOString().split("T")[0],
+        date: (new Date()).toUTCString(),
         needsMajority: false,
         options: ["", ""],
     });
@@ -121,7 +120,7 @@ export default function CreationMenu() {
             {modal}
             <Dropdown
                 options={votingMethods.map(m => m.name)}
-                defaultOption={0}
+                defaultOption={votingMethods.findIndex(v => v.name === (defaultMethod ?? votingMethods[0].name))}
                 disabled={disableForm}
                 getValue={(index: number) => dispatch({ type: "method", value: votingMethods[index].name })}
                 ariaLabel={"Select poll type"}
@@ -137,7 +136,7 @@ export default function CreationMenu() {
                     value={new Date(state.date)}
                     minDate={new Date()}
                     ampmInClock
-                    onChange={(e) => dispatch({ type: "date", value: e?.toISOString() ?? new Date().toISOString() })}
+                    onChange={(date) => dispatch({ type: "date", value: date ?? new Date() })}
                     disabled={disableForm}
                 />
             </LocalizationProvider>

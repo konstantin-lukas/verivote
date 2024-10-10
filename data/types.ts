@@ -6,7 +6,7 @@ export interface VotingMethod {
     shortDescription: string,
     longDescription: string,
     infoPage: string,
-    createPage: string,
+    shorthand: string,
     illustration: StaticImageData,
     illustrationAlt: string,
     bestFor: string,

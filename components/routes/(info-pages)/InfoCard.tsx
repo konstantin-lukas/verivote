@@ -76,7 +76,7 @@ export default function InfoCard({ votingMethod }: { votingMethod: VotingMethod 
                 </div>
             </div>
             <div className="mt-16 flex flex-col justify-center gap-8 border-t-2 border-neutral-300 pt-16 sm:flex-row dark:border-neutral-700">
-                <BlockLink href={votingMethod.createPage} className="inline-flex w-full justify-center sm:w-auto">
+                <BlockLink href={"/create?type=" + votingMethod.shorthand} className="inline-flex w-full justify-center sm:w-auto">
                     <LuBrush className="relative top-[-.1rem] inline" size="1rem"/>
                     <span className="ml-1">Start a poll</span>
                 </BlockLink>
