@@ -8,7 +8,7 @@ export default function Checkbox({ onChange, checked, label }: {
 }) {
     return (
         <label className="mt-4 flex cursor-pointer items-center justify-between">
-            <span>{label}</span>
+            <span className="mr-4">{label}</span>
             <input type="checkbox" onChange={onChange} checked={checked} className="peer hidden"/>
             <span
                 className="relative h-10 w-28 overflow-hidden rounded-full border-2 border-rose-500 bg-rose-500
