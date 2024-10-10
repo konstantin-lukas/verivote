@@ -5,7 +5,6 @@ import "./CreationMenu.css";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
-import type { ReactNode } from "react";
 import React, { useMemo, useReducer, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
@@ -18,6 +17,9 @@ import BlockButton from "@/components/shared/BlockButton";
 import Modal from "@/components/shared/Modal";
 import type { CreationFormState } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
+import { useModal } from "@/hooks";
+
+
 
 function reducer(
     state: CreationFormState,
@@ -45,6 +47,8 @@ function reducer(
 
     return { ...state };
 }
+
+
 
 export default function CreationMenu() {
     const [state, dispatch] = useReducer(reducer, {
@@ -82,7 +86,7 @@ export default function CreationMenu() {
         });
     }, [state, disableForm]);
 
-    const [modal, setModal] = useState<ReactNode>(null);
+    const [modal, setModal] = useModal();
 
     return (
         <form
@@ -90,15 +94,24 @@ export default function CreationMenu() {
             className="relative mx-auto mb-24 mt-12 inline-flex flex-col"
             onSubmit={async (e) => {
                 e.preventDefault();
+                e.stopPropagation();
+
+                if (state.name === "" || state.options.find(o => o === "") !== undefined) {
+                    setModal(<Modal closeButtonText="Got it">
+                        Please provide a name for the poll and every poll option.
+                    </Modal>);
+                    return;
+                }
+
+
                 setDisableForm(true);
                 const apiOrigin = process.env.NEXT_PUBLIC_API_ORIGIN;
                 if (!apiOrigin) {
                     setDisableForm(false);
                     setModal(
-                        <Modal
-                            onClose={() => setModal(null)}
-                            closeButtonText="Got it"
-                        >The api origin wasn&#39;t set by the developer. Cannot submit form.</Modal>,
+                        <Modal closeButtonText="Got it">
+                            The api origin wasn&#39;t set by the developer. Cannot submit form.
+                        </Modal>,
                     );
                 }
                 //const result = fetch();
