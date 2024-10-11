@@ -78,6 +78,8 @@ NEXTAUTH_SECRET=""
 NEXTAUTH_URL="http://localhost:3000/auth"
 // The origins to allow for CORS on the backend
 CORS_ALLOW_ORIGIN="http://localhost:3000"
+// This specifies were to reach MongoDB from the backend. Includes credentials and DB name
+MONGODB_URI="mongodb://user:pass@localhost:27017/?authSource=verivote"
 
 
 // PUBLIC ENVIRONMENT VARIABLES
