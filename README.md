@@ -66,11 +66,11 @@ The frontend and backend try to read from `.env.local` by default, so create tha
 
 // This is the ID from the GitHub developer portal used for OAuth
 GITHUB_ID=""
-// This is the ID from the GitHub developer portal used for OAuth
+// This is the secret from the GitHub developer portal used for OAuth
 GITHUB_SECRET=""
 // This is the ID from the Discord developer portal used for OAuth
 DISCORD_ID=""
-// This is the ID from the Discord developer portal used for OAuth
+// This is the secret from the Discord developer portal used for OAuth
 DISCORD_SECRET=""
 // This is the secret used for JWT encryption/decryption used by both the Next server and the backend server
 NEXTAUTH_SECRET=""
