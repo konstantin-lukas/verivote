@@ -1,7 +1,7 @@
 "use client";
 
 import type { ChangeEventHandler } from "react";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 export default function Checkbox({ onChange, checked, label, disabled, name }: {
     onChange: ChangeEventHandler<HTMLInputElement>
@@ -11,9 +11,6 @@ export default function Checkbox({ onChange, checked, label, disabled, name }: {
     name?: string,
 }) {
     const ref = useRef(null);
-    useEffect(() => {
-        console.log(checked);
-    }, [checked]);
     return (
         <label
             className="mt-4 flex items-center justify-between"
