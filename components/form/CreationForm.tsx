@@ -5,8 +5,8 @@ import "./CreationForm.css";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
-import { addDays } from "date-fns";
-import React, { useMemo, useReducer, useState } from "react";
+import { addDays, formatRFC3339, setSeconds } from "date-fns";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { IoAddSharp } from "react-icons/io5";
@@ -24,7 +24,7 @@ function reducer(
 ) {
     if (type === "method") return { ...state, method: value as string };
     if (type === "name") return { ...state, name: value as string };
-    if (type === "date") return { ...state, date: (value as Date).toISOString() };
+    if (type === "date") return { ...state, date: formatRFC3339(setSeconds(value as Date, 0)) };
     if (type === "majority") return { ...state, needsMajority: value as boolean };
     if (type === "optionsChange") {
         const copy = { ...state, options: [...state.options]};
@@ -51,12 +51,22 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
     const [state, dispatch] = useReducer(reducer, {
         method: defaultMethod ?? votingMethods[0].name,
         name: "",
-        date: (addDays(new Date(), 1)).toISOString(),
+        date: "",
         needsMajority: true,
         options: ["", ""],
     });
 
     const [disableForm, setDisableForm] = useState(false);
+
+    /**
+     * This effect is used instead of an initial value for the date to prevent a very rate hydration error.
+     * The hours and minutes of the date are displayed by the material ui datetime picker.
+     * If a client makes a request at the end of a minute and the response arrives in the next minute, the displayed
+     * HTML will differ. Setting an empty string as a date prevents that because the initial value is static.
+     */
+    useEffect(() => {
+        dispatch({ type: "date", value: formatRFC3339(setSeconds(addDays(new Date(), 1), 0)) });
+    }, []);
 
     const options = useMemo(() => {
         return state.options.map((o, i) => {
