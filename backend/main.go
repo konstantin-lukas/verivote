@@ -13,6 +13,7 @@ import (
 	"net/mail"
 	"os"
 	"time"
+	"verivote/api/routes"
 )
 
 func valid(email string) bool {
@@ -24,7 +25,6 @@ func authorize(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		tokenString, err := r.Cookie("next-auth.session-token")
-
 		if err != nil {
 			http.Error(w, "Invalid token", http.StatusUnauthorized)
 			return
@@ -100,31 +100,12 @@ func CORS(next http.Handler) http.Handler {
 	})
 }
 
-func getAlbums(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		http.Error(w, "Unable to parse form data", http.StatusBadRequest)
-		return
-	}
-
-	form := r.PostForm
-	for key, values := range form {
-		fmt.Printf("len: %s\n", len(values))
-		for _, value := range values {
-			fmt.Printf("%s: %s\n", key, value)
-		}
-	}
-
-	time.Sleep(3 * time.Second)
-	http.Redirect(w, r, fmt.Sprintf("%s/poll/23985723897632908", os.Getenv("ORIGIN")), http.StatusFound)
-}
-
 func main() {
 	err := godotenv.Load(".env.local")
 	if err != nil {
 		panic("Error loading .env file")
 	}
-	http.Handle("/api/poll", CORS(authorize(http.HandlerFunc(getAlbums))))
+	http.Handle("/api/poll", CORS(authorize(http.HandlerFunc(routes.HandlePoll))))
 	err = http.ListenAndServe(":4000", nil)
 	if err != nil {
 		panic(fmt.Sprintf("Error starting server: %s", err))

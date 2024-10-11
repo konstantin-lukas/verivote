@@ -24,7 +24,7 @@ function reducer(
 ) {
     if (type === "method") return { ...state, method: value as string };
     if (type === "name") return { ...state, name: value as string };
-    if (type === "date") return { ...state, date: (value as Date).toUTCString() };
+    if (type === "date") return { ...state, date: (value as Date).toISOString() };
     if (type === "majority") return { ...state, needsMajority: value as boolean };
     if (type === "optionsChange") {
         const copy = { ...state, options: [...state.options]};
@@ -51,7 +51,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
     const [state, dispatch] = useReducer(reducer, {
         method: defaultMethod ?? votingMethods[0].name,
         name: "",
-        date: (addDays(new Date(), 1)).toUTCString(),
+        date: (addDays(new Date(), 1)).toISOString(),
         needsMajority: true,
         options: ["", ""],
     });
@@ -98,7 +98,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
                 (e.target as HTMLFormElement).submit();
             }}
         >
-            {/* UTC Date String */}
+            {/* ISO Date String */}
             <input type="hidden" name="date" value={state.date}/>
             <input type="hidden" name="votingMethod" value={state.method}/>
             <Dropdown
