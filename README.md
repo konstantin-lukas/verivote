@@ -62,35 +62,32 @@ want to define your own environment variables and use them in your code.
 The frontend and backend try to read from `.env.local` by default, so create that file and add these variables:
 
 ```javascript
+// SERVER SIDE ENVIRONMENT VARIABLES
+
 // This is the ID from the GitHub developer portal used for OAuth
 GITHUB_ID=""
-
 // This is the ID from the GitHub developer portal used for OAuth
 GITHUB_SECRET=""
-
 // This is the ID from the Discord developer portal used for OAuth
 DISCORD_ID=""
-
 // This is the ID from the Discord developer portal used for OAuth
 DISCORD_SECRET=""
-
 // This is the secret used for JWT encryption/decryption used by both the Next server and the backend server
 NEXTAUTH_SECRET=""
-
 // Use your own origin here but make sure to keep the auth
 NEXTAUTH_URL="http://localhost:3000/auth"
-
-// The origin where the next server is reachable
-ORIGIN="http://localhost:3000"
-
 // The origins to allow for CORS on the backend
 CORS_ALLOW_ORIGIN="http://localhost:3000"
 
+
+// PUBLIC ENVIRONMENT VARIABLES
+
 // The origin where the backend server is reachable
 NEXT_PUBLIC_API_ORIGIN="http://localhost:4000/api"
-
 // The amount of poll options you want to allow users to create
 NEXT_PUBLIC_MAX_OPTIONS_PER_POLL="20"
+// The origin where the next server is reachable
+NEXT_PUBLIC_ORIGIN="http://localhost:3000"
 
 
 
@@ -98,16 +95,12 @@ NEXT_PUBLIC_MAX_OPTIONS_PER_POLL="20"
 
 // This is used in the example legal pages - The person responsible for the site (free format)
 LEGAL_RESPONSIBLE_ENTITY=""
-
 // This is used in the example legal pages - The street name of the person responsible for the site (free format)
 LEGAL_STREET=""
-
 // This is used in the example legal pages - The zip code and city of the person responsible for the site (free format)
 LEGAL_ZIP_AND_CITY=""
-
 // This is used in the example legal pages - The phone number of the person responsible for the site (free format)
 LEGAL_PHONE=""
-
 // This is used in the example legal pages - The email address of the person responsible for the site (free format)
 LEGAL_EMAIL=""
 ```

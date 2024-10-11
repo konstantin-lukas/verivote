@@ -6,6 +6,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import { addDays, formatRFC3339, setSeconds } from "date-fns";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useReducer, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
@@ -15,8 +16,10 @@ import Checkbox from "@/components/form/Checkbox";
 import Dropdown from "@/components/form/Dropdown";
 import Input from "@/components/form/Input";
 import BlockButton from "@/components/shared/BlockButton";
+import Modal from "@/components/shared/Modal";
 import type { CreationFormState } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
+import { useModal } from "@/hooks";
 
 function reducer(
     state: CreationFormState,
@@ -77,6 +80,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
                         disabled={disableForm}
                         className="w-full"
                         name={"options[]"}
+                        maxLength={100}
                         required={true}
                         setValue={value => dispatch({ type: "optionsChange", value, index: i })}
                         placeholder={"Option " + (i + 1)}
@@ -96,6 +100,9 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
         });
     }, [state, disableForm]);
 
+    const [modal, setModal] = useModal();
+    const router = useRouter();
+
     return (
         <form
             method="post"
@@ -105,12 +112,48 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
                 e.preventDefault();
                 e.stopPropagation();
                 setDisableForm(true);
-                (e.target as HTMLFormElement).submit();
+
+                const formData = new URLSearchParams();
+                formData.set("name", state.name);
+                formData.set("date", state.date);
+                if (state.needsMajority) formData.set("majority", "on");
+                state.options.forEach(o => {
+                    formData.append("options[]", o);
+                });
+                formData.set("votingMethod", state.method);
+
+                const response = await fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/poll", {
+                    credentials: "include",
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: formData,
+                });
+                if (!response.ok) {
+                    setDisableForm(false);
+                    setModal(
+                        <Modal closeButtonText="Got it">
+                            An error occurred while sending your request. Please try again later.
+                        </Modal>,
+                    );
+                }
+
+                const location = response.headers.get("Location");
+
+                if (!process.env.NEXT_PUBLIC_ORIGIN || !location?.startsWith(process.env.NEXT_PUBLIC_ORIGIN + "/poll")) {
+                    setDisableForm(false);
+                    setModal(
+                        <Modal closeButtonText="Got it">
+                            The server created your poll but responded with an invalid location. This could be a
+                            technical issue. Please only follow this link if it is on our server: <br/>
+                            {location}
+                        </Modal>,
+                    );
+                } else {
+                    router.push(location);
+                }
             }}
         >
-            {/* ISO Date String */}
-            <input type="hidden" name="date" value={state.date}/>
-            <input type="hidden" name="votingMethod" value={state.method}/>
+            {modal}
             <Dropdown
                 options={votingMethods.map(m => m.name)}
                 defaultOption={votingMethods.findIndex(v => v.name === (defaultMethod ?? votingMethods[0].name))}
@@ -122,6 +165,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
                 value={state.name}
                 name="name"
                 required={true}
+                maxLength={200}
                 disabled={disableForm}
                 setValue={value => dispatch({ type: "name", value })}
                 placeholder="Poll name"
