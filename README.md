@@ -104,3 +104,29 @@ LEGAL_PHONE=""
 // This is used in the example legal pages - The email address of the person responsible for the site (free format)
 LEGAL_EMAIL=""
 ```
+
+## Manual Deployment
+If you don't want to use the provided docker config for deploying the project, here's a list of steps to take
+to get the website up and running.
+
+### Database
+You need to set up a mongo database for verivote and create a user with the permissions.
+```bash
+> use verivote
+> db.createCollection("polls")
+> db.createRole({ 
+    role: "verivoteRole", 
+    privileges: [
+      {
+        resource: { db: "verivote", collection: "poll" }, 
+        actions: [ "find", "update", "insert", "remove" ] 
+      }
+    ],
+    roles:[]
+})
+> db.createUser({
+    user: "verivoteUser",
+    pwd: passwordPrompt(),
+    roles: [{ role: "verivoteRole", db: "verivote" }]
+})
+```

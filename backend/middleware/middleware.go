@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"context"
 	"crypto/sha256"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwe"
@@ -72,6 +73,9 @@ func Authorize(next http.Handler) http.Handler {
 			http.Error(w, "Token expired", http.StatusUnauthorized)
 			return
 		}
+
+		ctx := context.WithValue(r.Context(), "email", emailString)
+		r = r.WithContext(ctx)
 
 		next.ServeHTTP(w, r)
 	})

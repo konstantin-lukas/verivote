@@ -27,3 +27,21 @@ func LoadEnvironmentVariables() {
 		panic(err)
 	}
 }
+
+func Contains(slice []string, value string) bool {
+	for _, v := range slice {
+		if v == value {
+			return true
+		}
+	}
+	return false
+}
+
+func ContainsInvalidStringSize(slice []string, min int, max int) bool {
+	for _, v := range slice {
+		if len(v) < min || len(v) > max {
+			return true
+		}
+	}
+	return false
+}
