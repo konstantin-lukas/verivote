@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         {matchingInfo.longDescription}
                     </p>
                 </div>
-                <BlockLink href={matchingInfo.infoPage} className="mt-4">
+                <BlockLink href={matchingInfo.infoPage} className="mt-5">
                     <MdArrowForward className="relative top-[-.1rem] inline" size="1rem"/>
                     <span className="ml-1">Learn more</span>
                 </BlockLink>

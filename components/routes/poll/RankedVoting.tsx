@@ -27,30 +27,40 @@ function PollOption({ children, id, sortable, options, setOptions }: {
                 <span>{children}</span>
             </span>
             <div className="flex items-center gap-4">
-                <button type="button" className="relative size-8 rounded-full shadow-3d transition-shadow hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both" onClick={() => {
-                    if (!sortable) return;
-                    const arrayCopy = [...options];
-                    const lastIndex = arrayCopy.length - 1;
-                    const index = arrayCopy.findIndex(x => x === id);
-                    const element = arrayCopy[index];
-                    arrayCopy.splice(index, 1);
-                    arrayCopy.splice(index === 0 ? lastIndex : index - 1, 0, element);
-                    sortable.sort(arrayCopy, true);
-                    setOptions(arrayCopy);
-                }}>
+                <button
+                    type="button"
+                    className="relative size-8 rounded-full shadow-3d transition-shadow hover:shadow-3d-both
+                    dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
+                    onClick={() => {
+                        if (!sortable) return;
+                        const arrayCopy = [...options];
+                        const lastIndex = arrayCopy.length - 1;
+                        const index = arrayCopy.findIndex(x => x === id);
+                        const element = arrayCopy[index];
+                        arrayCopy.splice(index, 1);
+                        arrayCopy.splice(index === 0 ? lastIndex : index - 1, 0, element);
+                        sortable.sort(arrayCopy, true);
+                        setOptions(arrayCopy);
+                    }}
+                >
                     <MdArrowUpward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2"/>
                 </button>
-                <button type="button" className="relative size-8 rounded-full shadow-3d transition-shadow hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both" onClick={() => {
-                    if (!sortable) return;
-                    const arrayCopy = [...options];
-                    const lastIndex = arrayCopy.length - 1;
-                    const index = arrayCopy.findIndex(x => x === id);
-                    const element = arrayCopy[index];
-                    arrayCopy.splice(index, 1);
-                    arrayCopy.splice(index === lastIndex ? 0 : index + 1, 0, element);
-                    sortable.sort(arrayCopy, true);
-                    setOptions(arrayCopy);
-                }}>
+                <button
+                    type="button"
+                    className="relative size-8 rounded-full shadow-3d transition-shadow hover:shadow-3d-both
+                    dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
+                    onClick={() => {
+                        if (!sortable) return;
+                        const arrayCopy = [...options];
+                        const lastIndex = arrayCopy.length - 1;
+                        const index = arrayCopy.findIndex(x => x === id);
+                        const element = arrayCopy[index];
+                        arrayCopy.splice(index, 1);
+                        arrayCopy.splice(index === lastIndex ? 0 : index + 1, 0, element);
+                        sortable.sort(arrayCopy, true);
+                        setOptions(arrayCopy);
+                    }}
+                >
                     <MdArrowDownward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2"/>
                 </button>
             </div>
@@ -61,10 +71,6 @@ function PollOption({ children, id, sortable, options, setOptions }: {
 export default function RankedVoting({ poll }: { poll: Poll }) {
     const [options, setOptions] = useState(poll.Options.map((_, i) => i.toString()));
     const [sortable, setSortable] = useState<Sortable>();
-
-    useEffect(() => {
-        console.log(options);
-    }, [options]);
 
     const list = useRef(null);
     useEffect(() => {
