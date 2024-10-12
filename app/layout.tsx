@@ -2,6 +2,7 @@ import "./global.css";
 
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
+import { getServerSession } from "next-auth";
 import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
 import React from "react";
@@ -22,11 +23,13 @@ const jost = Jost({
     weight: ["400", "600", "700"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
   children: ReactNode;
 }>) {
+    const session = await getServerSession();
+
     return (
         <html lang="en" suppressHydrationWarning={true} className={jost.className}>
             <body className="bg-neutral-100 dark:bg-neutral-900">
@@ -35,7 +38,7 @@ export default function RootLayout({
                     enableSystem={true}
                 >
                     <SessionProvider basePath="/auth">
-                        <Header/>
+                        <Header signedIn={!!session}/>
                         <main>
                             {children}
                         </main>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { MdLogin, MdLogout } from "react-icons/md";
 import resolveConfig from "tailwindcss/resolveConfig";
@@ -15,8 +15,8 @@ import tailwindConfig from "@/tailwind.config";
 
 const fullConfig = resolveConfig(tailwindConfig);
 
-export default function Header() {
-    const { status } = useSession();
+export default function Header({ signedIn }: { signedIn: boolean }) {
+    //const { status } = useSession();
     const [isDesktop, setIsDesktop] = useState(true);
     useEffect(() => {
         setIsDesktop(
@@ -50,7 +50,7 @@ export default function Header() {
                     </nav>
                     <div className="flex">
                         {
-                            status !== "authenticated" || (
+                            signedIn && (
                                 <nav className="flex items-center">
                                     <ul className="flex">
                                         <li className="leading-none">
@@ -73,10 +73,10 @@ export default function Header() {
                             )
                         }
                         <ThemeToggle className="mr-8 size-10"/>
-                        <BlockButton onClick={status !== "authenticated" ? () => signIn() : () => signOut({ callbackUrl: "/" })}>
+                        <BlockButton onClick={signedIn ? () => signOut({ callbackUrl: "/" }) : () => signIn()}>
                             <span className="flex items-center justify-center">
-                                {status !== "authenticated" ? <MdLogin className="inline" size="1rem"/> : <MdLogout className="inline" size="1rem"/>}
-                                <span className="ml-1">{status !== "authenticated" ? "Sign In" : "Sign Out"}</span>
+                                {signedIn ? <MdLogout className="inline" size="1rem"/> : <MdLogin className="inline" size="1rem"/>}
+                                <span className="ml-1">{signedIn ? "Sign Out" : "Sign In"}</span>
                             </span>
                         </BlockButton>
                     </div>

@@ -16,7 +16,7 @@ alternative voting systems. You are welcome to deploy this website yourself or f
 # General Information 
 
 
-## Architecture
+## Example Architecture
 ![alt text](architecture.svg)
 The above is an example architecture. You can of course deploy the project however you like.
 Using the provided Docker compose config is just a quick way to get the project set up and just requires connecting the
