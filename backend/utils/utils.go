@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-var VotingMethods = []string{"Instant-Runoff", "Positional Voting", "Score Voting", "Approval Voting", "Plurality Voting"}
+var VotingMethods = []int32{0, 1, 2, 3, 4}
 
 func IsValidEmail(email string) bool {
 	_, err := mail.ParseAddress(email)
@@ -30,7 +30,7 @@ func LoadEnvironmentVariables() {
 	}
 }
 
-func Contains(slice []string, value string) bool {
+func Contains[T comparable](slice []T, value T) bool {
 	for _, v := range slice {
 		if v == value {
 			return true

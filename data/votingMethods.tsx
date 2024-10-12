@@ -55,6 +55,7 @@ export const votingMethods: VotingMethod[] = [
         ],
         tag: "Recommended",
         learnMoreLink: "https://en.wikipedia.org/wiki/Instant-runoff_voting",
+        dbId: 0,
     }, {
         name: "Positional Voting",
         shortDescription: "Voters rank candidates which receive points based on their rank. The candidate with the " +
@@ -99,6 +100,7 @@ export const votingMethods: VotingMethod[] = [
         ],
         tag: "Recommended",
         learnMoreLink: "https://en.wikipedia.org/wiki/Positional_voting",
+        dbId: 1,
     }, {
         name: "Score Voting",
         shortDescription: "Voters rate candidates on a point scale, points are accumulated and the candidate with " +
@@ -142,6 +144,7 @@ export const votingMethods: VotingMethod[] = [
             </li>,
         ],
         learnMoreLink: "https://en.wikipedia.org/wiki/Score_voting",
+        dbId: 2,
     }, {
         name: "Approval Voting",
         shortDescription: "Voters select as many candidates as they want, without ranking them. The candidate with " +
@@ -185,6 +188,7 @@ export const votingMethods: VotingMethod[] = [
             </li>,
         ],
         learnMoreLink: "https://en.wikipedia.org/wiki/Approval_voting",
+        dbId: 3,
     }, {
         name: "Plurality Voting",
         shortDescription: "Voters choose only one candidate, and the candidate with the most votes wins. This is the " +
@@ -225,5 +229,6 @@ export const votingMethods: VotingMethod[] = [
             </li>,
         ],
         learnMoreLink: "https://en.wikipedia.org/wiki/Plurality_voting",
+        dbId: 4,
     },
 ];

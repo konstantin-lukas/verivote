@@ -14,10 +14,11 @@ export interface VotingMethod {
     cons: ReactNode[],
     tag?: string,
     learnMoreLink: string,
+    dbId: number,
 }
 
 export interface CreationFormState {
-    method: string,
+    method: number,
     name: string,
     date: string,
     needsMajority: boolean,
@@ -30,5 +31,5 @@ export interface Poll {
     Name: string,
     Options: string[],
     Majority: boolean,
-    Method: string,
+    Method: number,
 }

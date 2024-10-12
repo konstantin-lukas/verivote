@@ -23,9 +23,9 @@ import { useModal } from "@/hooks";
 
 function reducer(
     state: CreationFormState,
-    { type, value, index }: {type: string; value?: string | boolean | Date, index?: number},
+    { type, value, index }: {type: string; value?: string | boolean | Date | number, index?: number},
 ) {
-    if (type === "method") return { ...state, method: value as string };
+    if (type === "method") return { ...state, method: value as number };
     if (type === "name") return { ...state, name: value as string };
     if (type === "date") return { ...state, date: formatRFC3339(setSeconds(value as Date, 0)) };
     if (type === "majority") return { ...state, needsMajority: value as boolean };
@@ -50,9 +50,9 @@ function reducer(
 
 
 
-export default function CreationForm({ defaultMethod }: { defaultMethod?: string }) {
+export default function CreationForm({ defaultMethod }: { defaultMethod?: number }) {
     const [state, dispatch] = useReducer(reducer, {
-        method: defaultMethod ?? votingMethods[0].name,
+        method: defaultMethod ?? votingMethods[0].dbId,
         name: "",
         date: "",
         needsMajority: true,
@@ -120,7 +120,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
                 state.options.forEach(o => {
                     formData.append("options[]", o);
                 });
-                formData.set("votingMethod", state.method);
+                formData.set("votingMethod", state.method.toString());
 
                 try {
                     const response = await fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/poll", {
@@ -165,9 +165,9 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
             {modal}
             <Dropdown
                 options={votingMethods.map(m => m.name)}
-                defaultOption={votingMethods.findIndex(v => v.name === (defaultMethod ?? votingMethods[0].name))}
+                defaultOption={votingMethods.findIndex(v => v.dbId === (defaultMethod ?? votingMethods[0].dbId))}
                 disabled={disableForm}
-                getValue={(index: number) => dispatch({ type: "method", value: votingMethods[index].name })}
+                getValue={(index: number) => dispatch({ type: "method", value: votingMethods[index].dbId })}
                 ariaLabel={"Select poll type"}
             />
             <Input

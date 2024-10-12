@@ -30,8 +30,9 @@ func PostPoll(w http.ResponseWriter, r *http.Request) {
 
 	// VALIDATE VOTING METHOD
 	form := r.PostForm
-	votingMethod := form.Get("votingMethod")
-	if !utils.Contains(utils.VotingMethods, votingMethod) {
+	v, err := strconv.ParseInt(form.Get("votingMethod"), 10, 32)
+	votingMethod := int32(v)
+	if err != nil || !utils.Contains(utils.VotingMethods, votingMethod) {
 		http.Error(w, "Unknown voting method", http.StatusBadRequest)
 		return
 	}

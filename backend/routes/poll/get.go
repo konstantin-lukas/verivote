@@ -16,7 +16,7 @@ type Poll struct {
 	Name      string
 	Options   []string
 	Majority  bool
-	Method    string
+	Method    int32
 }
 
 func GetPoll(w http.ResponseWriter, id string) {

@@ -11,7 +11,7 @@ export default async function Page({ searchParams }: { searchParams:{ type?:stri
             <H1 className="mt-28">
                 Create a poll
             </H1>
-            <CreationForm defaultMethod={votingMethods.find(m => m.shorthand === searchParams.type)?.name}/>
+            <CreationForm defaultMethod={votingMethods.find(m => m.shorthand === searchParams.type)?.dbId}/>
         </Wrapper>
     );
 }
