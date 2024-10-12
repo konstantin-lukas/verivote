@@ -18,7 +18,8 @@ export default function ShareButton({ url }: { url: string }) {
             </BlockButton>
             {showMessage && <span
                 className="absolute bottom-[calc(100%+1rem)] left-1/2 -translate-x-1/2 animate-fade-out rounded-xl
-                bg-gradient-to-br from-verivote-turquoise to-verivote-cyan px-4 py-2 text-center font-bold uppercase"
+                bg-gradient-to-br from-verivote-turquoise to-verivote-cyan px-4 py-2 text-center font-bold uppercase
+                text-white"
                 onAnimationEnd={() => setShowMessage(false)}
             >
                 Copied to clipboard!

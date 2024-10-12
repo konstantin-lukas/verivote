@@ -1,20 +1,56 @@
+import { format } from "date-fns";
 import { notFound } from "next/navigation";
 import React from "react";
+import { LuPieChart } from "react-icons/lu";
+import { MdArrowForward } from "react-icons/md";
+import { RiExternalLinkLine } from "react-icons/ri";
 
+import RankedVoting from "@/components/routes/poll/RankedVoting";
 import ShareButton from "@/components/routes/poll/ShareButton";
+import ButtonLink from "@/components/shared/BlockLink";
+import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
+import H3 from "@/components/shared/H3";
 import Wrapper from "@/components/shared/Wrapper";
+import WrapperSmall from "@/components/shared/WrapperSmall";
+import { votingMethods } from "@/data/votingMethods";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const { id } = params;
     if (id !== "123") notFound();
+    const date = new Date("2024-10-16T12:59:00+02:00");
 
     return (
-        <Wrapper className="flex min-h-[var(--main-height-mobile)] flex-col items-center py-24 desktop:min-h-[var(--main-height)]">
-            <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">What should we have for dinner? What should we have for dinner?</H1>
-            <h2 className="text-xl font-bold text-dark-font dark:text-light-font">Instant-Runoff Voting</h2>
-
-            <ShareButton url="https://google.com"/>
-        </Wrapper>
+        <div className="min-h-[var(--main-height-mobile)] py-24 desktop:min-h-[var(--main-height)]">
+            <Wrapper className="flex  flex-col items-center">
+                <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">What should we have for dinner?</H1>
+                <h2 className="mb-2 text-lg font-bold uppercase text-dark-font sm:text-xl md:text-2xl dark:text-light-font">Instant-Runoff</h2>
+                <span>Closing Time: {format(date, "dd LLLL yyyy hh:mm aa")}</span>
+                <div className="mt-6 flex gap-6">
+                    <ShareButton url="https://google.com"/>
+                    <ButtonLink href="/" className="flex items-center justify-center">
+                        <LuPieChart className="mr-1 inline-block size-4 translate-y-[-.1rem]"/>
+                        <span>
+                            See results
+                        </span>
+                    </ButtonLink>
+                </div>
+            </Wrapper>
+            <WrapperSmall>
+                <RankedVoting/>
+                <div>
+                    <H3>
+                        How does this poll work?
+                    </H3>
+                    <p>
+                        {votingMethods[0].longDescription}
+                    </p>
+                </div>
+                <BlockLink href={votingMethods[0].infoPage} className="mt-4">
+                    <MdArrowForward className="relative top-[-.1rem] inline" size="1rem"/>
+                    <span className="ml-1">Learn more</span>
+                </BlockLink>
+            </WrapperSmall>
+        </div>
     );
 }
