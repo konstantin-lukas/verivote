@@ -23,3 +23,12 @@ export interface CreationFormState {
     needsMajority: boolean,
     options: string[],
 }
+
+export interface Poll {
+    Id: string,
+    OpenUntil: string,
+    Name: string,
+    Options: string[],
+    Majority: boolean,
+    Method: string,
+}

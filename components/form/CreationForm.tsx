@@ -122,34 +122,43 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: string
                 });
                 formData.set("votingMethod", state.method);
 
-                const response = await fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/poll", {
-                    credentials: "include",
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: formData,
-                });
-                if (!response.ok) {
+                try {
+                    const response = await fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/poll", {
+                        credentials: "include",
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: formData,
+                    });
+                    if (!response.ok) {
+                        setDisableForm(false);
+                        setModal(
+                            <Modal closeButtonText="Got it">
+                                An error occurred while sending your request. Please try again later.
+                            </Modal>,
+                        );
+                        return;
+                    }
+
+                    const location = response.headers.get("Location");
+                    if (!process.env.NEXT_PUBLIC_ORIGIN || !location?.startsWith(process.env.NEXT_PUBLIC_ORIGIN + "/poll")) {
+                        setDisableForm(false);
+                        setModal(
+                            <Modal closeButtonText="Got it">
+                                The server created your poll but responded with an invalid location. This could be a
+                                technical issue. Please only follow this link if it is on our server: <br/>
+                                {location}
+                            </Modal>,
+                        );
+                    } else {
+                        router.push(location);
+                    }
+                } catch {
                     setDisableForm(false);
                     setModal(
                         <Modal closeButtonText="Got it">
-                            An error occurred while sending your request. Please try again later.
+                            A network error occurred. Unable to submit form. Please try again later.
                         </Modal>,
                     );
-                }
-
-                const location = response.headers.get("Location");
-
-                if (!process.env.NEXT_PUBLIC_ORIGIN || !location?.startsWith(process.env.NEXT_PUBLIC_ORIGIN + "/poll")) {
-                    setDisableForm(false);
-                    setModal(
-                        <Modal closeButtonText="Got it">
-                            The server created your poll but responded with an invalid location. This could be a
-                            technical issue. Please only follow this link if it is on our server: <br/>
-                            {location}
-                        </Modal>,
-                    );
-                } else {
-                    router.push(location);
                 }
             }}
         >

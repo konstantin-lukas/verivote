@@ -26,7 +26,8 @@ func main() {
 		}
 	}()
 
-	http.Handle("/api/poll", middleware.CORS(middleware.Authorize(http.HandlerFunc(routes.HandlePoll))))
+	http.Handle("/api/poll", middleware.CORS(http.HandlerFunc(routes.HandlePoll)))
+	http.Handle("/api/poll/", middleware.CORS(http.HandlerFunc(routes.HandlePoll)))
 
 	err = http.ListenAndServe(":4000", nil)
 	if err != nil {

@@ -14,8 +14,6 @@ import (
 	"verivote/api/utils"
 )
 
-var methods = []string{"Instant-Runoff", "Positional Voting", "Score Voting", "Approval Voting", "Plurality Voting"}
-
 func PostPoll(w http.ResponseWriter, r *http.Request) {
 
 	maxOptions, err := strconv.ParseInt(os.Getenv("NEXT_PUBLIC_MAX_OPTIONS_PER_POLL"), 10, 64)
@@ -33,7 +31,7 @@ func PostPoll(w http.ResponseWriter, r *http.Request) {
 	// VALIDATE VOTING METHOD
 	form := r.PostForm
 	votingMethod := form.Get("votingMethod")
-	if !utils.Contains(methods, votingMethod) {
+	if !utils.Contains(utils.VotingMethods, votingMethod) {
 		http.Error(w, "Unknown voting method", http.StatusBadRequest)
 		return
 	}
@@ -78,7 +76,7 @@ func PostPoll(w http.ResponseWriter, r *http.Request) {
 		"name":         name,
 		"options":      options,
 		"majority":     majority,
-		"type":         votingMethod,
+		"method":       votingMethod,
 		"creationTime": time.Now().Format(time.RFC3339),
 		"openUntil":    date,
 		"userEmail":    email,

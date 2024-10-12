@@ -7,15 +7,17 @@ import (
 	"strconv"
 )
 
+var VotingMethods = []string{"Instant-Runoff", "Positional Voting", "Score Voting", "Approval Voting", "Plurality Voting"}
+
 func IsValidEmail(email string) bool {
 	_, err := mail.ParseAddress(email)
 	return err == nil
 }
 
 func LoadEnvironmentVariables() {
-	err := godotenv.Load(".env.local")
+	err := godotenv.Load("../.env.local")
 	if err != nil {
-		panic("Error loading .env file")
+		panic(err)
 	}
 
 	_, err = strconv.ParseInt(os.Getenv("NEXT_PUBLIC_MAX_OPTIONS_PER_POLL"), 10, 64)

@@ -80,7 +80,8 @@ NEXTAUTH_URL="http://localhost:3000/auth"
 CORS_ALLOW_ORIGIN="http://localhost:3000"
 // This specifies were to reach MongoDB from the backend. Includes credentials and DB name
 MONGODB_URI="mongodb://user:pass@localhost:27017/?authSource=verivote"
-
+// This tells the next server where to reach the API locally to avoid leaving the network for SSR
+LOCAL_API_ORIGIN="http://localhost:4000/api"
 
 // PUBLIC ENVIRONMENT VARIABLES
 
