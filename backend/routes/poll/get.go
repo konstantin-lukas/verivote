@@ -6,12 +6,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
+	"time"
 	"verivote/api/database"
 )
 
 type Poll struct {
 	Id        primitive.ObjectID `bson:"_id"`
-	OpenUntil string
+	OpenUntil time.Time
 	Name      string
 	Options   []string
 	Majority  bool

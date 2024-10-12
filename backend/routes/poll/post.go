@@ -77,8 +77,8 @@ func PostPoll(w http.ResponseWriter, r *http.Request) {
 		"options":      options,
 		"majority":     majority,
 		"method":       votingMethod,
-		"creationTime": time.Now().Format(time.RFC3339),
-		"openUntil":    date,
+		"creationTime": time.Now(),
+		"openUntil":    parsedDate,
 		"userEmail":    email,
 	}
 

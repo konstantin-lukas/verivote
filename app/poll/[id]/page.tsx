@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <Wrapper className="flex  flex-col items-center">
                 <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">{poll.Name}</H1>
                 <h2 className="mb-2 text-lg font-bold uppercase text-dark-font sm:text-xl md:text-2xl dark:text-light-font">{poll.Method}</h2>
-                <span className="text-neutral-500">Closing Time: {format(date, "dd LLLL yyyy hh:mm aa")}</span>
+                <span className="text-neutral-500">Closing Time: {format(date, "dd LLLL yyyy hh:mm aa (OOOO)")}</span>
                 <div className="mt-6 flex gap-6">
                     <ShareButton url="https://google.com"/>
                     <BlockLink href="/" className="flex items-center justify-center">

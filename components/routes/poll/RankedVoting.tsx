@@ -3,6 +3,7 @@ import "./RankedVoting.css";
 
 import React, { useEffect, useRef, useState } from "react";
 import { MdDragIndicator } from "react-icons/md";
+// eslint-disable-next-line import/no-named-as-default
 import Sortable from "sortablejs";
 
 import BlockButton from "@/components/shared/BlockButton";
@@ -24,7 +25,7 @@ function PollOption({ children, id }: { children: React.ReactNode, id: string })
 }
 
 export default function RankedVoting({ poll }: { poll: Poll }) {
-    const [options, setOptions] = useState(poll.Options);
+    const [_, setOptions] = useState(poll.Options);
 
     const list = useRef(null);
     useEffect(() => {

@@ -10,7 +10,7 @@ export default function ShareButton({ url }: { url: string }) {
     return (
         <div className="relative">
             <BlockButton
-                onClick={() => navigator.clipboard.writeText(url).then(r => setShowMessage(true))}
+                onClick={() => navigator.clipboard.writeText(url).then(() => setShowMessage(true))}
                 className="flex items-center justify-center"
             >
                 <FiClipboard className="mr-1 inline-block size-4 -translate-y-0.5"/>
