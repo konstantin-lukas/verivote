@@ -8,6 +8,9 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            animation: {
+                "fade-out": "fade-out 3s linear forwards",
+            },
             keyframes: {
                 "ltr-checkbox": {
                     "0%": {
@@ -52,6 +55,11 @@ const config: Config = {
                         left: "0",
                         right: "auto",
                     },
+                },
+                "fade-out": {
+                    "0%": { opacity: "1" },
+                    "50%": { opacity: "1" },
+                    "100%": { opacity: "0" },
                 },
             },
             colors: {

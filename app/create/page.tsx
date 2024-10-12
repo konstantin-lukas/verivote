@@ -8,7 +8,7 @@ import { votingMethods } from "@/data/votingMethods";
 export default async function Page({ searchParams }: { searchParams:{ type?:string }}) {
     return (
         <Wrapper className="flex min-h-[var(--main-height-mobile)] flex-col items-center justify-center desktop:min-h-[var(--main-height)]">
-            <H1 style={{ marginTop: "7rem" }}>
+            <H1 className="mt-28">
                 Create a poll
             </H1>
             <CreationForm defaultMethod={votingMethods.find(m => m.shorthand === searchParams.type)?.name}/>
