@@ -5,6 +5,7 @@ import { LuPieChart } from "react-icons/lu";
 import { MdArrowForward } from "react-icons/md";
 
 import RankedVoting from "@/components/routes/poll/RankedVoting";
+import ScoreVoting from "@/components/routes/poll/ScoreVoting";
 import ShareButton from "@/components/routes/poll/ShareButton";
 import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
@@ -43,6 +44,9 @@ export default async function Page({ params }: { params: { id: string } }) {
             <WrapperSmall>
                 {["Instant-Runoff", "Positional Voting"].includes(matchingInfo.name) &&
                     <RankedVoting poll={poll}/>
+                }
+                {matchingInfo.name === "Score Voting" &&
+                    <ScoreVoting poll={poll}/>
                 }
                 <div>
                     <H3>
