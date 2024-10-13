@@ -5,6 +5,7 @@ import { LuPieChart } from "react-icons/lu";
 import { MdArrowForward } from "react-icons/md";
 
 import ApprovalVoting from "@/components/routes/poll/ApprovalVoting";
+import PluralityVoting from "@/components/routes/poll/PluralityVoting";
 import RankedVoting from "@/components/routes/poll/RankedVoting";
 import ScoreVoting from "@/components/routes/poll/ScoreVoting";
 import ShareButton from "@/components/routes/poll/ShareButton";
@@ -51,6 +52,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                 }
                 {matchingInfo.name === "Approval Voting" &&
                     <ApprovalVoting poll={poll}/>
+                }
+                {matchingInfo.name === "Plurality Voting" &&
+                    <PluralityVoting poll={poll}/>
                 }
                 <div>
                     <H3>

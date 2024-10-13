@@ -9,34 +9,31 @@ import type { Poll } from "@/data/types";
 
 function PollOption({ children, selected, setSelected, idx }: {
     children: React.ReactNode,
-    selected: boolean[],
-    setSelected: (scores: boolean[]) => void,
+    selected: number,
+    setSelected: (idx: number) => void,
     idx: number,
 }) {
-    const toggle = () => {
-        const copy = [...selected];
-        copy[idx] = !copy[idx];
-        setSelected(copy);
-    };
+
     return (
         <li className="py-3">
             <label className="flex cursor-pointer">
                 <input
-                    type="checkbox"
-                    checked={selected[idx]}
-                    onChange={toggle}
+                    type="radio"
+                    name="choice"
                     className="peer hidden"
+                    onChange={(e) => {
+                        if (e.target.checked) setSelected(idx);
+                    }}
                 />
                 <span
                     className="relative mr-4 block size-10 shrink-0 grow rounded-full bg-red-500
                     peer-checked:bg-verivote-turquoise"
-                    role="checkbox"
+                    role="radio"
                     tabIndex={0}
-                    aria-checked={selected[idx]}
-                    onKeyDown={e => {if (e.key === "Enter") toggle();}}
+                    aria-checked={selected === idx}
                 >
-                    {selected[idx] && <IoMdCheckmark className="center-absolute size-6 text-white"/>}
-                    {!selected[idx] && <IoMdClose className="center-absolute size-6 text-white"/>}
+                    {selected === idx && <IoMdCheckmark className="center-absolute size-6 text-white"/>}
+                    {selected !== idx && <IoMdClose className="center-absolute size-6 text-white"/>}
                 </span>
                 <span
                     className="relative block w-full overflow-hidden text-ellipsis text-nowrap rounded-full bg-neutral-100
@@ -50,7 +47,7 @@ function PollOption({ children, selected, setSelected, idx }: {
 }
 
 export default function ScoreVoting({ poll }: { poll: Poll }) {
-    const [selected, setSelected] = useState(poll.Options.map(() => false));
+    const [selected, setSelected] = useState(-1);
 
     return (
         <form method="POST" className="my-24">
