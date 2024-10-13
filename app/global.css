@@ -117,8 +117,9 @@
         /*custom styles*/
         background-color: var(--verivote-turquoise);
         height: 2.5rem;
-        width: 5rem;
-        border-radius: 2.5rem;
+        width: 2.5rem;
+
+        box-shadow: -100vw 0 0 100vw var(--verivote-turquoise);
     }
 
     input[type="range"]:focus-visible::-webkit-slider-thumb {
@@ -137,6 +138,8 @@
 
     input[type="range"] {
         height: 2.5rem;
+        border-radius: 2.5rem;
+        overflow: hidden;
     }
 
     :root[data-color-scheme="dark"] input[type="range"]::-moz-range-track {
@@ -150,14 +153,19 @@
         /*custom styles*/
         background-color: var(--verivote-turquoise);
         height: 2.5rem;
-        width: 5rem;
-        border-radius: 2.5rem;
+        width: 2.5rem;
+        border-radius: 0;
     }
 
     input[type="range"]:focus-visible::-moz-range-thumb {
         border: none;
         outline: .25rem solid var(--verivote-turquoise);
         outline-offset: .25rem;
+    }
+
+    input[type="range"]::-moz-range-progress {
+        background-color: var(--verivote-turquoise);
+        height: 2.5rem;
     }
 
 }
