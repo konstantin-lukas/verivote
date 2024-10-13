@@ -83,7 +83,7 @@
 
 
     /********** Range Input Styles **********/
-    /*Range Reset*/
+    /* Range Reset */
     input[type="range"] {
         -webkit-appearance: none;
         appearance: none;
@@ -114,7 +114,7 @@
         -webkit-appearance: none; /* Override default look */
         appearance: none;
 
-        /*custom styles*/
+        /* custom styles */
         background-color: var(--verivote-turquoise);
         height: 2.5rem;
         width: 2.5rem;
@@ -150,7 +150,7 @@
     input[type="range"]::-moz-range-thumb {
         border: none; /*Removes extra border that FF applies*/
 
-        /*custom styles*/
+        /* custom styles */
         background-color: var(--verivote-turquoise);
         height: 2.5rem;
         width: 2.5rem;

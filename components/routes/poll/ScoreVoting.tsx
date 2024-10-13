@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import BlockButton from "@/components/shared/BlockButton";
 import H3 from "@/components/shared/H3";
@@ -55,10 +55,6 @@ function PollOption({ children, scores, setScores, idx }: {
 
 export default function ScoreVoting({ poll }: { poll: Poll }) {
     const [scores, setScores] = useState(poll.Options.map(() => 1));
-
-    useEffect(() => {
-        console.log(scores);
-    }, [scores]);
 
     return (
         <form method="POST" className="my-24">
