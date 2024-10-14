@@ -51,10 +51,10 @@ export default function ScoreVoting({ poll }: { poll: Poll }) {
 
     return (
         <form method="POST" className="my-24">
-            <H3>Check all choices you approve</H3>
-            <span>You can check as many options as you like</span>
+            <H3>Check the choice you like the most</H3>
+            <span>You can only choose one option</span>
             <ul className="mt-4">
-                {poll.Options.map((x, i) => <PollOption key={i} idx={i} selected={selected} setSelected={setSelected}>{x}</PollOption>)}
+                {poll.options.map((x, i) => <PollOption key={i} idx={i} selected={selected} setSelected={setSelected}>{x}</PollOption>)}
             </ul>
             <BlockButton className="mt-8 w-full" type="submit">
                 Vote

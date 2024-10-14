@@ -5,6 +5,7 @@ import (
 	"strings"
 	"verivote/api/middleware"
 	"verivote/api/routes/poll"
+	"verivote/api/routes/vote"
 )
 
 func HandlePoll(w http.ResponseWriter, r *http.Request) {
@@ -29,6 +30,16 @@ func HandlePoll(w http.ResponseWriter, r *http.Request) {
 
 	if isPost || isGet {
 		http.Error(w, "Unknown address", http.StatusNotFound)
+		return
+	}
+
+	http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+}
+
+func HandleVote(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == "POST" {
+		vote.PostVote(w, r)
 		return
 	}
 

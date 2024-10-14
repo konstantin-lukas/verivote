@@ -22,15 +22,15 @@ export default async function Page({ params }: { params: { id: string } }) {
     const response = await fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/poll/" + id);
     if (!response.ok) notFound();
     const poll: Poll = await response.json();
-    const date = new Date(poll.OpenUntil);
-    const matchingInfo = votingMethods.find(x => x.dbId === poll.Method);
+    const date = new Date(poll.openUntil);
+    const matchingInfo = votingMethods.find(x => x.dbId === poll.method);
     if (!matchingInfo) notFound();
 
 
     return (
         <div className="min-h-[var(--main-height-mobile)] py-24 desktop:min-h-[var(--main-height)]">
             <Wrapper className="flex  flex-col items-center">
-                <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">{poll.Name}</H1>
+                <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">{poll.name}</H1>
                 <h2 className="mb-2 text-lg font-bold uppercase text-dark-font sm:text-xl md:text-2xl dark:text-light-font">{matchingInfo.name}</h2>
                 <span className="text-neutral-500">Closing Time: {format(date, "dd LLLL yyyy hh:mm aa (OOOO)")}</span>
                 <div className="mt-6 flex gap-6">

@@ -69,7 +69,7 @@ function PollOption({ children, id, sortable, options, setOptions }: {
 }
 
 export default function RankedVoting({ poll }: { poll: Poll }) {
-    const [options, setOptions] = useState(poll.Options.map((_, i) => i.toString()));
+    const [options, setOptions] = useState(poll.options.map((_, i) => i.toString()));
     const [sortable, setSortable] = useState<Sortable>();
 
     const list = useRef(null);
@@ -88,7 +88,7 @@ export default function RankedVoting({ poll }: { poll: Poll }) {
             <H3>Rank the choices by preference</H3>
             <span>Favorite at the top, least favorite at the bottom</span>
             <ul ref={list} className="mt-4">
-                {poll.Options.map((x, i) => {
+                {poll.options.map((x, i) => {
                     return (
                         <PollOption key={i} id={i.toString()} sortable={sortable} options={options}
                             setOptions={setOptions}>

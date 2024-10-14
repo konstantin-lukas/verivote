@@ -50,14 +50,14 @@ function PollOption({ children, selected, setSelected, idx }: {
 }
 
 export default function ScoreVoting({ poll }: { poll: Poll }) {
-    const [selected, setSelected] = useState(poll.Options.map(() => false));
+    const [selected, setSelected] = useState(poll.options.map(() => false));
 
     return (
         <form method="POST" className="my-24">
             <H3>Check all choices you approve</H3>
             <span>You can check as many options as you like</span>
             <ul className="mt-4">
-                {poll.Options.map((x, i) => <PollOption key={i} idx={i} selected={selected} setSelected={setSelected}>{x}</PollOption>)}
+                {poll.options.map((x, i) => <PollOption key={i} idx={i} selected={selected} setSelected={setSelected}>{x}</PollOption>)}
             </ul>
             <BlockButton className="mt-8 w-full" type="submit">
                 Vote

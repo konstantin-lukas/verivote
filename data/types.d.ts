@@ -26,10 +26,10 @@ export interface CreationFormState {
 }
 
 export interface Poll {
-    Id: string,
-    OpenUntil: string,
-    Name: string,
-    Options: string[],
-    Majority: boolean,
-    Method: number,
+    id: string,
+    openUntil: string,
+    name: string,
+    options: string[],
+    majority: boolean,
+    method: number,
 }
