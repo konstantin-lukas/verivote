@@ -27,12 +27,15 @@ func InitMongoDB() (*mongo.Client, error) {
 }
 
 func GetPollById(id string) (utils.Poll, bool) {
-	collection := MongoClient.Database("verivote").Collection("polls")
 	hex, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return utils.Poll{}, false
 	}
-	filter := bson.D{{"_id", hex}}
+
+	filter := bson.M{
+		"_id": hex,
+	}
+	collection := MongoClient.Database("verivote").Collection("polls")
 	response := collection.FindOne(context.TODO(), filter)
 
 	var result utils.Poll

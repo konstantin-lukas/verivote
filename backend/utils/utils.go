@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"cmp"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net"
@@ -38,6 +39,15 @@ func LoadEnvironmentVariables() {
 func Contains[T comparable](slice []T, value T) bool {
 	for _, v := range slice {
 		if v == value {
+			return true
+		}
+	}
+	return false
+}
+
+func ContainsOutOfRangeValue[T cmp.Ordered](slice []T, min T, max T) bool {
+	for _, v := range slice {
+		if v < min || v > max {
 			return true
 		}
 	}

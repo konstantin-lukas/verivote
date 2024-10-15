@@ -117,6 +117,8 @@ You need to set up a mongo database for verivote and create a user with the perm
 ```bash
 > use verivote
 > db.createCollection("polls")
+> db.createCollection("votes")
+> db.votes.createIndex({ ip: 1, pollId: 1 }, { unique: true })
 > db.createRole({ 
     role: "verivoteRole", 
     privileges: [

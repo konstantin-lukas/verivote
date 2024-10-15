@@ -46,7 +46,7 @@ function PollOption({ children, selected, setSelected, idx }: {
     );
 }
 
-export default function ScoreVoting({ poll }: { poll: Poll }) {
+export default function PluralityVoting({ poll }: { poll: Poll }) {
     const [selected, setSelected] = useState(-1);
 
     return (
