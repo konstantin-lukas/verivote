@@ -14,7 +14,7 @@ import (
 	"verivote/api/utils"
 )
 
-func PostPoll(w http.ResponseWriter, r *http.Request) {
+func Post(w http.ResponseWriter, r *http.Request) {
 
 	maxOptions, err := strconv.ParseInt(os.Getenv("NEXT_PUBLIC_MAX_OPTIONS_PER_POLL"), 10, 64)
 	if err != nil {

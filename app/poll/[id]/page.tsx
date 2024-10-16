@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import React from "react";
 import { LuPieChart } from "react-icons/lu";
@@ -14,17 +15,32 @@ import H1 from "@/components/shared/H1";
 import H3 from "@/components/shared/H3";
 import Wrapper from "@/components/shared/Wrapper";
 import WrapperSmall from "@/components/shared/WrapperSmall";
-import type { Poll } from "@/data/types";
+import type { Poll, VotingMethod } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const { id } = params;
-    const response = await fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/poll/" + id);
-    if (!response.ok) notFound();
-    const poll: Poll = await response.json();
+
+    let poll: Poll, hasVoted: boolean, matchingInfo: VotingMethod | undefined;
+    try {
+        const { id } = params;
+        const response = await fetch(process.env.LOCAL_API_ORIGIN + "/poll/" + id);
+        if (!response.ok) notFound();
+        poll = await response.json();
+        matchingInfo = votingMethods.find(x => x.dbId === poll.method);
+        if (!matchingInfo) notFound();
+
+        const hasVotedResponse = await fetch(process.env.LOCAL_API_ORIGIN + "/voted/" + poll.id, {
+            headers: {
+                "x-forwarded-for": headers().get("x-forwarded-for") ?? "",
+                "x-real-ip": headers().get("x-real-ip") ?? "",
+            },
+        });
+        if (!hasVotedResponse.ok) notFound();
+        hasVoted = (await hasVotedResponse.json()).hasVoted;
+    } catch {
+        notFound();
+    }
     const date = new Date(poll.openUntil);
-    const matchingInfo = votingMethods.find(x => x.dbId === poll.method);
-    if (!matchingInfo) notFound();
 
 
     return (
@@ -44,16 +60,16 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </div>
             </Wrapper>
             <WrapperSmall>
-                {["Instant-Runoff", "Positional Voting"].includes(matchingInfo.name) &&
+                {!hasVoted && ["Instant-Runoff", "Positional Voting"].includes(matchingInfo.name) &&
                     <RankedVoting poll={poll}/>
                 }
-                {matchingInfo.name === "Score Voting" &&
+                {!hasVoted && matchingInfo.name === "Score Voting" &&
                     <ScoreVoting poll={poll}/>
                 }
-                {matchingInfo.name === "Approval Voting" &&
+                {!hasVoted && matchingInfo.name === "Approval Voting" &&
                     <ApprovalVoting poll={poll}/>
                 }
-                {matchingInfo.name === "Plurality Voting" &&
+                {!hasVoted && matchingInfo.name === "Plurality Voting" &&
                     <PluralityVoting poll={poll}/>
                 }
                 <div>

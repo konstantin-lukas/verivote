@@ -29,6 +29,7 @@ func main() {
 	http.Handle("/api/poll", middleware.CORS(http.HandlerFunc(routes.HandlePoll)))
 	http.Handle("/api/poll/", middleware.CORS(http.HandlerFunc(routes.HandlePoll)))
 	http.Handle("/api/vote", middleware.CORS(http.HandlerFunc(routes.HandleVote)))
+	http.Handle("/api/voted/", middleware.CORS(http.HandlerFunc(routes.HandleVoted)))
 
 	err = http.ListenAndServe(":4000", nil)
 	if err != nil {

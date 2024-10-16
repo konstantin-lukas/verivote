@@ -46,3 +46,20 @@ func GetPollById(id string) (utils.Poll, bool) {
 
 	return result, true
 }
+
+func HasUserVoted(id string, ip string) bool {
+	hex, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return false
+	}
+	filter := bson.M{
+		"pollId": hex,
+		"ip":     ip,
+	}
+	collection := MongoClient.Database("verivote").Collection("votes")
+	result := collection.FindOne(context.TODO(), filter)
+	if result.Err() != nil {
+		return false
+	}
+	return true
+}

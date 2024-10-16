@@ -6,7 +6,7 @@ import (
 	"verivote/api/database"
 )
 
-func GetPoll(w http.ResponseWriter, id string) {
+func Get(w http.ResponseWriter, id string) {
 
 	poll, ok := database.GetPollById(id)
 	if !ok {

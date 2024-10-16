@@ -9,7 +9,7 @@ import (
 	"verivote/api/utils"
 )
 
-func PostVote(w http.ResponseWriter, r *http.Request) {
+func Post(w http.ResponseWriter, r *http.Request) {
 
 	ip, ok := utils.GetClientIp(r)
 	if !ok {
