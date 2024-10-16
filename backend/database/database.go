@@ -8,21 +8,39 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"os"
+	"time"
 	"verivote/api/utils"
 )
 
 var MongoClient *mongo.Client
 
 func InitMongoDB() (*mongo.Client, error) {
-	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	opts := options.Client().ApplyURI(os.Getenv("MONGODB_URI")).SetServerAPIOptions(serverAPI)
+	opts := options.
+		Client().
+		SetAppName("VerivoteAPI").
+		SetServerAPIOptions(options.ServerAPI(options.ServerAPIVersion1)).
+		SetAuth(options.Credential{
+			Username:   os.Getenv("MONGODB_USER"),
+			Password:   os.Getenv("MONGODB_PASSWORD"),
+			AuthSource: "verivote",
+		}).
+		SetHosts([]string{os.Getenv("MONGODB_HOST")}).
+		SetConnectTimeout(time.Second * 10).
+		SetTimeout(time.Second * 10).
+		SetMaxPoolSize(100).
+		SetMinPoolSize(10)
 	client, err := mongo.Connect(context.TODO(), opts)
 
 	if err != nil {
 		return nil, err
 	}
 
-	fmt.Println("Connected to MongoDB!")
+	err = client.Ping(context.TODO(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println("Initialized MongoDB client!")
 	return client, nil
 }
 
