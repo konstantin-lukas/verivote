@@ -3,14 +3,12 @@ package utils
 import (
 	"cmp"
 	"github.com/joho/godotenv"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net"
 	"net/http"
 	"net/mail"
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 var VotingMethods = []int32{0, 1, 2, 3, 4}
@@ -81,13 +79,4 @@ func GetClientIp(r *http.Request) (string, bool) {
 	}
 
 	return ip, net.ParseIP(ip) != nil
-}
-
-type Poll struct {
-	Id        primitive.ObjectID `bson:"_id" json:"id"`
-	OpenUntil time.Time          `bson:"openUntil" json:"openUntil"`
-	Name      string             `bson:"name" json:"name"`
-	Options   []string           `bson:"options" json:"options"`
-	Majority  bool               `bson:"majority" json:"majority"`
-	Method    int32              `bson:"method" json:"method"`
 }
