@@ -42,7 +42,7 @@
 }
 
 .MuiInputBase-input:disabled {
-    cursor: not-allowed !important;
+    cursor: wait !important;
     color: gray !important;
     -webkit-text-fill-color: initial;
 }

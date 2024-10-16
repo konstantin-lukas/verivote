@@ -77,6 +77,21 @@ func GetClientIp(r *http.Request) (string, bool) {
 			}
 		}
 	}
+	if ip == "" {
+		ip = r.RemoteAddr
+	}
+	parsedIp := net.ParseIP(ip)
+	if parsedIp != nil {
+		return parsedIp.String(), true
+	}
 
-	return ip, net.ParseIP(ip) != nil
+	host, _, err := net.SplitHostPort(ip)
+	if err != nil {
+		return "", false
+	}
+	parsedHost := net.ParseIP(host)
+	if parsedHost == nil {
+		return "", false
+	}
+	return parsedHost.String(), true
 }

@@ -91,6 +91,7 @@ func CORS(next http.Handler) http.Handler {
 
 		if r.Method == "OPTIONS" {
 			http.Error(w, "No Content", http.StatusNoContent)
+			return
 		}
 
 		next.ServeHTTP(w, r)

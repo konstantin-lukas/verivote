@@ -1,11 +1,12 @@
-"use client";
-
 import React, { useState } from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
-import BlockButton from "@/components/shared/BlockButton";
+import VoteButton from "@/components/routes/poll/VoteButton";
 import H3 from "@/components/shared/H3";
+import Modal from "@/components/shared/Modal";
 import type { Poll } from "@/data/types";
+import { useModal } from "@/hooks";
+import { submitVote } from "@/utils";
 
 function PollOption({ children, selected, setSelected, idx }: {
     children: React.ReactNode,
@@ -46,19 +47,37 @@ function PollOption({ children, selected, setSelected, idx }: {
     );
 }
 
-export default function PluralityVoting({ poll }: { poll: Poll }) {
+export default function PluralityVoting({ poll, setHasVoted }: { poll: Poll, setHasVoted: (v: boolean) => void }) {
     const [selected, setSelected] = useState(-1);
-
+    const [modal, setModal] = useModal();
+    const [disabled, setDisabled] = useState(false);
     return (
-        <form method="POST" className="my-24">
+        <form method="POST" className="my-24" onSubmit={e => {
+            if (selected === -1) {
+                e.preventDefault();
+                e.stopPropagation();
+                setModal(
+                    <Modal closeButtonText="Got it">
+                        Please choose one of the options.
+                    </Modal>,
+                );
+                return;
+            }
+            submitVote(
+                e,
+                setModal,
+                setDisabled,
+                setHasVoted,
+                { pollId: poll.id, selection: [selected]},
+            );
+        }}>
+            {modal}
             <H3>Check the choice you like the most</H3>
             <span>You can only choose one option</span>
             <ul className="mt-4">
                 {poll.options.map((x, i) => <PollOption key={i} idx={i} selected={selected} setSelected={setSelected}>{x}</PollOption>)}
             </ul>
-            <BlockButton className="mt-8 w-full" type="submit">
-                Vote
-            </BlockButton>
+            <VoteButton disabled={disabled}/>
         </form>
     );
 }
