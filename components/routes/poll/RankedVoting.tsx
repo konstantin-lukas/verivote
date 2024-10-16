@@ -29,8 +29,8 @@ function PollOption({ children, id, sortable, options, setOptions }: {
             <div className="flex items-center gap-4">
                 <button
                     type="button"
-                    className="relative size-8 rounded-full shadow-3d transition-shadow hover:shadow-3d-both
-                    dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
+                    className="group relative size-8 rounded-full shadow-3d transition-shadow
+                    hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
                     onClick={() => {
                         if (!sortable) return;
                         const arrayCopy = [...options];
@@ -43,12 +43,12 @@ function PollOption({ children, id, sortable, options, setOptions }: {
                         setOptions(arrayCopy);
                     }}
                 >
-                    <MdArrowUpward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2"/>
+                    <MdArrowUpward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-90"/>
                 </button>
                 <button
                     type="button"
-                    className="relative size-8 rounded-full shadow-3d transition-shadow hover:shadow-3d-both
-                    dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
+                    className="group relative size-8 rounded-full shadow-3d transition-shadow
+                    hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
                     onClick={() => {
                         if (!sortable) return;
                         const arrayCopy = [...options];
@@ -61,7 +61,7 @@ function PollOption({ children, id, sortable, options, setOptions }: {
                         setOptions(arrayCopy);
                     }}
                 >
-                    <MdArrowDownward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2"/>
+                    <MdArrowDownward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-90"/>
                 </button>
             </div>
         </li>
