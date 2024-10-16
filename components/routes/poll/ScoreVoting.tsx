@@ -1,10 +1,10 @@
-"use client";
-
 import React, { useState } from "react";
 
-import BlockButton from "@/components/shared/BlockButton";
+import VoteButton from "@/components/routes/poll/VoteButton";
 import H3 from "@/components/shared/H3";
 import type { Poll } from "@/data/types";
+import { useModal } from "@/hooks";
+import { submitVote } from "@/utils";
 
 const colorSteps = [
     "#f43f5e",
@@ -19,11 +19,12 @@ const colorSteps = [
     "#12d4ae",
 ];
 
-function PollOption({ children, scores, setScores, idx }: {
+function PollOption({ children, scores, setScores, idx, disabled }: {
     children: React.ReactNode,
     scores: number[],
     setScores: (scores: number[]) => void,
     idx: number,
+    disabled: boolean,
 }) {
     return (
         <li className="relative mt-6 flex items-center gap-6 last:mb-4">
@@ -36,6 +37,7 @@ function PollOption({ children, scores, setScores, idx }: {
                 min={1}
                 max={10}
                 step={1}
+                disabled={disabled}
                 value={scores[idx]}
                 onChange={(e) => {
                     const copy = [...scores];
@@ -53,19 +55,27 @@ function PollOption({ children, scores, setScores, idx }: {
     );
 }
 
-export default function ScoreVoting({ poll }: { poll: Poll }) {
+export default function ScoreVoting({ poll, setHasVoted }: { poll: Poll, setHasVoted: (v: boolean) => void }) {
     const [scores, setScores] = useState(poll.options.map(() => 1));
-
+    const [modal, setModal] = useModal();
+    const [disabled, setDisabled] = useState(false);
     return (
-        <form method="POST" className="my-24">
+        <form method="POST" className="my-24" onSubmit={e => {
+            submitVote(
+                e,
+                setModal,
+                setDisabled,
+                setHasVoted,
+                { pollId: poll.id, selection: scores },
+            );
+        }}>
+            {modal}
             <H3>Assign each choice a score</H3>
             <span>Rate each choice separately based on how much you like it</span>
             <ul className="mt-4">
-                {poll.options.map((x, i) => <PollOption key={i} idx={i} scores={scores} setScores={setScores}>{x}</PollOption>)}
+                {poll.options.map((x, i) => <PollOption disabled={disabled} key={i} idx={i} scores={scores} setScores={setScores}>{x}</PollOption>)}
             </ul>
-            <BlockButton className="mt-8 w-full" type="submit">
-                Vote
-            </BlockButton>
+            <VoteButton disabled={disabled}/>
         </form>
     );
 }

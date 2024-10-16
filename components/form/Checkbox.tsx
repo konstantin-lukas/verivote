@@ -14,7 +14,7 @@ export default function Checkbox({ onChange, checked, label, disabled, name }: {
     return (
         <label
             className="mt-4 flex items-center justify-between"
-            style={{ cursor: disabled ? "not-allowed" : "pointer" }}
+            style={{ cursor: disabled ? "wait" : "pointer" }}
         >
             <span className="mr-4">{label}</span>
             <input
