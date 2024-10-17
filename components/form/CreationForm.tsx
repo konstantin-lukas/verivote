@@ -79,7 +79,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                         value={o}
                         disabled={disableForm}
                         className="w-full"
-                        name={"options[]"}
+                        name={"options"}
                         maxLength={100}
                         required={true}
                         setValue={value => dispatch({ type: "optionsChange", value, index: i })}
@@ -118,7 +118,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                 formData.set("date", state.date);
                 if (state.needsMajority) formData.set("majority", "on");
                 state.options.forEach(o => {
-                    formData.append("options[]", o);
+                    formData.append("options", o);
                 });
                 formData.set("votingMethod", state.method.toString());
 

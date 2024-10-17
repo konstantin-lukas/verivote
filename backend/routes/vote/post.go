@@ -9,6 +9,20 @@ import (
 	"verivote/api/utils"
 )
 
+// Post godoc
+//
+//	@Summary		Create a new vote in a poll.
+//	@Description	Creates a new vote in a poll given the user's choices if and only if the user hasn't voted in that poll (determined by IP).
+//	@Tags			votes
+//	@Accept			json
+//	@Produce		plain
+//	@Param			payload	body		utils.Vote	true	"An object containing a poll ID and the user's choices."
+//	@Success		201		{object}	nil
+//	@Failure		400		{object}	nil
+//	@Failure		403		{object}	nil
+//	@Failure		404		{object}	nil
+//
+//	@Router			/vote [post]
 func Post(w http.ResponseWriter, r *http.Request) {
 
 	ip, ok := utils.GetClientIp(r)

@@ -6,18 +6,29 @@ import (
 	"verivote/api/database"
 )
 
+// Get godoc
+//
+//	@Summary		Gets a single Poll from the database.
+//	@Description	Retrieves a single poll by its ID in the path.
+//	@Tags			polls
+//	@Produce		json
+//	@Param			id	path		string	true	"Poll ID"
+//	@Success		200	{object}	utils.Poll
+//	@Failure		404	{object}	nil
+//
+//	@Router			/poll/{id} [get]
 func Get(w http.ResponseWriter, id string) {
 
 	poll, ok := database.GetPollById(id)
 	if !ok {
-		http.Error(w, "Unknown poll ID", http.StatusNotFound)
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	err := json.NewEncoder(w).Encode(poll)
 	if err != nil {
-		http.Error(w, "Unknown poll ID", http.StatusNotFound)
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 }

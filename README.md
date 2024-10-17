@@ -78,10 +78,14 @@ NEXTAUTH_SECRET=""
 NEXTAUTH_URL="http://localhost:3000/auth"
 // The origins to allow for CORS on the backend
 CORS_ALLOW_ORIGIN="http://localhost:3000"
-// This specifies were to reach MongoDB from the backend. Includes credentials and DB name
-MONGODB_URI="mongodb://user:pass@localhost:27017/?authSource=verivote"
 // This tells the next server where to reach the API locally to avoid leaving the network for SSR
 LOCAL_API_ORIGIN="http://localhost:4000/api"
+// This specifies were to reach MongoDB from the backend
+MONGODB_HOST="localhost:27017"
+// This is the MongoDB user for reading and writing
+MONGODB_USER=""
+// This is the password for the above MongoDB user
+MONGODB_PASSWORD=""
 
 // PUBLIC ENVIRONMENT VARIABLES
 
@@ -135,3 +139,25 @@ You need to set up a mongo database for verivote and create a user with the perm
     roles: [{ role: "verivoteRole", db: "verivote" }]
 })
 ```
+
+### Writing Your Own Backend
+If you don't like the Go backend provided by default or just want to try your skills in a new language by writing your
+own backend you can do so. For this, the backend code contains comments from which an API documentation can be generated.
+You will need to write an API that complies with these docs. To generate the documentation, run:
+```
+go install github.com/swaggo/swag/cmd/swag@latest
+```
+This you can run `swag init` in the backend directory which will create a `docs` directory containing the
+API specification in the OpenAPI format.
+
+An extra thing you will have to consider when writing your own backend is that authorization is handled by
+checking the cookies for an encrypted JWT. This means you will have to implement your own authorization.
+Specifically, you will need to write a middleware which:
+1. Reads the `next-auth.session-token` from the cookies
+2. Decrypts it using the same secret as NextAuth
+3. Decodes the JWT
+4. Checks if the JWT contains an expiration date that hasn't passed yet
+5. Adds the email from the JWT to the request for route handlers
+
+Keep in mind that in order to receive the cookies, you will need to implement a CORS policy. If you struggle with any of
+these steps check the Go backend implementation to see the exact steps required.

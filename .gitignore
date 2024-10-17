@@ -54,3 +54,5 @@ next-env.d.ts
 # Go workspace file
 go.work
 go.work.sum
+
+backend/docs

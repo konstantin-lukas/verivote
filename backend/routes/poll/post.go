@@ -14,17 +14,38 @@ import (
 	"verivote/api/utils"
 )
 
+// Post godoc
+//
+//	@Summary		Create a new poll.
+//	@Description	Tries to create a new poll and on success returns a URI to the newly created poll.
+//	@Tags			polls
+//	@Accept			x-www-form-urlencoded
+//	@Produce		plain
+//	@Param			majority		formData	boolean		false	"Indicates whether a candidate needs a majority to win."
+//	@Param			votingMethod	formData	int32		true	"A number representing the type of poll to create."
+//	@Param			date			formData	string		true	"An RFC3339 datetime string indicating the closing date of the poll."
+//	@Param			name			formData	string		true	"The title of the poll."
+//	@Param			options			formData	[]string	true	"The options/candidates in the poll."
+//	@Success		201				{object}	nil
+//	@Failure		400				{object}	nil
+//	@Failure		404				{object}	nil
+//	@Failure		500				{object}	nil
+//	@Header			201				{string}	Location	"/poll/{id}"
+//
+//	@Security		JWTAuth
+//
+//	@Router			/poll [post]
 func Post(w http.ResponseWriter, r *http.Request) {
 
 	maxOptions, err := strconv.ParseInt(os.Getenv("NEXT_PUBLIC_MAX_OPTIONS_PER_POLL"), 10, 64)
 	if err != nil {
-		http.Error(w, "Missing environment variables prevented processing the request", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	err = r.ParseForm()
 	if err != nil {
-		http.Error(w, "Unable to parse form data", http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -33,7 +54,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	v, err := strconv.ParseInt(form.Get("votingMethod"), 10, 32)
 	votingMethod := int32(v)
 	if err != nil || !utils.Contains(utils.VotingMethods, votingMethod) {
-		http.Error(w, "Unknown voting method", http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -41,14 +62,14 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	date := form.Get("date")
 	parsedDate, err := time.Parse(time.RFC3339, date)
 	if err != nil || parsedDate.Before(time.Now()) {
-		http.Error(w, "Invalid date", http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// VALIDATE NAME
 	name := form.Get("name")
 	if len(name) == 0 || len(name) > 200 {
-		http.Error(w, "Invalid name", http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -59,15 +80,15 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// VALIDATE POLL CHOICES
-	options := form["options[]"]
+	options := form["options"]
 	if len(options) < 2 || len(options) > int(maxOptions) || utils.ContainsInvalidStringSize(options, 0, 100) {
-		http.Error(w, "Invalid poll choices", http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	email := r.Context().Value("email").(string)
 	if !utils.IsValidEmail(email) {
-		http.Error(w, "Invalid JWT payload", http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -86,7 +107,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	result, err := collection.InsertOne(context.TODO(), doc)
 	if err != nil {
 		log.Println(err)
-		http.Error(w, "Database connection failed", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
