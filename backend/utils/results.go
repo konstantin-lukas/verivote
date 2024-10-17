@@ -1,21 +1,20 @@
 package utils
 
-// GetInstantRunoffResults - This function calculates the instant runoff results for a list of Votes.
+// GetInstantRunoffResults - This function calculates the instant-runoff results for a list of Votes.
 // It assumes that the Selection property of each vote is the same length n and contains the numbers from 0 to n-1 in
 // arbitrary order without any duplicates.
 // WARNING: This function modifies the input.
-func GetInstantRunoffResults(votes []Vote) []int32 {
+func GetInstantRunoffResults(votes []Vote, choiceCount int) []int32 {
+	results := make([]int32, choiceCount)
 	if len(votes) == 0 {
-		return []int32{}
+		return results
 	}
-	maxRounds := len(votes[0].Selection)
-	results := make([]int32, maxRounds)
 	// DISTRIBUTE FIRST CHOICES
 	for _, vote := range votes {
 		results[vote.Selection[0]]++
 	}
 	// REDISTRIBUTE VOTES
-	for round := 0; round < maxRounds; round++ {
+	for round := 0; round < choiceCount; round++ {
 		// A: CHECK IF A SINGLE CANDIDATE HAS A MAJORITY; IF SO QUIT
 		// B: FIND THE FEWEST AMOUNT OF VOTES THAT'S NOT ZERO
 		fewestVotes := int32(len(votes))
@@ -47,6 +46,49 @@ func GetInstantRunoffResults(votes []Vote) []int32 {
 					}
 				}
 			}
+		}
+	}
+	return results
+}
+
+// GetPositionalVotingResults - This function calculates the positional voting results for a list of Votes.
+// It assumes that the Selection property of each vote is the same length n and contains the numbers from 0 to n-1 in
+// arbitrary order without any duplicates.
+func GetPositionalVotingResults(votes []Vote, choiceCount int) []int32 {
+	results := make([]int32, choiceCount)
+	if len(votes) == 0 {
+		return results
+	}
+	for _, vote := range votes {
+		for i, choice := range vote.Selection {
+			results[choice] += int32(choiceCount - i)
+		}
+	}
+	return results
+}
+
+// GetScoreVotingResults - This function calculates the score voting results for a list of Votes.
+// It assumes that the Selection property of each vote is the same length and each element in the array is a value
+// between 1 and 10
+func GetScoreVotingResults(votes []Vote, choiceCount int) []int32 {
+	results := make([]int32, choiceCount)
+	for _, vote := range votes {
+		for i, score := range vote.Selection {
+			results[i] += score
+		}
+	}
+	return results
+}
+
+// GetApprovalOrPluralityVotingResults - This function calculates the approval voting results for a list of Votes.
+// It assumes that the Selection property of each vote contains at least one element and no more than the
+// specified choiceCount. This function is a generalized version of the plurality voting approach and can be used
+// to calculate the results of both an approval and a plurality vote.
+func GetApprovalOrPluralityVotingResults(votes []Vote, choiceCount int) []int32 {
+	results := make([]int32, choiceCount)
+	for _, vote := range votes {
+		for _, choice := range vote.Selection {
+			results[choice]++
 		}
 	}
 	return results
