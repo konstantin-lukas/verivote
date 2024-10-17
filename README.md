@@ -157,16 +157,16 @@ You need to set up a mongo database for verivote and create a user with the perm
   validator: {
     $jsonSchema: {
       bsonType: "object",
-	  title: "Vote Validation",
-	  required: ["ip", "pollId", "selection"],
-	  properties: {
-	    ip: {
-	      bsonType: "string"
-	    },
-	    pollId: {
-	      bsonType: "objectId"
-	    },
-	    selection: {
+      title: "Vote Validation",
+      required: ["ip", "pollId", "selection"],
+      properties: {
+        ip: {
+          bsonType: "string"
+        },
+        pollId: {
+          bsonType: "objectId"
+        },
+        selection: {
           bsonType: "array",
           items: { bsonType: "int" }
         }
