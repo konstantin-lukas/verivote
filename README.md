@@ -120,8 +120,60 @@ to get the website up and running.
 You need to set up a mongo database for verivote and create a user with the permissions.
 ```bash
 > use verivote
-> db.createCollection("polls")
-> db.createCollection("votes")
+> db.createCollection("polls", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      title: "Poll Validation",
+      required: ["creationTime", "openUntil", "userEmail", "name", "options", "majority", "method"],
+      properties: {
+        creationTime: {
+          bsonType: "date"
+        },
+        openUntil: {
+          bsonType: "date"
+        },
+        userEmail: {
+          bsonType: "string"
+        },
+        name: {
+          bsonType: "string"
+        },
+        options: {
+          bsonType: "array",
+          items: { bsonType: "string" }
+        },
+        majority: {
+          bsonType: "bool"
+        },
+        method: {
+          bsonType: "int"
+        }
+      }
+    }
+  }
+})
+> db.createCollection("test", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+	  title: "Vote Validation",
+	  required: ["ip", "pollId", "selection"],
+	  properties: {
+	    ip: {
+	      bsonType: "string"
+	    },
+	    pollId: {
+	      bsonType: "objectId"
+	    },
+	    selection: {
+          bsonType: "array",
+          items: { bsonType: "int" }
+        }
+      }
+    }
+  }
+})
 > db.votes.createIndex({ ip: 1, pollId: 1 }, { unique: true })
 > db.createRole({ 
     role: "verivoteRole", 
