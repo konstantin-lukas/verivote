@@ -18,3 +18,13 @@ type Vote struct {
 	PollId    string  `json:"pollId" example:"670ae4a2724ba0d2874447c9"`
 	Selection []int32 `json:"selection" example:"1,4,0,2,3"`
 }
+
+type PollSummary struct {
+	Name        string
+	Method      int32
+	VoteCount   int32
+	Winner      int32
+	Options     []string
+	Results     []int32
+	ClosingDate time.Time
+}
