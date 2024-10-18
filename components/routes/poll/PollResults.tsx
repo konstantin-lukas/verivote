@@ -1,12 +1,15 @@
 import { BarController, BarElement, CategoryScale, Chart, LinearScale, Tooltip } from "chart.js";
+import Image from "next/image";
 import { useTheme } from "next-themes";
 import React, { useEffect, useRef } from "react";
 import resolveConfig from "tailwindcss/resolveConfig";
 
+import H2 from "@/components/shared/H2";
+import type { Poll, PollSummary } from "@/data/types";
+import illustration from "@/public/undraw_no_data_re_kwbl.svg";
 import tailwindConfig from "@/tailwind.config";
 
 const fullConfig = resolveConfig(tailwindConfig);
-import type { Poll, PollSummary } from "@/data/types";
 Chart.defaults.font.size = 16;
 Chart.defaults.font.family = "Jost";
 Chart.register(LinearScale, BarController, CategoryScale, BarElement, Tooltip);
@@ -125,9 +128,14 @@ export default function PollResults({ poll, results }: { poll: Poll, results: Po
                     className="my-4 flex items-center text-ellipsis border-neutral-300 px-6 sm:my-0 sm:w-1/3 sm:flex-col
                     sm:justify-center sm:border-x-2 dark:border-neutral-700"
                 >
-                    <span className="font-bold uppercase after:mr-1 after:content-[':'] sm:after:content-none">Winner{results.winners.length !== 1 && "s"}</span>
+                    <span className="font-bold uppercase after:mr-1 after:content-[':'] sm:after:content-none">
+                        Winner{results.winners && results.winners.length !== 1 && "s"}
+                    </span>
                     <span className="break-words text-center sm:w-full">
-                        {results.winners.length === 0 ? "None" : results.winners.map(x => results.options[x]).join(", ")}
+                        {results.winners && results.winners.length === 0
+                            ? "None"
+                            : results.winners && results.winners.map(x => results.options[x]).join(", ")
+                        }
                     </span>
                 </div>
                 <div className="flex items-center px-6 sm:w-1/3 sm:flex-col sm:justify-center">
@@ -135,14 +143,31 @@ export default function PollResults({ poll, results }: { poll: Poll, results: Po
                     <span className="text-center">{results.options.length}</span>
                 </div>
             </div>
-            <div className="relative h-[20dvw] max-h-[50dvh] min-h-48 w-full">
-                <canvas ref={chartRef} aria-label="Poll result bar chart" role="img">
-                    <ul>
-                        {results.options.map((x, i) => <li key={i}>{x}: {results.results[i]}</li>)}
-                    </ul>
-                </canvas>
-            </div>
-            {poll.majority && <span className="mt-6 block">Note: the winner of this poll needs a majority.</span>}
+            {
+                results.voterCount === 0 ?
+                    (
+                        <div className="my-24 flex flex-col items-center">
+                            <H2>Waiting for the first vote</H2>
+                            <Image
+                                src={illustration}
+                                alt="illustration"
+                                priority
+                                className="mt-8 h-auto w-1/2 max-w-60"
+                            />
+                        </div>
+                    ) : (
+                        <>
+                            <div className="relative h-[20dvw] max-h-[50dvh] min-h-48 w-full">
+                                <canvas ref={chartRef} aria-label="Poll result bar chart" role="img">
+                                    <ul>
+                                        {results.options.map((x, i) => <li key={i}>{x}: {results.results[i]}</li>)}
+                                    </ul>
+                                </canvas>
+                            </div>
+                            {poll.majority && <span className="mt-6 block">Note: the winner of this poll needs a majority.</span>}
+                        </>
+                    )
+            }
         </section>
     );
 }

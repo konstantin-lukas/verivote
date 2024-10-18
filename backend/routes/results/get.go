@@ -39,6 +39,12 @@ func Get(w http.ResponseWriter, id string) {
 	switch poll.Method {
 	case 0:
 		results = utils.GetInstantRunoffResults(votes, len(poll.Options))
+	case 1:
+		results = utils.GetPositionalVotingResults(votes, len(poll.Options))
+	case 2:
+		results = utils.GetScoreVotingResults(votes, len(poll.Options))
+	case 3, 4:
+		results = utils.GetApprovalOrPluralityVotingResults(votes, len(poll.Options))
 	default:
 		w.WriteHeader(http.StatusInternalServerError)
 		return
