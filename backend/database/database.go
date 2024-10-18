@@ -82,7 +82,7 @@ func HasUserVoted(id string, ip string) bool {
 	return true
 }
 
-func GetVotesByPollId(id string, choiceCount int) ([][]int32, bool) {
+func GetVotesByPollId(id string) ([][]int32, bool) {
 	hex, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return [][]int32{}, false
@@ -95,15 +95,9 @@ func GetVotesByPollId(id string, choiceCount int) ([][]int32, bool) {
 	var votes [][]int32
 	for cursor.Next(context.TODO()) {
 		var result utils.VoteSelection
-		if err := cursor.Decode(&result); err == nil && len(result.Selection) == choiceCount {
+		if err := cursor.Decode(&result); err == nil {
 			votes = append(votes, result.Selection)
 		}
 	}
 	return votes, true
-
-	/*
-		if result.Err() != nil {
-			return false
-		}
-		return true*/
 }

@@ -29,7 +29,7 @@ func Get(w http.ResponseWriter, id string) {
 		return
 	}
 
-	votes, ok := database.GetVotesByPollId(id, len(poll.Options))
+	votes, ok := database.GetVotesByPollId(id)
 	if !ok {
 		w.WriteHeader(http.StatusBadRequest)
 		return
