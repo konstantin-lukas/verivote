@@ -28,9 +28,14 @@ export default function ViewController({ poll, results, info, defaultHasVoted }:
     const date = new Date(poll.openUntil);
     const [showResults, setShowResults] = useState(false);
     const [hasVoted, setHasVoted] = useState(defaultHasVoted);
+    const [pollResults, setPollResults] = useState(results);
     useEffect(() => {
         setShowResults(hasVoted);
-    }, [hasVoted]);
+        fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/results/" + poll.id)
+            .then(data => data.json())
+            .then(json => setPollResults(json))
+            .catch(() => window.location.reload());
+    }, [hasVoted, poll.id]);
     useEffect(() => {
         fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/voted/" + poll.id)
             .then(res => res.json())
@@ -80,7 +85,7 @@ export default function ViewController({ poll, results, info, defaultHasVoted }:
                 {!hasVoted && !showResults && info.name === "Plurality Voting" &&
                     <PluralityVoting poll={poll} setHasVoted={setHasVoted}/>
                 }
-                {(hasVoted || showResults) && <PollResults poll={poll} results={results}/>}
+                {(hasVoted || showResults) && <PollResults poll={poll} results={pollResults}/>}
             </WrapperSmall>
         </>
     );
