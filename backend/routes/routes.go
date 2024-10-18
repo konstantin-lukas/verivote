@@ -5,6 +5,7 @@ import (
 	"strings"
 	"verivote/api/middleware"
 	"verivote/api/routes/poll"
+	"verivote/api/routes/results"
 	"verivote/api/routes/vote"
 	"verivote/api/routes/voted"
 )
@@ -53,6 +54,18 @@ func HandleVoted(w http.ResponseWriter, r *http.Request) {
 	urlComponents := strings.Split(page, "/")
 	if r.Method == "GET" && len(urlComponents) == 3 {
 		voted.Get(w, r, urlComponents[2])
+		return
+	}
+
+	http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+}
+
+func HandleResults(w http.ResponseWriter, r *http.Request) {
+
+	page := r.URL.Path[1:]
+	urlComponents := strings.Split(page, "/")
+	if r.Method == "GET" && len(urlComponents) == 3 {
+		results.Get(w, urlComponents[2])
 		return
 	}
 

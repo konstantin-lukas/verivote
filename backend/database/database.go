@@ -81,3 +81,29 @@ func HasUserVoted(id string, ip string) bool {
 	}
 	return true
 }
+
+func GetVotesByPollId(id string, choiceCount int) ([][]int32, bool) {
+	hex, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return [][]int32{}, false
+	}
+	filter := bson.M{
+		"pollId": hex,
+	}
+	collection := MongoClient.Database("verivote").Collection("votes")
+	cursor, err := collection.Find(context.TODO(), filter)
+	var votes [][]int32
+	for cursor.Next(context.TODO()) {
+		var result utils.VoteSelection
+		if err := cursor.Decode(&result); err == nil && len(result.Selection) == choiceCount {
+			votes = append(votes, result.Selection)
+		}
+	}
+	return votes, true
+
+	/*
+		if result.Err() != nil {
+			return false
+		}
+		return true*/
+}

@@ -19,12 +19,16 @@ type Vote struct {
 	Selection []int32 `json:"selection" example:"1,4,0,2,3"`
 }
 
+type VoteSelection struct {
+	Selection []int32 `json:"selection" example:"1,4,0,2,3"`
+}
+
 type PollSummary struct {
-	Name        string
-	Method      int32
-	VoteCount   int32
-	Winner      int32
-	Options     []string
-	Results     []int32
-	ClosingDate time.Time
+	Name        string    `json:"name" example:"Who should be the next president?"`
+	Method      int32     `json:"method" example:"4"`
+	VoterCount  int       `json:"voterCount" example:"42"`
+	Winners     []int32   `json:"winners" example:"0,2"`
+	Options     []string  `json:"options" example:"Harris,Trump,Kennedy"`
+	Results     []int32   `json:"results" example:"3,0,0,4"`
+	ClosingDate time.Time `json:"closingDate" example:"1999-01-01T10:00:00+02:00"`
 }
