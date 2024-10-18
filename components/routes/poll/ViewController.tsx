@@ -7,6 +7,7 @@ import { MdOutlineHowToVote } from "react-icons/md";
 
 import ApprovalVoting from "@/components/routes/poll/ApprovalVoting";
 import PluralityVoting from "@/components/routes/poll/PluralityVoting";
+import PollResults from "@/components/routes/poll/PollResults";
 import RankedVoting from "@/components/routes/poll/RankedVoting";
 import ScoreVoting from "@/components/routes/poll/ScoreVoting";
 import ShareButton from "@/components/routes/poll/ShareButton";
@@ -14,11 +15,12 @@ import BlockButton from "@/components/shared/BlockButton";
 import H1 from "@/components/shared/H1";
 import Wrapper from "@/components/shared/Wrapper";
 import WrapperSmall from "@/components/shared/WrapperSmall";
-import type { Poll, VotingMethod } from "@/data/types";
+import type { Poll, PollSummary, VotingMethod } from "@/data/types";
 
 
-export default function ViewController({ poll, info, defaultHasVoted }: {
+export default function ViewController({ poll, results, info, defaultHasVoted }: {
     poll: Poll,
+    results: PollSummary,
     info: VotingMethod,
     defaultHasVoted: boolean,
 }) {
@@ -78,6 +80,7 @@ export default function ViewController({ poll, info, defaultHasVoted }: {
                 {!hasVoted && !showResults && info.name === "Plurality Voting" &&
                     <PluralityVoting poll={poll} setHasVoted={setHasVoted}/>
                 }
+                {(hasVoted || showResults) && <PollResults poll={poll} results={results}/>}
             </WrapperSmall>
         </>
     );

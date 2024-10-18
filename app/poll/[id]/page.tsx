@@ -7,12 +7,12 @@ import ViewController from "@/components/routes/poll/ViewController";
 import BlockLink from "@/components/shared/BlockLink";
 import H3 from "@/components/shared/H3";
 import WrapperSmall from "@/components/shared/WrapperSmall";
-import type { Poll, VotingMethod } from "@/data/types";
+import type { Poll, PollSummary, VotingMethod } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
 
 export default async function Page({ params }: { params: { id: string } }) {
 
-    let poll: Poll, matchingInfo: VotingMethod | undefined, hasVoted: boolean;
+    let poll: Poll, matchingInfo: VotingMethod | undefined, hasVoted: boolean, results: PollSummary;
     try {
         const { id } = params;
         const response = await Promise.all([
@@ -23,19 +23,22 @@ export default async function Page({ params }: { params: { id: string } }) {
                     "X-Real-Ip": headers().get("X-Real-Ip") ?? "",
                 },
             }),
+            fetch(process.env.LOCAL_API_ORIGIN + "/results/" + id),
         ]);
-        if (!response[0].ok || !response[1].ok) notFound();
+        console.log(response[0].ok, response[1].ok, response[2].ok);
+        if (!response[0].ok || !response[1].ok || !response[2].ok) notFound();
         poll = await response[0].json();
-        hasVoted = (await response[1].json()).hasVoted;
         matchingInfo = votingMethods.find(x => x.dbId === poll.method);
         if (!matchingInfo) notFound();
+        results = await response[2].json();
+        hasVoted = (await response[1].json()).hasVoted;
     } catch {
         notFound();
     }
 
     return (
         <div className="min-h-[var(--main-height-mobile)] py-24 desktop:min-h-[var(--main-height)]">
-            <ViewController poll={poll} info={matchingInfo} defaultHasVoted={hasVoted}/>
+            <ViewController poll={poll} results={results} info={matchingInfo} defaultHasVoted={hasVoted}/>
             <WrapperSmall>
                 <div>
                     <H3>

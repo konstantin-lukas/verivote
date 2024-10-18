@@ -65,8 +65,8 @@ const config: Config = {
             colors: {
                 "verivote-turquoise": "#12d4ae",
                 "verivote-cyan": "#129dd4",
-                "dark-font": "rgb(38 38 38)",
-                "light-font": "rgb(229 229 229)",
+                "dark-font": "rgb(38, 38, 38)",
+                "light-font": "rgb(229, 229, 229)",
             },
             boxShadow: {
                 "3d": "-0.16rem -0.16rem 0.16rem 0.16rem #fff, 0.16rem 0.16rem 0.16rem 0.16rem rgba(0, 0, 0, 0.1)",

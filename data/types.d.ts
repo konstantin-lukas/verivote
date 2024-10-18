@@ -33,3 +33,13 @@ export interface Poll {
     majority: boolean,
     method: number,
 }
+
+export interface PollSummary {
+    name: string,
+    method: number,
+    voterCount: number,
+    winners: number[],
+    options: string[],
+    results: number[],
+    closingDate: string,
+}
