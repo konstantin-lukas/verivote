@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -9,6 +10,14 @@ import H3 from "@/components/shared/H3";
 import WrapperSmall from "@/components/shared/WrapperSmall";
 import type { Poll, PollSummary, VotingMethod } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
+
+export async function generateMetadata(context: { params: { id: string } }) {
+    const response = await fetch(process.env.LOCAL_API_ORIGIN + "/poll/" + context.params.id);
+    const poll = await response.json();
+    return {
+        title: `${poll.name} - Verivote`,
+    };
+}
 
 export default async function Page({ params }: { params: { id: string } }) {
 

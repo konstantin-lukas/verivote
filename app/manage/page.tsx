@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -6,6 +7,9 @@ import ManageCards from "@/components/routes/manage/ManageCards";
 import Wrapper from "@/components/shared/Wrapper";
 import type { Poll } from "@/data/types";
 
+export const metadata: Metadata = {
+    title: "Manage - Verivote",
+};
 
 export default async function Page() {
 

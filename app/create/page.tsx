@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import React from "react";
 
 import CreationForm from "@/components/form/CreationForm";
 import H1 from "@/components/shared/H1";
 import Wrapper from "@/components/shared/Wrapper";
 import { votingMethods } from "@/data/votingMethods";
+
+export const metadata: Metadata = {
+    title: "Create - Verivote",
+};
 
 export default async function Page({ searchParams }: { searchParams:{ type?:string }}) {
     return (
