@@ -5,10 +5,12 @@ import React, { useEffect, useRef } from "react";
 
 import BlockButton from "@/components/shared/BlockButton";
 
-export default function Modal({ children, closeButtonText, onClose }: {
+export default function Modal({ children, closeButtonText, cancelButtonText, onClose, onAccept }: {
     children: React.ReactNode,
     closeButtonText: string,
+    cancelButtonText?: string,
     onClose?: ReactEventHandler<HTMLDialogElement>,
+    onAccept?: () => void,
 }) {
     const dialog = useRef<HTMLDialogElement>(null);
     useEffect(() => {
@@ -19,19 +21,29 @@ export default function Modal({ children, closeButtonText, onClose }: {
             ref={dialog}
             onClose={onClose}
             className="flex max-w-[85dvw] flex-col items-center justify-center rounded-2xl border-none
-            bg-neutral-100 p-8 shadow-vague sm:max-w-96 dark:bg-neutral-900 dark:shadow-dark-vague"
+            bg-neutral-100 p-8 shadow-vague sm:max-w-[30rem] dark:bg-neutral-900 dark:shadow-dark-vague"
         >
             <p className="mb-6 text-center">
                 {children}
             </p>
-            <div>
+            <div className="flex gap-8">
                 <BlockButton type="button" onClick={() => {
                     if (!dialog.current) return;
                     dialog.current.style.display = "none";
                     dialog.current.close();
+                    if (typeof onAccept === "function") onAccept();
                 }}>
                     {closeButtonText}
                 </BlockButton>
+                {cancelButtonText && (
+                    <BlockButton type="button" onClick={() => {
+                        if (!dialog.current) return;
+                        dialog.current.style.display = "none";
+                        dialog.current.close();
+                    }}>
+                        {cancelButtonText}
+                    </BlockButton>
+                )}
             </div>
         </dialog>
     );

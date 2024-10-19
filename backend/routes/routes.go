@@ -19,12 +19,20 @@ func HandlePoll(w http.ResponseWriter, r *http.Request) {
 
 	isGet := r.Method == "GET"
 	isPost := r.Method == "POST"
+	isPut := r.Method == "DELETE"
 
 	pathSegments := int64(len(urlComponents)) - utils.BasePathLength
 
 	if isPost && pathSegments == 1 {
 		middleware.Authorize(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			poll.Post(w, r)
+		})).ServeHTTP(w, r)
+		return
+	}
+
+	if isPut && pathSegments == 2 {
+		middleware.Authorize(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			poll.Delete(w, r, urlComponents[2])
 		})).ServeHTTP(w, r)
 		return
 	}

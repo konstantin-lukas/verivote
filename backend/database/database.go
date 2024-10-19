@@ -65,6 +65,36 @@ func GetPollById(id string) (utils.Poll, bool) {
 	return result, true
 }
 
+func DeletePoll(id string, email string) bool {
+	hex, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return false
+	}
+
+	filter := bson.M{
+		"_id":       hex,
+		"userEmail": email,
+	}
+	collection := MongoClient.Database("verivote").Collection("polls")
+	result, err := collection.DeleteOne(context.TODO(), filter)
+
+	if err != nil || result.DeletedCount == 0 {
+		return false
+	}
+
+	collection = MongoClient.Database("verivote").Collection("votes")
+	filter = bson.M{
+		"pollId": hex,
+	}
+
+	_, err = collection.DeleteMany(context.TODO(), filter)
+	if err != nil {
+		return false
+	}
+
+	return true
+}
+
 func GetPollsByEmail(email string) ([]utils.Poll, bool) {
 	filter := bson.M{
 		"userEmail": email,
