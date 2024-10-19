@@ -12,6 +12,7 @@ import (
 )
 
 var VotingMethods = []int32{0, 1, 2, 3, 4}
+var BasePathLength int64 = 0
 
 func IsValidEmail(email string) bool {
 	_, err := mail.ParseAddress(email)
@@ -30,6 +31,10 @@ func LoadEnvironmentVariables() {
 	}
 
 	if os.Getenv("NEXT_PUBLIC_ORIGIN") == "" {
+		panic(err)
+	}
+
+	if BasePathLength, err = strconv.ParseInt(os.Getenv("API_BASE_PATH_LENGTH"), 10, 64); err != nil {
 		panic(err)
 	}
 }

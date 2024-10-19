@@ -9,6 +9,7 @@ import (
 	"verivote/api/routes/results"
 	"verivote/api/routes/vote"
 	"verivote/api/routes/voted"
+	"verivote/api/utils"
 )
 
 func HandlePoll(w http.ResponseWriter, r *http.Request) {
@@ -19,14 +20,16 @@ func HandlePoll(w http.ResponseWriter, r *http.Request) {
 	isGet := r.Method == "GET"
 	isPost := r.Method == "POST"
 
-	if isPost && len(urlComponents) == 2 {
+	pathSegments := int64(len(urlComponents)) - utils.BasePathLength
+
+	if isPost && pathSegments == 1 {
 		middleware.Authorize(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			poll.Post(w, r)
 		})).ServeHTTP(w, r)
 		return
 	}
 
-	if isGet && len(urlComponents) == 3 {
+	if isGet && pathSegments == 2 {
 		poll.Get(w, urlComponents[2])
 		return
 	}
@@ -53,7 +56,8 @@ func HandleVoted(w http.ResponseWriter, r *http.Request) {
 
 	page := r.URL.Path[1:]
 	urlComponents := strings.Split(page, "/")
-	if r.Method == "GET" && len(urlComponents) == 3 {
+	pathSegments := int64(len(urlComponents)) - utils.BasePathLength
+	if r.Method == "GET" && pathSegments == 2 {
 		voted.Get(w, r, urlComponents[2])
 		return
 	}
@@ -65,7 +69,8 @@ func HandleResults(w http.ResponseWriter, r *http.Request) {
 
 	page := r.URL.Path[1:]
 	urlComponents := strings.Split(page, "/")
-	if r.Method == "GET" && len(urlComponents) == 3 {
+	pathSegments := int64(len(urlComponents)) - utils.BasePathLength
+	if r.Method == "GET" && pathSegments == 2 {
 		results.Get(w, urlComponents[2])
 		return
 	}
