@@ -1,6 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { LuPieChart } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
@@ -16,6 +15,7 @@ import H1 from "@/components/shared/H1";
 import Wrapper from "@/components/shared/Wrapper";
 import WrapperSmall from "@/components/shared/WrapperSmall";
 import type { Poll, PollSummary, VotingMethod } from "@/data/types";
+import { formatDate } from "@/utils";
 
 
 export default function ViewController({ poll, results, info, defaultHasVoted }: {
@@ -51,7 +51,7 @@ export default function ViewController({ poll, results, info, defaultHasVoted }:
             <Wrapper className="flex  flex-col items-center">
                 <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">{poll.name}</H1>
                 <h2 className="mb-2 text-lg font-bold uppercase text-dark-font sm:text-xl md:text-2xl dark:text-light-font">{info.name}</h2>
-                <span className="text-center text-neutral-500">Closing Time: {format(date, "dd LLLL yyyy hh:mm aa (OOOO)")}</span>
+                <span className="text-center text-neutral-500">Closing Time: {formatDate(date)}</span>
                 <div className="mt-6 flex flex-wrap justify-center gap-6">
                     <ShareButton url="https://google.com"/>
                     {!showResults && !hasVoted && (

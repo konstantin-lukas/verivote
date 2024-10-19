@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         const { id } = params;
         const response = await Promise.all([
             fetch(process.env.LOCAL_API_ORIGIN + "/poll/" + id),
-            fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/voted/" + id, {
+            fetch(process.env.LOCAL_API_ORIGIN + "/voted/" + id, {
                 headers: {
                     "X-Forwarded-For": headers().get("X-Forwarded-For") ?? "",
                     "X-Real-Ip": headers().get("X-Real-Ip") ?? "",
@@ -25,7 +25,6 @@ export default async function Page({ params }: { params: { id: string } }) {
             }),
             fetch(process.env.LOCAL_API_ORIGIN + "/results/" + id),
         ]);
-        console.log(response[0].ok, response[1].ok, response[2].ok);
         if (!response[0].ok || !response[1].ok || !response[2].ok) notFound();
         poll = await response[0].json();
         matchingInfo = votingMethods.find(x => x.dbId === poll.method);

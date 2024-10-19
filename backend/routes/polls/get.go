@@ -15,6 +15,7 @@ import (
 //	@Produce		json
 //	@Success		200	{object}	[]utils.Poll
 //	@Failure		400	{object}	nil
+//	@Failure		401	{object}	nil
 //	@Failure		404	{object}	nil
 //
 // @Security		JWTAuth

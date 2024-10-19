@@ -28,6 +28,7 @@ import (
 //	@Param			options			formData	[]string	true	"The options/candidates in the poll."
 //	@Success		201				{object}	nil
 //	@Failure		400				{object}	nil
+//	@Failure		401				{object}	nil
 //	@Failure		404				{object}	nil
 //	@Failure		500				{object}	nil
 //	@Header			201				{string}	Location	"/poll/{id}"

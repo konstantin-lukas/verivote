@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import type { FormEvent, ReactElement } from "react";
 import React from "react";
 
@@ -35,4 +36,8 @@ export function submitVote(
     }).catch(() => {
         error();
     });
+}
+
+export function formatDate(date: Date) {
+    return format(date, "dd LLLL yyyy hh:mm aa (OOOO)");
 }
