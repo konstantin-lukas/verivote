@@ -32,3 +32,7 @@ type PollSummary struct {
 	Results     []int32   `json:"results" example:"3,0,0,4"`
 	ClosingDate time.Time `json:"closingDate" example:"1999-01-01T10:00:00+02:00"`
 }
+
+type PollId struct {
+	Id string `bson:"_id"`
+}

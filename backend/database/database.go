@@ -151,3 +151,57 @@ func GetVotesByPollId(id string) ([][]int32, bool) {
 	}
 	return votes, true
 }
+
+func GetPollIdsByEmail(email string) ([]string, bool) {
+	filter := bson.M{
+		"userEmail": email,
+	}
+	collection := MongoClient.Database("verivote").Collection("polls")
+	cursor, err := collection.Find(context.TODO(), filter)
+	if err != nil {
+		return []string{}, false
+	}
+	var results []string
+	for cursor.Next(context.TODO()) {
+		var result utils.PollId
+		if err = cursor.Decode(&result); err == nil {
+			results = append(results, result.Id)
+		}
+	}
+	return results, true
+}
+
+func DeleteVotesByPollId(id string) bool {
+	hex, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return false
+	}
+	filter := bson.M{
+		"pollId": hex,
+	}
+	collection := MongoClient.Database("verivote").Collection("votes")
+	_, err = collection.DeleteMany(context.TODO(), filter)
+	return err == nil
+}
+
+func DeleteAccount(email string) bool {
+
+	polls, ok := GetPollIdsByEmail(email)
+	if !ok {
+		return false
+	}
+
+	filter := bson.M{
+		"userEmail": email,
+	}
+	collection := MongoClient.Database("verivote").Collection("polls")
+	_, err := collection.DeleteMany(context.TODO(), filter)
+	if err != nil {
+		return false
+	}
+	for _, poll := range polls {
+		DeleteVotesByPollId(poll)
+	}
+
+	return true
+}

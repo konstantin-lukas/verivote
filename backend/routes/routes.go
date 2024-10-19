@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strings"
 	"verivote/api/middleware"
+	"verivote/api/routes/account"
 	"verivote/api/routes/poll"
 	"verivote/api/routes/polls"
 	"verivote/api/routes/results"
@@ -90,6 +91,17 @@ func HandlePolls(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		middleware.Authorize(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			polls.Get(w, r)
+		})).ServeHTTP(w, r)
+		return
+	}
+
+	http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+}
+
+func HandleAccount(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "DELETE" {
+		middleware.Authorize(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			account.Delete(w, r)
 		})).ServeHTTP(w, r)
 		return
 	}
