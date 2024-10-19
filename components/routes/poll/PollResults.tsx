@@ -164,7 +164,9 @@ export default function PollResults({ poll, results }: { poll: Poll, results: Po
                                     </ul>
                                 </canvas>
                             </div>
-                            {poll.majority && <span className="mt-6 block">Note: the winner of this poll needs a majority.</span>}
+                            {poll.majority && <span className="mt-6 block">
+                                Note: the winner of this poll needs a majority (more than half of possible points).
+                            </span>}
                         </>
                     )
             }

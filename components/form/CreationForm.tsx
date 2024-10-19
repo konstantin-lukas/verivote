@@ -55,7 +55,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         method: defaultMethod ?? votingMethods[0].dbId,
         name: "",
         date: "",
-        needsMajority: true,
+        needsMajority: false,
         options: ["", ""],
     });
 
