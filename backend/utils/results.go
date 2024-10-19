@@ -1,11 +1,16 @@
 package utils
 
+import (
+	"slices"
+)
+
 // GetInstantRunoffResults - This function calculates the instant-runoff results for a list of Votes.
 // It assumes that the Selection property of each vote is the same length n and contains the numbers from 0 to n-1 in
 // arbitrary order without any duplicates.
 // WARNING: This function modifies the input.
 func GetInstantRunoffResults(votes [][]int32, choiceCount int) []int32 {
 	results := make([]int32, choiceCount)
+	eliminated := make([]bool, choiceCount)
 	if len(votes) == 0 {
 		return results
 	}
@@ -13,16 +18,16 @@ func GetInstantRunoffResults(votes [][]int32, choiceCount int) []int32 {
 	for _, vote := range votes {
 		results[vote[0]]++
 	}
-	// REDISTRIBUTE VOTES
+	// FIND THE FEWEST VOTES OF CANDIDATES STILL IN THE RACE
 	for round := 0; round < choiceCount; round++ {
 		// A: CHECK IF A SINGLE CANDIDATE HAS A MAJORITY; IF SO QUIT
-		// B: FIND THE FEWEST AMOUNT OF VOTES THAT'S NOT ZERO
+		// B: FIND THE FEWEST AMOUNT OF VOTES OF NON-ELIMINATED CANDIDATES
 		fewestVotes := int32(len(votes))
-		for _, result := range results {
+		for i, result := range results {
 			if result > int32(len(votes))/2 { // A
 				return results
 			}
-			if result > 0 && result < fewestVotes { // B
+			if result < fewestVotes && !eliminated[i] { // B
 				fewestVotes = result
 			}
 		}
@@ -36,16 +41,23 @@ func GetInstantRunoffResults(votes [][]int32, choiceCount int) []int32 {
 		}
 
 		// REDISTRIBUTE VOTES FOR THE CANDIDATE(S) IN LAST PLACE
-		for _, loser := range losers {
-			for i := 0; i < len(votes); i++ {
-				if votes[i][0] == loser {
-					if len(votes[i]) > 1 {
-						results[loser]--
-						results[votes[i][1]]++
-						votes[i] = votes[i][1:]
+		for i := 0; i < len(votes); i++ {
+			if len(votes[i]) > 1 && Contains(losers, votes[i][0]) {
+				offset := 1
+				if index := slices.Index(losers, votes[i][0]); index > -1 {
+					for len(votes[i]) > offset+1 && eliminated[votes[i][offset]] {
+						offset++
 					}
+					results[votes[i][offset]]++
+					results[losers[index]]--
 				}
+				votes[i] = votes[i][offset:]
 			}
+		}
+
+		// ELIMINATE CANDIDATES WHO WERE ELIMINATED
+		for _, loser := range losers {
+			eliminated[loser] = true
 		}
 	}
 	return results

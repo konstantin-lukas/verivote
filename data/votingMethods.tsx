@@ -24,7 +24,7 @@ export const votingMethods: VotingMethod[] = [
         shorthand: "irv",
         illustration: illustrationRunoff,
         illustrationAlt: "Illustration of a man running with a coffe cup in his hand.",
-        bestFor: "Groups of any size where majority support is essential, and preferences between candidates are clear.",
+        bestFor: "Medium to large groups (5+ people) where majority support is essential, and preferences between candidates are clear.",
         pros: [
             <li key={0}>
                 <b>Majority support guaranteed:</b> The winner is more likely to have broad support since the system eliminates the lowest-ranked candidates progressively.

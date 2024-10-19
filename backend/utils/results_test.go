@@ -13,10 +13,6 @@ type resultTestCase struct {
 }
 
 var instantRunoffTests = []resultTestCase{
-	// SINGLE VOTE
-	{[][]int32{
-		{1, 3, 2, 0},
-	}, []int32{0, 1, 0, 0}, 4},
 	// REGULAR VOTES
 	{[][]int32{
 		{1, 0, 3, 2},
@@ -25,11 +21,33 @@ var instantRunoffTests = []resultTestCase{
 		{2, 3, 1, 0},
 		{0, 3, 2, 1},
 	}, []int32{0, 2, 3, 0}, 4},
+	// SINGLE VOTE
+	{[][]int32{
+		{1, 3, 2, 0},
+	}, []int32{0, 1, 0, 0}, 4},
+	// VOTES WHERE LAST CANDIDATE FROM FIRST ROUND APPEARS AS SECOND OPTION IN SOME VOTES
+	{[][]int32{
+		{1, 0, 3, 2},
+		{2, 0, 1, 3},
+		{3, 0, 2, 1},
+	}, []int32{0, 1, 1, 1}, 4},
+	// VOTES WHERE TWO ELIMINATED CANDIDATES ARE FOUND IN THE SECOND ROUND
+	{[][]int32{
+		{0, 3, 4, 1, 2},
+		{1, 3, 4, 0, 2},
+		{2, 3, 4, 0, 1},
+	}, []int32{2, 1, 0, 0, 0}, 5},
+	{[][]int32{
+		{5, 3, 4, 1, 0, 2},
+		{0, 3, 4, 1, 2, 5},
+		{1, 3, 4, 0, 2, 5},
+		{2, 3, 4, 0, 1, 5},
+	}, []int32{2, 2, 0, 0, 0, 0}, 6},
 	// TWO LOSING CANDIDATES IN FIRST ROUND
 	{[][]int32{
 		{0, 1, 2},
 		{2, 1, 0},
-	}, []int32{0, 2, 0}, 3},
+	}, []int32{1, 0, 1}, 3},
 	// TIE
 	{[][]int32{
 		{0, 1},
