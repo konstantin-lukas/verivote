@@ -129,12 +129,12 @@ export default function PollResults({ poll, results }: { poll: Poll, results: Po
                     sm:justify-center sm:border-x-2 dark:border-neutral-700"
                 >
                     <span className="font-bold uppercase after:mr-1 after:content-[':'] sm:after:content-none">
-                        Winner{(!results.winners || results.winners.length !== 1) && "s"}
+                        Winner{results.winners.length !== 1 && "s"}
                     </span>
                     <span className="break-words text-center sm:w-full">
-                        {!results.winners || results.winners.length === 0
+                        {results.winners.length === 0
                             ? "None"
-                            : results.winners && results.winners.map(x => results.options[x]).join(", ")
+                            : results.winners.map(x => results.options[x]).join(", ")
                         }
                     </span>
                 </div>

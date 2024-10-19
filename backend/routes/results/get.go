@@ -36,31 +36,26 @@ func Get(w http.ResponseWriter, id string) {
 	}
 
 	var results []int32
+	var maxVotes int
 	switch poll.Method {
 	case 0:
+		maxVotes = len(votes)
 		results = utils.GetInstantRunoffResults(votes, len(poll.Options))
 	case 1:
+		maxVotes = len(votes) * len(poll.Options)
 		results = utils.GetPositionalVotingResults(votes, len(poll.Options))
 	case 2:
+		maxVotes = len(votes) * 10
 		results = utils.GetScoreVotingResults(votes, len(poll.Options))
 	case 3, 4:
+		maxVotes = len(votes)
 		results = utils.GetApprovalOrPluralityVotingResults(votes, len(poll.Options))
 	default:
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	var maxVotes int
-	switch poll.Method {
-	case 0, 3, 4:
-		maxVotes = len(votes)
-	case 1:
-		maxVotes = len(votes) * len(poll.Options)
-	case 2:
-		maxVotes = len(votes) * 10
-	}
-
-	var winners []int32
+	winners := make([]int32, 0)
 	maxValue := slices.Max(results)
 	if poll.Majority && maxValue > int32(maxVotes)/2 {
 		for i, r := range results {

@@ -65,6 +65,26 @@ func GetPollById(id string) (utils.Poll, bool) {
 	return result, true
 }
 
+func GetPollsByEmail(email string) ([]utils.Poll, bool) {
+	filter := bson.M{
+		"userEmail": email,
+	}
+	collection := MongoClient.Database("verivote").Collection("polls")
+	cursor, err := collection.Find(context.TODO(), filter)
+	if err != nil {
+		return []utils.Poll{}, false
+	}
+	results := make([]utils.Poll, 0)
+	for cursor.Next(context.TODO()) {
+		var result utils.Poll
+		if err = cursor.Decode(&result); err == nil {
+			results = append(results, result)
+		}
+	}
+
+	return results, true
+}
+
 func HasUserVoted(id string, ip string) bool {
 	hex, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
