@@ -6,7 +6,7 @@ export default function H1({ children, className, customSizes }: { children: Rea
     return (
         <h1
             className={`inline-block bg-gradient-to-r from-verivote-turquoise to-verivote-cyan bg-clip-text pb-2
-            font-bold uppercase text-transparent ${className ?? ""} ${sizes}`}
+            pt-1 font-bold uppercase text-transparent ${className ?? ""} ${sizes}`}
         >
             {children}
         </h1>

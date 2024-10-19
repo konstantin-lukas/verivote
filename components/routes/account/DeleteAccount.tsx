@@ -20,7 +20,7 @@ export default function DeleteAccount() {
                             method: "DELETE",
                             credentials: "include",
                         })
-                            .then(() => signOut())
+                            .then(() => signOut({ callbackUrl: "/" }))
                             .catch(() => setModal(<Modal closeButtonText="Got it">A network error occurred. Please try again.</Modal>));
                     }}>
                         Are you sure you want to delete your account?
