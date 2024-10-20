@@ -41,18 +41,22 @@ func Authorize(next http.Handler) http.Handler {
 		token, err := jwt.Parse(decrypted, jwt.WithVerify(false))
 
 		email, exists := token.Get("email")
+		isEmail := true
 		if !exists {
-			http.Error(w, "Invalid token", http.StatusUnauthorized)
-			return
+			isEmail = false
+			email, exists = token.Get("name")
+			if !exists {
+				http.Error(w, "Invalid token", http.StatusUnauthorized)
+				return
+			}
 		}
-
 		emailString, ok := email.(string)
 		if !ok {
 			http.Error(w, "Invalid token", http.StatusUnauthorized)
 			return
 		}
 
-		if !utils.IsValidEmail(emailString) {
+		if isEmail && !utils.IsValidEmail(emailString) {
 			http.Error(w, "Invalid token", http.StatusUnauthorized)
 			return
 		}

@@ -3,7 +3,6 @@ package poll
 import (
 	"net/http"
 	"verivote/api/database"
-	"verivote/api/utils"
 )
 
 // Delete godoc
@@ -23,10 +22,7 @@ import (
 func Delete(w http.ResponseWriter, r *http.Request, id string) {
 
 	email := r.Context().Value("email").(string)
-	if !utils.IsValidEmail(email) {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
+
 	if !database.DeletePoll(id, email) {
 		w.WriteHeader(http.StatusNotFound)
 		return

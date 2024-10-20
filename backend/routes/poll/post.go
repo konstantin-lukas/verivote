@@ -88,10 +88,6 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	}
 
 	email := r.Context().Value("email").(string)
-	if !utils.IsValidEmail(email) {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
 
 	collection := database.MongoClient.Database("verivote").Collection("polls")
 

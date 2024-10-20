@@ -3,7 +3,6 @@ package account
 import (
 	"net/http"
 	"verivote/api/database"
-	"verivote/api/utils"
 )
 
 // Delete godoc
@@ -23,10 +22,7 @@ import (
 func Delete(w http.ResponseWriter, r *http.Request) {
 
 	email := r.Context().Value("email").(string)
-	if !utils.IsValidEmail(email) {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
+
 	if !database.DeleteAccount(email) {
 		w.WriteHeader(http.StatusNotFound)
 		return

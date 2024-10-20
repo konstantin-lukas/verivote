@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"verivote/api/database"
-	"verivote/api/utils"
 )
 
 // Get godoc
@@ -24,10 +23,6 @@ import (
 func Get(w http.ResponseWriter, r *http.Request) {
 
 	email := r.Context().Value("email").(string)
-	if !utils.IsValidEmail(email) {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
 
 	results, ok := database.GetPollsByEmail(email)
 	if !ok {

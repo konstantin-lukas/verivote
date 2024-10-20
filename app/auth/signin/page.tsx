@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import React from "react";
+import { PiRedditLogo } from "react-icons/pi";
 import { RiDiscordLine, RiGithubLine } from "react-icons/ri";
 
 import SignInButton from "@/components/routes/auth/SignInButton";
@@ -32,6 +33,10 @@ export default async function SignIn(context: {
                     <SignInButton serviceName="github">
                         <RiGithubLine className="mr-2 inline"/>
                         <span>GitHub</span>
+                    </SignInButton>
+                    <SignInButton serviceName="reddit">
+                        <PiRedditLogo className="mr-2 inline"/>
+                        <span>Reddit</span>
                     </SignInButton>
                 </div>
             </Wrapper>

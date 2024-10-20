@@ -14,13 +14,19 @@ export const metadata: Metadata = {
 export default async function Page() {
 
     const auth = cookies().get("next-auth.session-token")?.value;
-    const response = await fetch(process.env.LOCAL_API_ORIGIN + "/polls", {
-        headers: { Cookie: "next-auth.session-token=" + auth },
-    });
-    if (!response.ok) {
+    let polls: Poll[];
+    try {
+        const response = await fetch(process.env.LOCAL_API_ORIGIN + "/polls", {
+            headers: { Cookie: "next-auth.session-token=" + auth },
+        });
+        if (!response.ok) {
+            console.log(response);
+            notFound();
+        }
+        polls = await response.json();
+    } catch {
         notFound();
     }
-    const polls: Poll[] = await response.json();
     return (
         <Wrapper className="min-h-[var(--main-height-mobile)] py-24 desktop:min-h-[var(--main-height)]">
             <ManageCards defaultPolls={polls}/>
