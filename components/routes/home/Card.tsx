@@ -7,19 +7,21 @@ import H2 from "@/components/shared/H2";
 import type { VotingMethod } from "@/data/types";
 
 export default function Card({ votingMethod }: { votingMethod: VotingMethod }) {
-    const tagClass = votingMethod.tag ? `after:content-['${votingMethod.tag.replaceAll(" ", "_")}']` : "";
-
     return (
         <div className="flex flex-col justify-between">
             <div>
                 <div
-                    className={votingMethod.tag && `relative inline-block after:absolute 
-                        after:left-0 after:top-0 after:translate-y-[calc(-100%-1rem)] after:rounded-full after:bg-red-600
-                        after:px-2 after:text-[0.8rem] after:text-white ` + tagClass}
+                    className="relative inline-block"
                 >
                     <H2>
                         {votingMethod.name}
                     </H2>
+                    {votingMethod?.tag && (
+                        <span
+                            className="absolute left-0 top-0 translate-y-[calc(-100%-1rem)] rounded-full bg-red-600
+                            px-2 text-[0.8rem] text-white"
+                        >{votingMethod.tag}</span>
+                    )}
                 </div>
                 <p className="mb-6">
                     {votingMethod.shortDescription}
