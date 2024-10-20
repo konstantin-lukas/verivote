@@ -1,11 +1,30 @@
 version: "3.8"
 services:
-    frontend:
-        container_name: verivote-frontend
-        image: verivote-frontend
+    #frontend:
+    #    container_name: verivote-frontend
+    #    image: verivote-frontend
+    #    build:
+    #        dockerfile: Dockerfile
+    #    expose:
+    #        - "3000"
+    #    ports:
+    #        - "127.0.0.1:3001:3000"
+    #    restart: unless-stopped
+
+    database:
+        container_name: verivote-database
+        image: verivote-database
         build:
-            dockerfile: frontend.Dockerfile
+            dockerfile: ./database/Dockerfile
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
         expose:
-            - "3000"
+            - "27017"
         ports:
-            - "127.0.0.1:3001:3000"
+            - "127.0.0.1:3002:27017"
+        restart: unless-stopped
+        volumes:
+            - ./database/init.d:/docker-entrypoint-initdb.d:ro
+            #- ./database/data/db:/data/db
+            #- ./database/data/log:/var/log/mongodb

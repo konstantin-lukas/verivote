@@ -161,7 +161,7 @@ You need to set up a mongo database for verivote and create a user with the perm
     }
   }
 })
-> db.createCollection("test", {
+> db.createCollection("votes", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
@@ -183,15 +183,17 @@ You need to set up a mongo database for verivote and create a user with the perm
   }
 })
 > db.votes.createIndex({ ip: 1, pollId: 1 }, { unique: true })
-> db.createRole({ 
-    role: "verivoteRole", 
-    privileges: [
-      {
-        resource: { db: "verivote", collection: "poll" }, 
-        actions: [ "find", "update", "insert", "remove" ] 
-      }
-    ],
-    roles:[]
+> db.createRole({
+  role: "verivoteRole",
+  privileges: [
+    {
+      resource: { db: "verivote", collection: "polls" },
+      actions: [ "find", "update", "insert", "remove" ]
+    }, {
+      resource: { db: "verivote", collection: "votes" },
+      actions: [ "find", "update", "insert", "remove" ]
+    }],
+  roles:[]
 })
 > db.createUser({
     user: "verivoteUser",
