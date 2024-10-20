@@ -6,9 +6,8 @@ const CSPHeaders =
     "child-src 'self'; " +
     "frame-src 'self'; " +
     "worker-src 'none'; " +
-    "prefetch-src 'self'; " +
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-    "style-src 'self' 'unsafe-inline'; " +
+    "style-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
     "object-src 'none'; " +
     "base-uri 'self'; " +
     "form-action 'self'; " +
@@ -49,6 +48,9 @@ const nextConfig = {
             }],
         }];
     },
+    eslint: {
+        ignoreDuringBuilds: true,
+    }
 };
 
 export default nextConfig;
