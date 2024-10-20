@@ -72,6 +72,10 @@ GITHUB_SECRET=""
 DISCORD_ID=""
 // This is the secret from the Discord developer portal used for OAuth
 DISCORD_SECRET=""
+// This is the ID from the Reddit developer portal used for OAuth
+REDDIT_ID=""
+// This is the secret from the Reddit developer portal used for OAuth
+REDDIT_SECRET=""
 // This is the secret used for JWT encryption/decryption used by both the Next server and the backend server
 NEXTAUTH_SECRET=""
 // Use your own origin here but make sure to keep the auth
