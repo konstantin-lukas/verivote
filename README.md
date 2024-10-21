@@ -79,17 +79,17 @@ REDDIT_SECRET=""
 // This is the secret used for JWT encryption/decryption used by both the Next server and the backend server
 NEXTAUTH_SECRET=""
 // Use your own origin here but make sure to keep the auth
-NEXTAUTH_URL="http://localhost:3000/auth"
+NEXTAUTH_URL="https://verivote.eu/auth"
 // The origins to allow for CORS on the backend
-CORS_ALLOW_ORIGIN="http://localhost:3000"
+CORS_ALLOW_ORIGIN="https://verivote.eu"
 // This tells the next server where to reach the API locally to avoid leaving the network for SSR
-LOCAL_API_ORIGIN="http://localhost:4000/api"
+LOCAL_API_ORIGIN="http://database:4000/api"
 // This specifies were to reach MongoDB from the backend. Don't add http because mongo uses its own protocol.
-MONGODB_HOST="localhost:27017"
+MONGODB_HOST="database:27017"
 // This is the MongoDB user for reading and writing
-MONGODB_USER=""
+MONGODB_USER="verivoteUser"
 // This is the password for the above MongoDB user
-MONGODB_PASSWORD=""
+MONGODB_PASSWORD="verivotePwd"
 // If your api doesn't run on the root (e.g. api.example.com), the backend needs to know where relevant 
 // slugs in the pathname are. This variable needs to be set to the amount of path segments between the origin root
 // and the api route. For example if your API runs on example.com/api, set this variable to 1.
@@ -97,13 +97,12 @@ API_BASE_PATH_LENGTH="1"
 
 // PUBLIC ENVIRONMENT VARIABLES
 
+// The origin where the next server is reachable
+NEXT_PUBLIC_ORIGIN="https://verivote.eu"
 // The origin where the backend server is reachable
-NEXT_PUBLIC_API_ORIGIN="http://localhost:4000/api"
+NEXT_PUBLIC_API_ORIGIN="https://verivote.eu/api"
 // The amount of poll options you want to allow users to create
 NEXT_PUBLIC_MAX_OPTIONS_PER_POLL="20"
-// The origin where the next server is reachable
-NEXT_PUBLIC_ORIGIN="http://localhost:3000"
-
 
 
 // ENV VARS PREFIXED WITH "LEGAL" ARE NOT NECESSARY IF YOU DECIDE TO IMPLEMENT YOUR OWN LEGAL PAGES
