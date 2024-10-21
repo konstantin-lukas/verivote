@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
+	"time"
 	"verivote/api/database"
 	"verivote/api/utils"
 )
@@ -41,6 +42,11 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	poll, ok := database.GetPollById(payload.PollId)
 	if !ok {
 		http.Error(w, "Unknown poll ID", http.StatusNotFound)
+		return
+	}
+
+	if poll.OpenUntil.Before(time.Now()) {
+		w.WriteHeader(http.StatusForbidden)
 		return
 	}
 
