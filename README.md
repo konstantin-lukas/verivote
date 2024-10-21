@@ -118,6 +118,16 @@ LEGAL_PHONE=""
 // This is used in the example legal pages - The email address of the person responsible for the site (free format)
 LEGAL_EMAIL=""
 ```
+Please make sure you replace `verivotePwd` with a strong password. Also put the same password in the first line of
+`@/database/init.d/mongo-init.js`. In `@/docker-compose.yml`, please set `MONGO_INITDB_ROOT_PASSWORD` to a different
+but equally strong password. This just ensures that the root user of the MongoDB instance is secured.
+The app doesn't actually use the root user. But if you intend to make your database directly reachable from the outside,
+a strong root password is essential.
+
+### Starting The Containers
+Once you have set all environment variables correctly, you can proceed to run `docker compose up`.
+This will start the app which will be reachable under `localhost:3001` by default. Keep in mind that
+the MongoDB container uses a volume so restarting the container will still persist your data.
 
 ## Manual Deployment
 If you don't want to use the provided docker config for deploying the project, here's a list of steps to take
