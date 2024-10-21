@@ -1,15 +1,30 @@
-version: "3.8"
 services:
-    #frontend:
-    #    container_name: verivote-frontend
-    #    image: verivote-frontend
-    #    build:
-    #        dockerfile: Dockerfile
-    #    expose:
-    #        - "3000"
-    #    ports:
-    #        - "127.0.0.1:3001:3000"
-    #    restart: unless-stopped
+    frontend:
+        container_name: verivote-frontend
+        image: verivote-frontend
+        build:
+            dockerfile: Dockerfile
+        expose:
+            - "3000"
+        ports:
+            - "127.0.0.1:3001:3000"
+        restart: unless-stopped
+        depends_on:
+            backend:
+                condition: service_started
+
+    backend:
+        container_name: verivote-backend
+        restart: unless-stopped
+        build:
+            dockerfile: ./backend/Dockerfile
+        expose:
+            - "4000"
+        ports:
+            - "127.0.0.1:3002:4000"
+        depends_on:
+            database:
+                condition: service_started
 
     database:
         container_name: verivote-database
@@ -22,9 +37,9 @@ services:
         expose:
             - "27017"
         ports:
-            - "127.0.0.1:3002:27017"
+            - "127.0.0.1:3003:27017"
         restart: unless-stopped
         volumes:
             - ./database/init.d:/docker-entrypoint-initdb.d:ro
-            #- ./database/data/db:/data/db
-            #- ./database/data/log:/var/log/mongodb
+            - ./database/data/db:/data/db
+            - ./database/data/log:/var/log/mongodb

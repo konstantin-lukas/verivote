@@ -11,11 +11,17 @@ import type { Poll, PollSummary, VotingMethod } from "@/data/types";
 import { votingMethods } from "@/data/votingMethods";
 
 export async function generateMetadata(context: { params: { id: string } }) {
-    const response = await fetch(process.env.LOCAL_API_ORIGIN + "/poll/" + context.params.id);
-    const poll = await response.json();
-    return {
-        title: `${poll.name} - Verivote`,
-    };
+    try {
+        const response = await fetch(process.env.LOCAL_API_ORIGIN + "/poll/" + context.params.id);
+        const poll = await response.json();
+        return {
+            title: `${poll.name} - Verivote`,
+        };
+    } catch {
+        return  {
+            title: "Not found",
+        }
+    }
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
