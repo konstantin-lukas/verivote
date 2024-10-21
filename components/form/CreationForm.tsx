@@ -5,7 +5,7 @@ import "./CreationForm.css";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
-import { addDays, formatRFC3339, setSeconds } from "date-fns";
+import { addDays, addMinutes, formatRFC3339, setSeconds } from "date-fns";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useReducer, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -111,6 +111,16 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             onSubmit={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+
+                if (new Date(state.date) < addMinutes(new Date(), 1)) {
+                    setModal(
+                        <Modal closeButtonText="Got it">
+                            Please set a date that&#39;s at least one minute in the future.
+                        </Modal>,
+                    );
+                    return;
+                }
+
                 setDisableForm(true);
 
                 const formData = new URLSearchParams();
