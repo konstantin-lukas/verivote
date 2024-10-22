@@ -57,6 +57,7 @@ export default function ManageCards({ defaultPolls }: { defaultPolls: Poll[] }) 
                         src={illustration}
                         alt="A man holding a magnifying glass in front of a large mobile phone."
                         priority
+                        draggable={false}
                         className="mb-16 h-auto w-1/2 max-w-60"
                     />
                     <BlockLink href="/create">

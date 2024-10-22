@@ -20,7 +20,6 @@ export default async function Page() {
             headers: { Cookie: process.env.SESSION_TOKEN_NAME + "=" + auth },
         });
         if (!response.ok) {
-            console.log(response);
             notFound();
         }
         polls = await response.json();
