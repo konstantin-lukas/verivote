@@ -20,7 +20,7 @@ export async function generateMetadata(context: { params: { id: string } }) {
     } catch {
         return  {
             title: "Not found",
-        }
+        };
     }
 }
 

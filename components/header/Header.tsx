@@ -45,7 +45,7 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
                 <div className="flex h-full items-center justify-between">
                     <nav className="flex h-full items-center">
                         <Link href="/" className="h-10">
-                            <Logo className={"h-full w-auto"}/>
+                            <Logo className={"h-full w-auto"} alt="Navigate to home page"/>
                         </Link>
                     </nav>
                     <div className="flex">

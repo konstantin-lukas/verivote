@@ -13,7 +13,7 @@ export default async function NotFound() {
                 desktop:min-h-[var(--main-height)]"
             >
                 <H1>Page not found</H1>
-                <Image src={illustration} alt="Error 404 - Page not found" className="mt-8 w-[50dvmin] select-none" draggable={false} priority/>
+                <Image src={illustration} alt="" className="mt-8 w-[50dvmin] select-none" draggable={false} priority/>
             </div>
         </Wrapper>
     );

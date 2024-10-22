@@ -56,7 +56,7 @@ export default function MobileMenu() {
                         href="/"
                         onClick={() => forceSetIsOpen(false)}
                     >
-                        <Logo className="size-auto h-full w-[60dvmin]"/>
+                        <Logo className="size-auto h-full w-[60dvmin]" alt="Navigate to home page"/>
                     </Link>
                     <nav className="w-full">
                         <ul className={`flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 

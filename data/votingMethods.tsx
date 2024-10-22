@@ -23,7 +23,7 @@ export const votingMethods: VotingMethod[] = [
         infoPage: "/instant-runoff-voting",
         shorthand: "irv",
         illustration: illustrationRunoff,
-        illustrationAlt: "Illustration of a man running with a coffe cup in his hand.",
+        illustrationAlt: "A man running with a coffee cup in his hand.",
         bestFor: "Medium to large groups (5+ people) where majority support is essential, and preferences between candidates are clear.",
         pros: [
             <li key={0}>
@@ -68,7 +68,7 @@ export const votingMethods: VotingMethod[] = [
         infoPage: "/positional-voting",
         shorthand: "pos",
         illustration: illustrationPositional,
-        illustrationAlt: "Illustration of a man ranking choices on a screen.",
+        illustrationAlt: "A man ranking choices on a screen.",
         bestFor: "Medium-sized polls (5-20 people) with multiple choices, where detailed preferences matter.",
         pros: [
             <li key={0}>
@@ -113,7 +113,7 @@ export const votingMethods: VotingMethod[] = [
         infoPage: "/score-voting",
         shorthand: "scr",
         illustration: illustrationScore,
-        illustrationAlt: "Illustration of a man expressing his opinion with a star rating system.",
+        illustrationAlt: "A man expressing his opinion with a star rating system.",
         bestFor: "Medium-sized groups (5-20 people) who want more flexibility to express their intensity of preference.",
         pros: [
             <li key={0}>
@@ -157,7 +157,7 @@ export const votingMethods: VotingMethod[] = [
         infoPage: "/approval-voting",
         shorthand: "apr",
         illustration: illustrationApproval,
-        illustrationAlt: "Illustration of a woman holding up like and dislike signs.",
+        illustrationAlt: "A woman holding up like and dislike signs.",
         bestFor: "Small to medium-sized groups (up to 20 people) who want a simple poll and don’t have strong preferences.",
         pros: [
             <li key={0}>
@@ -201,7 +201,7 @@ export const votingMethods: VotingMethod[] = [
         infoPage: "/plurality-voting",
         shorthand: "plu",
         illustration: illustrationPlurality,
-        illustrationAlt: "Illustration of a woman casting a ballot at a polling station.",
+        illustrationAlt: "A woman casting a ballot at a polling station.",
         bestFor: "Small groups (less than 10 people) when simplicity important and there likely is a favorite candidate.",
         pros: [
             <li key={0}>

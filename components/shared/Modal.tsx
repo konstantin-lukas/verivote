@@ -20,6 +20,7 @@ export default function Modal({ children, closeButtonText, cancelButtonText, onC
         <dialog
             ref={dialog}
             onClose={onClose}
+            aria-modal
             className="flex max-w-[85dvw] flex-col items-center justify-center rounded-2xl border-none
             bg-neutral-100 p-8 shadow-vague sm:max-w-[30rem] dark:bg-neutral-900 dark:shadow-dark-vague"
         >

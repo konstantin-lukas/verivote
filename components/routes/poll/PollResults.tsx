@@ -150,7 +150,7 @@ export default function PollResults({ poll, results }: { poll: Poll, results: Po
                             <H2>Waiting for the first vote</H2>
                             <Image
                                 src={illustration}
-                                alt="illustration"
+                                alt="Two empty clipboards"
                                 priority
                                 className="mt-8 h-auto w-1/2 max-w-60"
                             />

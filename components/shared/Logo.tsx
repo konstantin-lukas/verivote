@@ -8,7 +8,7 @@ import React from "react";
 import logo from "@/public/verivote_logo.svg";
 import logoDark from "@/public/verivote_logo_dark.svg";
 
-export default function Logo({ className }: { className?: string }) {
+export default function Logo({ className, alt }: { className?: string, alt: string }) {
     const mounted = useHasMounted();
     const { resolvedTheme } = useTheme();
 
@@ -24,7 +24,7 @@ export default function Logo({ className }: { className?: string }) {
         <Image
             className={"select-none " + className}
             src={src}
-            alt="Verivote Logo"
+            alt={alt}
             priority
             draggable={false}
         />

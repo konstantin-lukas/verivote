@@ -21,7 +21,7 @@ export default async function Page() {
                         ></span>
                         <Image
                             src={illustration}
-                            alt="illustration"
+                            alt=""
                             priority
                             draggable={false}
                             className="absolute hidden md:bottom-0 md:right-0 md:block md:h-[115dvh] md:w-auto md:translate-x-1/3 md:translate-y-1/3"
