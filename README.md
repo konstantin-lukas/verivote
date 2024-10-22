@@ -96,9 +96,10 @@ MONGODB_HOST="database:27017"
 MONGODB_USER="verivoteUser"
 // This is the password for the above MongoDB user
 MONGODB_PASSWORD="verivotePwd"
-// If your api doesn't run on the root (e.g. api.example.com), the backend needs to know where relevant 
+// If your api doesn't run on /api, the backend needs to know where relevant 
 // slugs in the pathname are. This variable needs to be set to the amount of path segments between the origin root
 // and the api route. For example if your API runs on example.com/api, set this variable to 1.
+// Note that you cannot deploy the current frontend and backend on two different (sub)domains.
 API_BASE_PATH_LENGTH="1"
 // This is the name of the JWT token cookie. Remove the "__Secure-" prefix for development.
 SESSION_TOKEN_NAME="__Secure-next-auth.session-token"
