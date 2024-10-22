@@ -1,7 +1,6 @@
 services:
     frontend:
         container_name: verivote-frontend
-        image: verivote-frontend
         build:
             dockerfile: Dockerfile
         expose:
@@ -28,7 +27,6 @@ services:
 
     database:
         container_name: verivote-database
-        image: verivote-database
         build:
             dockerfile: ./database/Dockerfile
         environment:
