@@ -34,6 +34,10 @@ func LoadEnvironmentVariables() {
 		panic(err)
 	}
 
+	if os.Getenv("SESSION_TOKEN_NAME") == "" {
+		panic(err)
+	}
+
 	if BasePathLength, err = strconv.ParseInt(os.Getenv("API_BASE_PATH_LENGTH"), 10, 64); err != nil {
 		panic(err)
 	}

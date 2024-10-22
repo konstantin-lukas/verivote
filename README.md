@@ -100,6 +100,8 @@ MONGODB_PASSWORD="verivotePwd"
 // slugs in the pathname are. This variable needs to be set to the amount of path segments between the origin root
 // and the api route. For example if your API runs on example.com/api, set this variable to 1.
 API_BASE_PATH_LENGTH="1"
+// This is the name of the JWT token cookie. Remove the "__Secure-" prefix for development.
+SESSION_TOKEN_NAME="__Secure-next-auth.session-token"
 
 // PUBLIC ENVIRONMENT VARIABLES
 
@@ -129,6 +131,8 @@ Please make sure you replace `verivotePwd` with a strong password. Also put the 
 but equally strong password. This just ensures that the root user of the MongoDB instance is secured.
 The app doesn't actually use the root user. But if you intend to make your database directly reachable from the outside,
 a strong root password is essential.
+
+If your api doesn't run on `/api`, edit the routes in `backend/main.go`.
 
 ### Starting The Containers
 Once you have set all environment variables correctly, you can proceed to run `docker compose up`.
@@ -230,7 +234,7 @@ API specification in the OpenAPI format.
 An extra thing you will have to consider when writing your own backend is that authorization is handled by
 checking the cookies for an encrypted JWT. This means you will have to implement your own authorization.
 Specifically, you will need to write a middleware which:
-1. Reads the `next-auth.session-token` from the cookies
+1. Reads the `__Secure-next-auth.session-token` from the cookies
 2. Decrypts it using the same secret as NextAuth
 3. Decodes the JWT
 4. Checks if the JWT contains an expiration date that hasn't passed yet

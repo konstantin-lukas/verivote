@@ -17,7 +17,7 @@ import (
 func Authorize(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		tokenString, err := r.Cookie("next-auth.session-token")
+		tokenString, err := r.Cookie(os.Getenv("SESSION_TOKEN_NAME"))
 		if err != nil {
 			http.Error(w, "Invalid token", http.StatusUnauthorized)
 			return

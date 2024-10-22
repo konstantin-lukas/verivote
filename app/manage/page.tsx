@@ -13,11 +13,11 @@ export const metadata: Metadata = {
 
 export default async function Page() {
 
-    const auth = cookies().get("next-auth.session-token")?.value;
+    const auth = cookies().get(process.env.SESSION_TOKEN_NAME!)?.value;
     let polls: Poll[];
     try {
         const response = await fetch(process.env.LOCAL_API_ORIGIN + "/polls", {
-            headers: { Cookie: "next-auth.session-token=" + auth },
+            headers: { Cookie: process.env.SESSION_TOKEN_NAME + "=" + auth },
         });
         if (!response.ok) {
             console.log(response);
