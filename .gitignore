@@ -57,3 +57,6 @@ go.work.sum
 
 backend/docs
 database/data
+
+cypress.env.json
+cypress/downloads

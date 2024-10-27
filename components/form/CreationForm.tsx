@@ -79,6 +79,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                         value={o}
                         disabled={disableForm}
                         className="w-full"
+                        testId={"option" + i}
                         name={"options"}
                         maxLength={100}
                         required={true}
@@ -183,6 +184,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             <Input
                 value={state.name}
                 name="name"
+                testId="name"
                 required={true}
                 maxLength={200}
                 disabled={disableForm}
@@ -199,6 +201,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                 />
             </LocalizationProvider>
             <Checkbox
+                testId="majority"
                 onChange={(e) => dispatch({ type: "majority", value: e.target.checked })}
                 checked={state.needsMajority}
                 label="Winner needs majority: "
@@ -215,13 +218,15 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                             dispatch({ type: "optionsAdd" });
                             window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
                         }}
+                        data-cy="addOption"
                         type="button"
                         disabled={disableForm}
+                        aria-label="Add another poll option"
                     >
-                        <IoAddSharp className="size-7 transition-transform group-hover:scale-90"/>
+                        <IoAddSharp aria-hidden="true" className="size-7 transition-transform group-hover:scale-90"/>
                     </button>
                 )}
-                <BlockButton className="grow" type="submit" disabled={disableForm}>
+                <BlockButton className="grow" type="submit" disabled={disableForm} testId="submit">
                     Create
                 </BlockButton>
             </div>

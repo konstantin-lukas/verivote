@@ -3,12 +3,13 @@
 import type { ChangeEventHandler } from "react";
 import React, { useRef } from "react";
 
-export default function Checkbox({ onChange, checked, label, disabled, name }: {
+export default function Checkbox({ onChange, checked, label, disabled, name, testId }: {
     onChange: ChangeEventHandler<HTMLInputElement>
     checked: boolean,
     label: string,
     disabled?: boolean,
     name?: string,
+    testId?: string,
 }) {
     const ref = useRef(null);
     return (
@@ -37,6 +38,7 @@ export default function Checkbox({ onChange, checked, label, disabled, name }: {
                 }}
                 role="checkbox"
                 tabIndex={0}
+                data-cy={testId}
                 aria-checked={checked}
                 onKeyDown={(e) => {
                     if (e.key !== "Enter" || !ref.current) return;

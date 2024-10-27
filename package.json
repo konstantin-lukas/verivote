@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "fix": "next lint --fix"
+        "fix": "next lint --fix",
+        "cy:open": "cypress open"
     },
     "dependencies": {
         "@emotion/react": "^11.13.3",
@@ -34,6 +35,7 @@
         "@types/react-dom": "^18",
         "@types/react-transition-group": "^4.4.11",
         "@types/sortablejs": "^1.15.8",
+        "cypress": "^13.15.1",
         "eslint": "^8",
         "eslint-config-next": "14.2.13",
         "eslint-plugin-import": "^2.30.0",

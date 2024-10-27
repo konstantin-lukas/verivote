@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Input({ value, setValue, placeholder, className, disabled, required, name, maxLength }: {
+export default function Input({ value, setValue, placeholder, className, disabled, required, name, maxLength, testId }: {
     value: string,
     setValue: (value: string) => void,
     placeholder?: string,
@@ -9,12 +9,14 @@ export default function Input({ value, setValue, placeholder, className, disable
     required?: boolean,
     name?: string,
     maxLength?: number,
+    testId?: string,
 }) {
     return (
         <input
             type="text"
             value={value}
             name={name}
+            data-cy={testId}
             maxLength={maxLength}
             disabled={disabled}
             required={required}
