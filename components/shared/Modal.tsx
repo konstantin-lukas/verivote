@@ -28,7 +28,7 @@ export default function Modal({ children, closeButtonText, cancelButtonText, onC
                 {children}
             </p>
             <div className="flex gap-8">
-                <BlockButton type="button" onClick={() => {
+                <BlockButton type="button" testId="acceptBtn" onClick={() => {
                     if (!dialog.current) return;
                     dialog.current.style.display = "none";
                     dialog.current.close();
@@ -37,7 +37,7 @@ export default function Modal({ children, closeButtonText, cancelButtonText, onC
                     {closeButtonText}
                 </BlockButton>
                 {cancelButtonText && (
-                    <BlockButton type="button" onClick={() => {
+                    <BlockButton type="button" testId="cancelBtn" onClick={() => {
                         if (!dialog.current) return;
                         dialog.current.style.display = "none";
                         dialog.current.close();

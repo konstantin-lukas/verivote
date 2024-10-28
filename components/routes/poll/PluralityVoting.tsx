@@ -16,7 +16,7 @@ function PollOption({ children, selected, setSelected, idx }: {
 }) {
 
     return (
-        <li className="py-3">
+        <li className="py-3" data-cy="pollOption">
             <label className="flex cursor-pointer">
                 <input
                     type="radio"

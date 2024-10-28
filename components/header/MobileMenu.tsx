@@ -14,7 +14,12 @@ import BlockButton from "@/components/shared/BlockButton";
 import BlockLink from "@/components/shared/BlockLink";
 import Logo from "@/components/shared/Logo";
 
-function MenuLink({ href, children, closeMenu }: { href: string, children: ReactNode, closeMenu: () => void }) {
+function MenuLink({ href, children, closeMenu, testId }: {
+    href: string,
+    children: ReactNode,
+    closeMenu: () => void,
+    testId?: string;
+}) {
     return (
         <li
             className="group mt-8 flex size-full items-center justify-center first:mt-12 landscape:mt-0 landscape:first:mt-0"
@@ -22,6 +27,7 @@ function MenuLink({ href, children, closeMenu }: { href: string, children: React
             <BlockLink
                 href={href}
                 onClick={closeMenu}
+                testId={testId}
             >
                 <div className="flex w-24 items-center justify-center transition-all">
                     {children}
@@ -61,15 +67,15 @@ export default function MobileMenu() {
                     <nav className="w-full">
                         <ul className={`flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 
                         landscape:grid landscape:w-96 landscape:gap-6 ` + buttonsClass}>
-                            {session ? (<><MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account">
+                            {session ? (<><MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account" testId="account">
                                 <MdOutlinePersonOutline className="inline" size="1rem"/>
                                 <span className="ml-1">Account</span>
                             </MenuLink>
-                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create">
+                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create" testId="create">
                                 <LuBrush className="inline" size="1rem"/>
                                 <span className="ml-1">Create</span>
                             </MenuLink>
-                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/manage">
+                            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/manage" testId="manage">
                                 <HiOutlineCog6Tooth className="inline" size="1rem"/>
                                 <span className="ml-1">Manage</span>
                             </MenuLink></>) : ""}

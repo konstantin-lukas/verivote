@@ -54,17 +54,17 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
                                 <nav className="flex items-center">
                                     <ul className="flex">
                                         <li className="leading-none">
-                                            <Link href="/account" className="inline-link mr-8">
+                                            <Link href="/account" className="inline-link mr-8" data-cy="account">
                                                 Account
                                             </Link>
                                         </li>
                                         <li className="leading-none">
-                                            <Link href="/create" className="inline-link mr-8">
+                                            <Link href="/create" className="inline-link mr-8" data-cy="create">
                                                 Create
                                             </Link>
                                         </li>
                                         <li className="leading-none">
-                                            <Link href="/manage" className="inline-link mr-8">
+                                            <Link href="/manage" className="inline-link mr-8" data-cy="manage">
                                                 Manage
                                             </Link>
                                         </li>

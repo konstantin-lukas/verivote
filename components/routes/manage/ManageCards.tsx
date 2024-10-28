@@ -25,11 +25,11 @@ function PollCard({ poll }: { poll: Poll }) {
             <div>
                 <span>Closing date: {formatDate(new Date(poll.openUntil))}</span>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
-                    <BlockLink href={`/poll/${poll.id}`} className="mt-6 flex grow justify-center">
+                    <BlockLink href={`/poll/${poll.id}`} className="mt-6 flex grow justify-center" testId="viewPoll">
                         <LuEye className="mr-1 inline translate-y-[-0.1em]"/>
                         <span>View</span>
                     </BlockLink>
-                    <DeleteButton id={poll.id} />
+                    <DeleteButton id={poll.id} testId="deletePoll"/>
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@ function PollOption({ children, id, sortable, options, setOptions, disabled }: {
     disabled: boolean,
 }) {
     return (
-        <li className="flex select-none gap-4 py-3" draggable={false} data-id={id} style={{ cursor: disabled ? "wait" : "move" }}>
+        <li className="flex select-none gap-4 py-3" draggable={false} data-id={id} style={{ cursor: disabled ? "wait" : "move" }} data-cy="pollOption">
             <span
                 className="relative block w-full overflow-hidden text-ellipsis text-nowrap rounded-full bg-neutral-100 px-10
                 py-2 shadow-3d-inset placeholder:text-neutral-500 dark:bg-neutral-900 dark:shadow-dark-3d-inset"

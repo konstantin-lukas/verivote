@@ -7,12 +7,12 @@ import BlockButton from "@/components/shared/BlockButton";
 import Modal from "@/components/shared/Modal";
 import { useModal } from "@/hooks";
 
-export default function DeleteButton({ id }: { id: string }) {
+export default function DeleteButton({ id, testId }: { id: string, testId?: string }) {
     const [modal, setModal] = useModal();
     return (
         <>
             {modal}
-            <BlockButton className="mt-6 flex grow justify-center" onClick={() => {
+            <BlockButton className="mt-6 flex grow justify-center" testId={testId} onClick={() => {
                 setModal(
                     <Modal
                         closeButtonText="Yes, I'm sure"
