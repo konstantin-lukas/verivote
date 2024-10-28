@@ -49,7 +49,7 @@ Cypress.Commands.add("login", () => {
     cy.setCookie(Cypress.env("TOKEN_NAME"), Cypress.env("TOKEN"), {
         httpOnly: true,
     });
-    return cy.visit(Cypress.env("SITE_NAME"));
+    return cy.visit("/");
 });
 
 Cypress.Commands.add("logout", () => {
@@ -57,7 +57,7 @@ Cypress.Commands.add("logout", () => {
 });
 
 Cypress.Commands.add("createPoll", (type: string, options?: string[]) => {
-    cy.visit(Cypress.env("SITE_NAME") + "/create");
+    cy.visit("/create");
     cy.get("[aria-label='Select poll type']").click();
     cy.contains(type).click();
     cy.get("[data-cy=name]").type("What should we have for dinner?");

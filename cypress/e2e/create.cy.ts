@@ -8,7 +8,6 @@ describe("Create Page", () => {
         cy.get("[data-cy=deletePoll").should("have.length", 1).click();
         cy.get("[data-cy=acceptBtn").click();
         cy.get("[data-cy=deletePoll").should("have.length", 0);
-        cy.logout();
     });
     it("should allow to create an instant-runoff poll", () => {
         cy.createPoll("Instant-Runoff");

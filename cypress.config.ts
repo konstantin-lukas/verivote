@@ -5,8 +5,6 @@ export default defineConfig({
     viewportHeight: 960,
 
     e2e: {
-        setupNodeEvents(/*on, config*/) {
-            // implement node event listeners here
-        },
+        baseUrl: "http://localhost:3001",
     },
 });

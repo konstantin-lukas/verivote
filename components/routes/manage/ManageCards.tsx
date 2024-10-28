@@ -42,7 +42,7 @@ export default function ManageCards({ defaultPolls }: { defaultPolls: Poll[] }) 
         fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/polls", {
             credentials: "include",
         }).then(async (res) => await res.json()).then(data => setPolls(data)).catch(() => { /* */ });
-    });
+    }, []);
     return (
         <>
             <div className="mb-8 flex justify-center">
