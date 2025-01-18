@@ -63,7 +63,10 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         options: ["", ""],
     });
 
-    const [, formAction, formPending] = useActionState(createPoll.bind(null, state), { ok: false });
+    const [formState, formAction, formPending] = useActionState(createPoll.bind(null, state), {
+        ok: false,
+        message: "",
+    });
 
     /**
      * This effect is used instead of an initial value for the date to prevent a very rate hydration error.
@@ -77,6 +80,10 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             value: setSeconds(addDays(new Date(), 1), 0),
         });
     }, []);
+
+    useEffect(() => {
+        setModalMessage(formState.message);
+    }, [formState.message]);
 
     const [modalMessage, setModalMessage] = useState<ReactNode>(null);
 

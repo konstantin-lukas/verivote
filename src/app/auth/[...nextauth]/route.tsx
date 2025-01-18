@@ -23,6 +23,11 @@ const authOptions: AuthOptions = {
         signIn: "/signin",
     },
     callbacks: {
+        async jwt({ token, account }) {
+            if (account?.provider && token.email) token.email += account.provider;
+            if (account?.provider && token.name) token.name += account.provider;
+            return token;
+        },
         async session({ session }: { session: Session }) {
             delete session.user;
             return session;
