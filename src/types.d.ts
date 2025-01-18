@@ -20,7 +20,7 @@ export interface VotingMethod {
 export interface CreationFormState {
     method: number;
     name: string;
-    date: string;
+    date: Date;
     needsMajority: boolean;
     options: string[];
 }

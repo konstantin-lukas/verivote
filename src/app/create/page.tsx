@@ -10,20 +10,15 @@ export const metadata: Metadata = {
     title: "Create - Verivote",
 };
 
-export default async function Page({
-    searchParams,
-}: {
-    searchParams: { type?: string };
-}) {
+export default async function Page({ searchParams }: { searchParams: Promise<{ type?: string }> }) {
+    const type = (await searchParams).type;
     return (
-        <Wrapper className="flex min-h-[var(--main-height-mobile)] flex-col items-center justify-center desktop:min-h-[var(--main-height)]">
+        <Wrapper
+            className="flex min-h-[var(--main-height-mobile)] flex-col items-center justify-center
+            desktop:min-h-[var(--main-height)]"
+        >
             <H1 className="mt-28">Create a poll</H1>
-            <CreationForm
-                defaultMethod={
-                    votingMethods.find((m) => m.shorthand === searchParams.type)
-                        ?.dbId
-                }
-            />
+            <CreationForm defaultMethod={votingMethods.find((m) => m.shorthand === type)?.dbId} />
         </Wrapper>
     );
 }

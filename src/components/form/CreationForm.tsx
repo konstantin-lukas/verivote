@@ -2,16 +2,15 @@
 
 import "./CreationForm.css";
 
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
-import { addDays, addMinutes, formatRFC3339, setSeconds } from "date-fns";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useMemo, useReducer, useState } from "react";
+import { addDays, addMinutes, setSeconds } from "date-fns";
+import type { ReactNode } from "react";
+import React, { useActionState, useEffect, useMemo, useReducer, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { IoAddSharp } from "react-icons/io5";
 
+import createPoll from "@/actions/poll/create";
 import Checkbox from "@/components/form/Checkbox";
 import Dropdown from "@/components/form/Dropdown";
 import Input from "@/components/form/Input";
@@ -34,7 +33,7 @@ function reducer(
 ) {
     if (type === "method") return { ...state, method: value as number };
     if (type === "name") return { ...state, name: value as string };
-    if (type === "date") return { ...state, date: formatRFC3339(setSeconds(value as Date, 0)) };
+    if (type === "date") return { ...state, date: setSeconds(value as Date, 0) };
     if (type === "majority") return { ...state, needsMajority: value as boolean };
     if (type === "optionsChange") {
         const copy = { ...state, options: [...state.options] };
@@ -59,12 +58,12 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     const [state, dispatch] = useReducer(reducer, {
         method: defaultMethod ?? votingMethods[0].dbId,
         name: "",
-        date: "",
+        date: new Date(""),
         needsMajority: false,
         options: ["", ""],
     });
 
-    const [disableForm, setDisableForm] = useState(false);
+    const [, formAction, formPending] = useActionState(createPoll.bind(null, state), { ok: false });
 
     /**
      * This effect is used instead of an initial value for the date to prevent a very rate hydration error.
@@ -75,9 +74,11 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     useEffect(() => {
         dispatch({
             type: "date",
-            value: formatRFC3339(setSeconds(addDays(new Date(), 1), 0)),
+            value: setSeconds(addDays(new Date(), 1), 0),
         });
     }, []);
+
+    const [modalMessage, setModalMessage] = useState<ReactNode>(null);
 
     const options = useMemo(() => {
         return state.options.map((o, i) => {
@@ -85,7 +86,8 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                 <div key={i} className="relative mt-4">
                     <Input
                         value={o}
-                        disabled={disableForm}
+                        valid={o.length > 0 && o.length <= 100}
+                        disabled={formPending}
                         className="w-full"
                         testId={"option" + i}
                         name={"options"}
@@ -98,7 +100,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                         <button
                             className="group absolute right-4 top-1/2 -translate-y-1/2"
                             onClick={() => dispatch({ type: "optionsDelete", index: i })}
-                            disabled={disableForm}
+                            disabled={formPending}
                             type="button"
                         >
                             <IoMdClose className="size-6 transition-colors group-hover:text-rose-500" />
@@ -107,162 +109,125 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                 </div>
             );
         });
-    }, [state, disableForm]);
+    }, [state, formPending]);
 
-    const router = useRouter();
+    const pollTypeSelect = (
+        <Dropdown
+            options={votingMethods.map((m) => m.name)}
+            defaultOption={votingMethods.findIndex((v) => v.dbId === (defaultMethod ?? votingMethods[0].dbId))}
+            disabled={formPending}
+            getValue={(index: number) =>
+                dispatch({
+                    type: "method",
+                    value: votingMethods[index].dbId,
+                })
+            }
+            ariaLabel={"Select poll type"}
+        />
+    );
+
+    const pollName = (
+        <Input
+            value={state.name}
+            name="name"
+            testId="name"
+            valid={state.name.length > 0 && state.name.length <= 200}
+            required={true}
+            maxLength={200}
+            disabled={formPending}
+            setValue={(value) => dispatch({ type: "name", value })}
+            placeholder="Poll name"
+        />
+    );
+
+    const datePicker = (
+        <MobileDateTimePicker
+            value={state.date}
+            minDateTime={addMinutes(new Date(), 1)}
+            ampmInClock
+            onChange={(date) => dispatch({ type: "date", value: date ?? new Date() })}
+            disabled={formPending}
+        />
+    );
+
+    const needsMajorityCheckbox = (
+        <Checkbox
+            testId="majority"
+            onChange={(e) => dispatch({ type: "majority", value: e.target.checked })}
+            checked={state.needsMajority}
+            label="Winner needs majority: "
+            disabled={formPending}
+            name="majority"
+        />
+    );
+
+    const formButtons = (
+        <div className="mt-6 flex gap-6">
+            {state.options.length < parseInt(process.env.NEXT_PUBLIC_MAX_OPTIONS_PER_POLL ?? "20") && (
+                <button
+                    className="group flex size-10 items-center justify-center rounded-full shadow-3d
+                        transition-shadow hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
+                    onClick={() => {
+                        dispatch({ type: "optionsAdd" });
+                        window.scrollTo({
+                            top: document.body.scrollHeight,
+                            behavior: "smooth",
+                        });
+                    }}
+                    type="button"
+                    disabled={formPending}
+                    aria-label="Add another poll option"
+                >
+                    <IoAddSharp aria-hidden="true" className="size-7 transition-transform group-hover:scale-90" />
+                </button>
+            )}
+            <BlockButton className="grow" type="submit" disabled={formPending} testId="submit">
+                Create
+            </BlockButton>
+        </div>
+    );
+
+    const loadingIndicator = formPending && (
+        <>
+            <div
+                className="pointer-events-none absolute left-1/2 top-1/2 box-content size-full -translate-x-1/2
+                            -translate-y-1/2 bg-neutral-100/50 p-4 dark:bg-neutral-900/50"
+            />
+            <div
+                className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-100 p-4
+                            shadow-vague dark:bg-neutral-900 dark:shadow-dark-vague"
+            >
+                <AiOutlineLoading3Quarters className="size-20 animate-spin text-verivote-turquoise" />
+            </div>
+        </>
+    );
 
     return (
         <form
-            method="post"
-            action={process.env.NEXT_PUBLIC_API_ORIGIN + "/poll"}
+            action={formAction}
             className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-auto"
-            onSubmit={async (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-
-                if (new Date(state.date) < addMinutes(new Date(), 1)) {
-                    alert(
-                        <Modal closeButtonText="Got it">
-                            Please set a date that&#39;s at least one minute in the future.
-                        </Modal>,
-                    );
-                    return;
-                }
-
-                setDisableForm(true);
-
-                const formData = new URLSearchParams();
-                formData.set("name", state.name);
-                formData.set("date", state.date);
-                if (state.needsMajority) formData.set("majority", "on");
-                state.options.forEach((o) => {
-                    formData.append("options", o);
-                });
-                formData.set("votingMethod", state.method.toString());
-
-                try {
-                    const response = await fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/poll", {
-                        credentials: "include",
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                        body: formData,
-                    });
-                    if (!response.ok) {
-                        setDisableForm(false);
-                        alert(
-                            <Modal closeButtonText="Got it">
-                                An error occurred while sending your request. Please try again later.
-                            </Modal>,
-                        );
-                        return;
-                    }
-
-                    const location = response.headers.get("Location");
-                    if (
-                        !process.env.NEXT_PUBLIC_ORIGIN ||
-                        !location?.startsWith(process.env.NEXT_PUBLIC_ORIGIN + "/poll")
-                    ) {
-                        setDisableForm(false);
-                        alert(
-                            <Modal closeButtonText="Got it">
-                                The server created your poll but responded with an invalid location. This could be a
-                                technical issue. Please only follow this link if it is on our server: <br />
-                                {location}
-                            </Modal>,
-                        );
-                    } else {
-                        router.push(location);
-                    }
-                } catch {
-                    setDisableForm(false);
-                    alert(
-                        <Modal closeButtonText="Got it">
-                            A network error occurred. Unable to submit form. Please try again later.
-                        </Modal>,
-                    );
+            onSubmit={(e) => {
+                if (
+                    state.name.length === 0 ||
+                    state.name.length > 200 ||
+                    new Date(state.date) < addMinutes(new Date(), 1) ||
+                    !state.options.every((x) => x.length > 0 && x.length <= 100)
+                ) {
+                    e.preventDefault();
+                    setModalMessage("Please only provide valid values.");
                 }
             }}
         >
-            <Dropdown
-                options={votingMethods.map((m) => m.name)}
-                defaultOption={votingMethods.findIndex((v) => v.dbId === (defaultMethod ?? votingMethods[0].dbId))}
-                disabled={disableForm}
-                getValue={(index: number) =>
-                    dispatch({
-                        type: "method",
-                        value: votingMethods[index].dbId,
-                    })
-                }
-                ariaLabel={"Select poll type"}
-            />
-            <Input
-                value={state.name}
-                name="name"
-                testId="name"
-                required={true}
-                maxLength={200}
-                disabled={disableForm}
-                setValue={(value) => dispatch({ type: "name", value })}
-                placeholder="Poll name"
-            />
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <MobileDateTimePicker
-                    value={new Date(state.date)}
-                    minDate={new Date()}
-                    ampmInClock
-                    onChange={(date) => dispatch({ type: "date", value: date ?? new Date() })}
-                    disabled={disableForm}
-                />
-            </LocalizationProvider>
-            <Checkbox
-                testId="majority"
-                onChange={(e) => dispatch({ type: "majority", value: e.target.checked })}
-                checked={state.needsMajority}
-                label="Winner needs majority: "
-                disabled={disableForm}
-                name="majority"
-            />
+            {pollTypeSelect}
+            {pollName}
+            {datePicker}
+            {needsMajorityCheckbox}
             {options}
-            <div className="mt-6 flex gap-6">
-                {state.options.length < parseInt(process.env.NEXT_PUBLIC_MAX_OPTIONS_PER_POLL ?? "20") && (
-                    <button
-                        className="group flex size-10 items-center justify-center rounded-full shadow-3d
-                        transition-shadow hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
-                        onClick={() => {
-                            dispatch({ type: "optionsAdd" });
-                            window.scrollTo({
-                                top: document.body.scrollHeight,
-                                behavior: "smooth",
-                            });
-                        }}
-                        data-cy="addOption"
-                        type="button"
-                        disabled={disableForm}
-                        aria-label="Add another poll option"
-                    >
-                        <IoAddSharp aria-hidden="true" className="size-7 transition-transform group-hover:scale-90" />
-                    </button>
-                )}
-                <BlockButton className="grow" type="submit" disabled={disableForm} testId="submit">
-                    Create
-                </BlockButton>
-            </div>
-            {disableForm && (
-                <>
-                    <div
-                        className="pointer-events-none absolute left-1/2 top-1/2 box-content size-full -translate-x-1/2
-                            -translate-y-1/2 bg-neutral-100/50 p-4 dark:bg-neutral-900/50"
-                    />
-                    <div
-                        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-100 p-4
-                            shadow-vague dark:bg-neutral-900 dark:shadow-dark-vague"
-                    >
-                        <AiOutlineLoading3Quarters className="size-20 animate-spin text-verivote-turquoise" />
-                    </div>
-                </>
-            )}
+            {formButtons}
+            {loadingIndicator}
+            <Modal closeButtonText="Got it" setChildren={setModalMessage}>
+                {modalMessage}
+            </Modal>
         </form>
     );
 }

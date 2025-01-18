@@ -20,10 +20,7 @@ export default function Checkbox({
 }) {
     const ref = useRef(null);
     return (
-        <label
-            className="mt-4 flex items-center justify-between"
-            style={{ cursor: disabled ? "wait" : "pointer" }}
-        >
+        <label className="mt-4 flex items-center justify-between" style={{ cursor: disabled ? "wait" : "pointer" }}>
             <span className="mr-4">{label}</span>
             <input
                 ref={ref}
@@ -43,15 +40,14 @@ export default function Checkbox({
                     backgroundColor: disabled ? "gray" : undefined,
                     borderColor: disabled ? "gray" : undefined,
                 }}
+                aria-label="Winner needs majority"
                 role="checkbox"
                 tabIndex={0}
                 data-cy={testId}
                 aria-checked={checked}
                 onKeyDown={(e) => {
                     if (e.key !== "Enter" || !ref.current) return;
-                    (ref.current as HTMLInputElement).checked = !(
-                        ref.current as HTMLInputElement
-                    ).checked;
+                    (ref.current as HTMLInputElement).checked = !(ref.current as HTMLInputElement).checked;
                 }}
             >
                 <span

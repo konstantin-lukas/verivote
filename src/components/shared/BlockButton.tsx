@@ -11,9 +11,7 @@ export default function ButtonLink({
     testId,
 }: {
     children: React.ReactNode;
-    onClick?:
-        | MouseEventHandler<HTMLButtonElement>
-        | KeyboardEventHandler<HTMLButtonElement>;
+    onClick?: MouseEventHandler<HTMLButtonElement> | KeyboardEventHandler<HTMLButtonElement>;
     className?: string;
     tabIndex?: number;
     type?: "submit" | "reset" | "button";
@@ -31,9 +29,7 @@ export default function ButtonLink({
             transition-shadow hover:shadow-3d-both dark:bg-neutral-900 dark:shadow-dark-3d 
             dark:hover:shadow-dark-3d-both ${className ?? ""}`}
         >
-            <span className="m-0 block font-medium transition-transform group-hover:scale-95">
-                {children}
-            </span>
+            <span className="m-0 block font-medium transition-transform group-hover:scale-95">{children}</span>
         </button>
     );
 }

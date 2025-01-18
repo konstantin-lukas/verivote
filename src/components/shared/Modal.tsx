@@ -1,63 +1,41 @@
-"use client";
-
-import type { ReactEventHandler } from "react";
-import React, { useEffect, useRef } from "react";
+import { Modal as MUIModal } from "@mui/material";
+import type { ReactNode } from "react";
+import React from "react";
 
 import BlockButton from "@/components/shared/BlockButton";
 
 export default function Modal({
     children,
+    setChildren,
     closeButtonText,
     cancelButtonText,
-    onClose,
-    onAccept,
 }: {
-    children: React.ReactNode;
-    closeButtonText: string;
+    children?: ReactNode;
+    setChildren: (m: ReactNode) => void;
+    closeButtonText?: string;
     cancelButtonText?: string;
-    onClose?: ReactEventHandler<HTMLDialogElement>;
-    onAccept?: () => void;
 }) {
-    const dialog = useRef<HTMLDialogElement>(null);
-    useEffect(() => {
-        dialog.current?.showModal();
-    }, [dialog]);
+    const close = () => setChildren(null);
     return (
-        <dialog
-            ref={dialog}
-            onClose={onClose}
-            aria-modal
-            className="flex max-w-[85dvw] flex-col items-center justify-center rounded-2xl border-none
-            bg-neutral-100 p-8 shadow-vague sm:max-w-[30rem] dark:bg-neutral-900 dark:shadow-dark-vague"
-        >
-            <p className="mb-6 text-center">{children}</p>
-            <div className="flex gap-8">
-                <BlockButton
-                    type="button"
-                    testId="acceptBtn"
-                    onClick={() => {
-                        if (!dialog.current) return;
-                        dialog.current.style.display = "none";
-                        dialog.current.close();
-                        if (typeof onAccept === "function") onAccept();
-                    }}
-                >
-                    {closeButtonText}
-                </BlockButton>
-                {cancelButtonText && (
-                    <BlockButton
-                        type="button"
-                        testId="cancelBtn"
-                        onClick={() => {
-                            if (!dialog.current) return;
-                            dialog.current.style.display = "none";
-                            dialog.current.close();
-                        }}
-                    >
-                        {cancelButtonText}
-                    </BlockButton>
-                )}
-            </div>
-        </dialog>
+        <MUIModal open={!!children} onClose={close} className="flex items-center justify-center">
+            <aside
+                className="flex max-w-[85dvw] flex-col items-center justify-center rounded-2xl border-none bg-neutral-100
+                p-8 shadow-vague sm:max-w-[30rem] dark:bg-neutral-900 dark:shadow-dark-vague"
+            >
+                <p className="mb-6 text-center">{children}</p>
+                <div className="flex gap-8">
+                    {closeButtonText && (
+                        <BlockButton type="button" testId="acceptBtn" onClick={close}>
+                            {closeButtonText}
+                        </BlockButton>
+                    )}
+                    {cancelButtonText && (
+                        <BlockButton type="button" testId="cancelBtn" onClick={close}>
+                            {cancelButtonText}
+                        </BlockButton>
+                    )}
+                </div>
+            </aside>
+        </MUIModal>
     );
 }
