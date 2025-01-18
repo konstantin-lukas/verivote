@@ -2,10 +2,11 @@ import "@/app/globals.css";
 
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
+import { getServerSession } from "next-auth";
 import { ThemeProvider } from "next-themes";
 import React, { type ReactNode } from "react";
 
-// import { getServerSession } from "next-auth";
+import Header from "@/components/header/Header";
 import SessionProvider from "@/components/providers/SessionProvider";
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default async function RootLayout({
 }: Readonly<{
     children: ReactNode;
 }>) {
-    // const session = await getServerSession();
+    const session = await getServerSession();
 
     return (
         <html
@@ -40,7 +41,7 @@ export default async function RootLayout({
                     enableSystem={true}
                 >
                     <SessionProvider basePath="/auth">
-                        {/*<Header signedIn={!!session}/>*/}
+                        <Header signedIn={!!session} />
                         <main>{children}</main>
                         {/*<Footer/>*/}
                     </SessionProvider>
