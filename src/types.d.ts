@@ -1,6 +1,8 @@
 import type { StaticImageData } from "next/image";
 import type { ReactNode } from "react";
 
+import type { VotingType } from "./enums";
+
 export interface VotingMethod {
     name: string;
     shortDescription: string;
@@ -18,7 +20,7 @@ export interface VotingMethod {
 }
 
 export interface CreationFormState {
-    method: number;
+    method: VotingType;
     name: string;
     date: Date;
     needsMajority: boolean;

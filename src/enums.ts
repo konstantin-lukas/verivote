@@ -1,0 +1,7 @@
+export enum VotingType {
+    INSTANT_RUNOFF_VOTING = 0,
+    POSITIONAL_VOTING = 1,
+    SCORE_VOTING = 2,
+    APPROVAL_VOTING = 3,
+    PLURALITY_VOTING = 4,
+}
