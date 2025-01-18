@@ -19,9 +19,9 @@ const authOptions: AuthOptions = {
             clientSecret: process.env.REDDIT_SECRET ?? "",
         }),
     ],
-    // pages: {
-    //     signIn: "/signin",
-    // },
+    pages: {
+        signIn: "/signin",
+    },
     callbacks: {
         async session({ session }: { session: Session }) {
             delete session.user;
