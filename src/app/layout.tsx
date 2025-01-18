@@ -2,11 +2,10 @@ import "@/app/globals.css";
 
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
-// import { getServerSession } from "next-auth";
 import { ThemeProvider } from "next-themes";
-import type { ReactNode } from "react";
-import React from "react";
+import React, { type ReactNode } from "react";
 
+// import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/providers/SessionProvider";
 
 export const metadata: Metadata = {
