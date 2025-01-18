@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { ThemeProvider } from "next-themes";
 import React, { type ReactNode } from "react";
 
+import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import SessionProvider from "@/components/providers/SessionProvider";
 
@@ -43,7 +44,7 @@ export default async function RootLayout({
                     <SessionProvider basePath="/auth">
                         <Header signedIn={!!session} />
                         <main>{children}</main>
-                        {/*<Footer/>*/}
+                        <Footer />
                     </SessionProvider>
                 </ThemeProvider>
             </body>
