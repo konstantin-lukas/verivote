@@ -31,16 +31,9 @@ export default async function RootLayout({
     const session = await getServerSession();
 
     return (
-        <html
-            lang="en"
-            suppressHydrationWarning={true}
-            className={jost.className}
-        >
+        <html lang="en" suppressHydrationWarning={true} className={jost.className}>
             <body className="bg-neutral-100 dark:bg-neutral-900">
-                <ThemeProvider
-                    attribute="data-color-scheme"
-                    enableSystem={true}
-                >
+                <ThemeProvider attribute="data-color-scheme" enableSystem={true}>
                     <SessionProvider basePath="/auth">
                         <Header signedIn={!!session} />
                         <main>{children}</main>
