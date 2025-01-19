@@ -9,11 +9,15 @@ export default function Modal({
     setChildren,
     closeButtonText,
     cancelButtonText,
+    onCancel,
+    onClose,
 }: {
     children?: ReactNode;
     setChildren: (m: ReactNode) => void;
     closeButtonText?: string;
     cancelButtonText?: string;
+    onCancel?: () => void;
+    onClose?: () => void;
 }) {
     const close = () => setChildren(null);
     return (
@@ -25,12 +29,26 @@ export default function Modal({
                 <p className="mb-6 text-center">{children}</p>
                 <div className="flex gap-8">
                     {closeButtonText && (
-                        <BlockButton type="button" testId="acceptBtn" onClick={close}>
+                        <BlockButton
+                            type="button"
+                            testId="acceptBtn"
+                            onClick={() => {
+                                if (onClose) onClose();
+                                close();
+                            }}
+                        >
                             {closeButtonText}
                         </BlockButton>
                     )}
                     {cancelButtonText && (
-                        <BlockButton type="button" testId="cancelBtn" onClick={close}>
+                        <BlockButton
+                            type="button"
+                            testId="cancelBtn"
+                            onClick={() => {
+                                if (onCancel) onCancel();
+                                close();
+                            }}
+                        >
                             {cancelButtonText}
                         </BlockButton>
                     )}
