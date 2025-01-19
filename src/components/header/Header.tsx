@@ -16,7 +16,6 @@ import Wrapper from "@/components/shared/Wrapper";
 const fullConfig = resolveConfig(tailwindConfig);
 
 export default function Header({ signedIn }: { signedIn: boolean }) {
-    //const { status } = useSession();
     const [isDesktop, setIsDesktop] = useState(true);
     useEffect(() => {
         setIsDesktop(
@@ -43,69 +42,48 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
 
     if (!isDesktop) return <MobileMenu />;
 
+    const signedInComponents = signedIn && (
+        <nav className="flex items-center">
+            <ul className="flex">
+                <li className="leading-none">
+                    <Link href="/account" className="inline-link mr-8" data-cy="account">
+                        Account
+                    </Link>
+                </li>
+                <li className="leading-none">
+                    <Link href="/create" className="inline-link mr-8" data-cy="create">
+                        Create
+                    </Link>
+                </li>
+                <li className="leading-none">
+                    <Link href="/manage" className="inline-link mr-8" data-cy="manage">
+                        Manage
+                    </Link>
+                </li>
+            </ul>
+        </nav>
+    );
+
     return (
-        <header className="relative flex h-header justify-center bg-neutral-100 shadow-header dark:bg-neutral-900 dark:shadow-dark-header">
+        <header className="relative flex h-header justify-center bg-neutral-100 shadow-header transition-all dark:bg-neutral-900 dark:shadow-dark-header">
             <Wrapper>
                 <div className="flex h-full items-center justify-between">
                     <nav className="flex h-full items-center">
                         <Link href="/" className="h-10">
-                            <Logo
-                                className={"h-full w-auto"}
-                                alt="Navigate to home page"
-                            />
+                            <Logo className="h-full w-auto" alt="Navigate to home page" />
                         </Link>
                     </nav>
                     <div className="flex">
-                        {signedIn && (
-                            <nav className="flex items-center">
-                                <ul className="flex">
-                                    <li className="leading-none">
-                                        <Link
-                                            href="/account"
-                                            className="inline-link mr-8"
-                                            data-cy="account"
-                                        >
-                                            Account
-                                        </Link>
-                                    </li>
-                                    <li className="leading-none">
-                                        <Link
-                                            href="/create"
-                                            className="inline-link mr-8"
-                                            data-cy="create"
-                                        >
-                                            Create
-                                        </Link>
-                                    </li>
-                                    <li className="leading-none">
-                                        <Link
-                                            href="/manage"
-                                            className="inline-link mr-8"
-                                            data-cy="manage"
-                                        >
-                                            Manage
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </nav>
-                        )}
+                        {signedInComponents}
                         <ThemeToggle className="mr-8 size-10" />
-                        <BlockButton
-                            onClick={
-                                signedIn
-                                    ? () => signOut({ callbackUrl: "/" })
-                                    : () => signIn()
-                            }
-                        >
+                        <BlockButton onClick={signedIn ? () => signOut({ callbackUrl: "/" }) : () => signIn()}>
                             <span className="flex items-center justify-center">
                                 {signedIn ? (
                                     <MdLogout className="inline" size="1rem" />
                                 ) : (
                                     <MdLogin className="inline" size="1rem" />
                                 )}
-                                <span className="ml-1">
-                                    {signedIn ? "Sign Out" : "Sign In"}
-                                </span>
+                                <span className="ml-1">{signedIn ? "Sign Out" : "Sign In"}</span>
                             </span>
                         </BlockButton>
                     </div>

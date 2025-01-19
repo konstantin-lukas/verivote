@@ -33,7 +33,7 @@ export default async function RootLayout({
 
     return (
         <html lang="en" suppressHydrationWarning={true} className={jost.className}>
-            <body className="bg-neutral-100 dark:bg-neutral-900">
+            <body className="bg-neutral-100 transition-colors dark:bg-neutral-900">
                 <ThemeProvider attribute="data-color-scheme" enableSystem={true}>
                     <SessionProvider basePath="/auth">
                         <LocalizationProvider>

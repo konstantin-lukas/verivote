@@ -5,12 +5,7 @@ import type { ReactNode } from "react";
 import React, { useRef } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { LuBrush } from "react-icons/lu";
-import {
-    MdArrowBack,
-    MdLogin,
-    MdLogout,
-    MdOutlinePersonOutline,
-} from "react-icons/md";
+import { MdArrowBack, MdLogin, MdLogout, MdOutlinePersonOutline } from "react-icons/md";
 import { RiMenu5Fill } from "react-icons/ri";
 import { CSSTransition } from "react-transition-group";
 
@@ -33,9 +28,7 @@ function MenuLink({
     return (
         <li className="group mt-8 flex size-full items-center justify-center first:mt-12 landscape:mt-0 landscape:first:mt-0">
             <BlockLink href={href} onClick={closeMenu} testId={testId}>
-                <div className="flex w-24 items-center justify-center transition-all">
-                    {children}
-                </div>
+                <div className="flex w-24 items-center justify-center transition-all">{children}</div>
             </BlockLink>
         </li>
     );
@@ -50,65 +43,34 @@ export default function MobileMenu() {
     const buttonsClass = `landscape:grid-cols-${session ? 2 : 1}`;
     return (
         <header className="relative z-50">
-            <CSSTransition
-                in={isOpen}
-                timeout={200}
-                nodeRef={menuRef}
-                classNames="menu"
-                unmountOnExit
-            >
+            <CSSTransition in={isOpen} timeout={200} nodeRef={menuRef} classNames="menu" unmountOnExit>
                 <div
                     ref={menuRef}
                     className="fixed left-0 top-0 flex h-dvh w-dvw flex-col items-center justify-center bg-neutral-100
-                    dark:bg-neutral-900"
+                    transition-colors dark:bg-neutral-900"
                 >
                     <Link href="/" onClick={() => forceSetIsOpen(false)}>
-                        <Logo
-                            className="size-auto h-full w-[60dvmin]"
-                            alt="Navigate to home page"
-                        />
+                        <Logo className="size-auto h-full w-[60dvmin]" alt="Navigate to home page" />
                     </Link>
                     <nav className="w-full">
                         <ul
                             className={
                                 `flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 
-                        landscape:grid landscape:w-96 landscape:gap-6 ` +
-                                buttonsClass
+                                landscape:grid landscape:w-96 landscape:gap-6 ` + buttonsClass
                             }
                         >
                             {session ? (
                                 <>
-                                    <MenuLink
-                                        closeMenu={() => forceSetIsOpen(false)}
-                                        href="/account"
-                                        testId="account"
-                                    >
-                                        <MdOutlinePersonOutline
-                                            className="inline"
-                                            size="1rem"
-                                        />
+                                    <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account" testId="account">
+                                        <MdOutlinePersonOutline className="inline" size="1rem" />
                                         <span className="ml-1">Account</span>
                                     </MenuLink>
-                                    <MenuLink
-                                        closeMenu={() => forceSetIsOpen(false)}
-                                        href="/create"
-                                        testId="create"
-                                    >
-                                        <LuBrush
-                                            className="inline"
-                                            size="1rem"
-                                        />
+                                    <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create" testId="create">
+                                        <LuBrush className="inline" size="1rem" />
                                         <span className="ml-1">Create</span>
                                     </MenuLink>
-                                    <MenuLink
-                                        closeMenu={() => forceSetIsOpen(false)}
-                                        href="/manage"
-                                        testId="manage"
-                                    >
-                                        <HiOutlineCog6Tooth
-                                            className="inline"
-                                            size="1rem"
-                                        />
+                                    <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/manage" testId="manage">
+                                        <HiOutlineCog6Tooth className="inline" size="1rem" />
                                         <span className="ml-1">Manage</span>
                                     </MenuLink>
                                 </>
@@ -116,29 +78,14 @@ export default function MobileMenu() {
                                 ""
                             )}
                             <li className="group mt-8 flex size-full items-center justify-center landscape:mt-0">
-                                <BlockButton
-                                    onClick={
-                                        !session
-                                            ? () => signIn()
-                                            : () =>
-                                                  signOut({ callbackUrl: "/" })
-                                    }
-                                >
+                                <BlockButton onClick={!session ? () => signIn() : () => signOut({ callbackUrl: "/" })}>
                                     <span className="flex w-24 items-center justify-center transition-all">
                                         {!session ? (
-                                            <MdLogin
-                                                className="inline"
-                                                size="1rem"
-                                            />
+                                            <MdLogin className="inline" size="1rem" />
                                         ) : (
-                                            <MdLogout
-                                                className="inline"
-                                                size="1rem"
-                                            />
+                                            <MdLogout className="inline" size="1rem" />
                                         )}
-                                        <span className="ml-1">
-                                            {!session ? "Sign In" : "Sign Out"}
-                                        </span>
+                                        <span className="ml-1">{!session ? "Sign In" : "Sign Out"}</span>
                                     </span>
                                 </BlockButton>
                             </li>
@@ -163,10 +110,7 @@ export default function MobileMenu() {
                     unmountOnExit
                 >
                     <span ref={closeIconRef} className="absolute left-0 top-0">
-                        <MdArrowBack
-                            size="2.5rem"
-                            className="fill-dark-font dark:fill-light-font"
-                        />
+                        <MdArrowBack size="2.5rem" className="fill-dark-font dark:fill-light-font" />
                     </span>
                 </CSSTransition>
 
@@ -178,10 +122,7 @@ export default function MobileMenu() {
                     unmountOnExit
                 >
                     <span ref={openIconRef} className="absolute left-0 top-0">
-                        <RiMenu5Fill
-                            size="2.5rem"
-                            className="fill-dark-font dark:fill-light-font"
-                        />
+                        <RiMenu5Fill size="2.5rem" className="fill-dark-font dark:fill-light-font" />
                     </span>
                 </CSSTransition>
             </button>

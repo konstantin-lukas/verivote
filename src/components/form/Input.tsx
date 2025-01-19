@@ -34,8 +34,8 @@ export default function Input({
             required={required}
             placeholder={placeholder}
             onInput={(e) => setValue((e.target as HTMLInputElement).value)}
-            className={`rounded-full bg-neutral-100 px-10 py-2 shadow-3d-inset placeholder:text-neutral-500
-                dark:bg-neutral-900 dark:shadow-dark-3d-inset ${className ?? ""} 
+            className={`rounded-full bg-neutral-100 px-10 py-2 shadow-3d-inset transition-all
+                placeholder:text-neutral-500 dark:bg-neutral-900 dark:shadow-dark-3d-inset ${className ?? ""} 
                 ${typeof valid !== "undefined" && !valid && "outline-rose-500"}`}
         />
     );
