@@ -1,12 +1,12 @@
 import Image from "next/image";
 import React from "react";
 
-import illustration from "@/../public/undraw_election_day_w842.svg";
 import Card from "@/components/routes/home/Card";
 import H1 from "@/components/shared/H1";
 import ScrollDownButton from "@/components/shared/ScrollButton";
 import Wrapper from "@/components/shared/Wrapper";
 import { votingMethods } from "@/content/votingMethods";
+import illustration from "@/public/undraw_election_day_w842.svg";
 
 export default async function Page() {
     return (

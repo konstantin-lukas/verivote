@@ -4,12 +4,12 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { LuBrush, LuEye } from "react-icons/lu";
 
-import illustration from "@/../public/undraw_the_search_s0xf.svg";
 import DeleteButton from "@/components/routes/manage/DeleteButton";
 import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
 import H2 from "@/components/shared/H2";
 import { votingMethods } from "@/content/votingMethods";
+import illustration from "@/public/undraw_the_search_s0xf.svg";
 import type { Poll } from "@/types";
 import { formatDate } from "@/utils";
 
