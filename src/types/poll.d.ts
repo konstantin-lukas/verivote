@@ -1,6 +1,7 @@
 import type { VotingMethod } from "@/enums";
 
 export interface Poll {
+    id?: string;
     creationTime?: Date;
     closingTime: Date;
     userIdentifier?: string;
@@ -17,5 +18,5 @@ export interface PollSummary {
     winners: number[];
     options: string[];
     results: number[];
-    closingDate: string;
+    closingDate: Date;
 }
