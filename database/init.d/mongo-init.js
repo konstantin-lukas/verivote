@@ -8,28 +8,36 @@ db.createCollection("polls", {
         $jsonSchema: {
             bsonType: "object",
             title: "Poll Validation",
-            required: ["creationTime", "openUntil", "userIdentifier", "name", "options", "majority", "method"],
+            required: [
+                "creationTime",
+                "closingTime",
+                "userIdentifier",
+                "title",
+                "options",
+                "winnerNeedsMajority",
+                "votingMethod",
+            ],
             properties: {
                 creationTime: {
                     bsonType: "date",
                 },
-                openUntil: {
+                closingTime: {
                     bsonType: "date",
                 },
                 userIdentifier: {
                     bsonType: "string",
                 },
-                name: {
+                title: {
                     bsonType: "string",
                 },
                 options: {
                     bsonType: "array",
                     items: { bsonType: "string" },
                 },
-                majority: {
+                winnerNeedsMajority: {
                     bsonType: "bool",
                 },
-                method: {
+                votingMethod: {
                     bsonType: "int",
                 },
             },

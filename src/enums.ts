@@ -1,4 +1,4 @@
-export enum VotingType {
+export enum VotingMethod {
     INSTANT_RUNOFF_VOTING = 0,
     POSITIONAL_VOTING = 1,
     SCORE_VOTING = 2,

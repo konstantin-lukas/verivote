@@ -3,7 +3,7 @@ import React from "react";
 
 import ManageCards from "@/components/routes/manage/ManageCards";
 import Wrapper from "@/components/shared/Wrapper";
-import type { Poll } from "@/types";
+import type { Poll } from "@/types/poll";
 
 export const metadata: Metadata = {
     title: "Manage - Verivote",

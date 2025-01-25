@@ -17,7 +17,8 @@ import Input from "@/components/form/Input";
 import BlockButton from "@/components/shared/BlockButton";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
-import type { CreationFormState } from "@/types";
+import type { CreationFormState } from "@/types/poll";
+import { validateClosingTime, validateOption, validateOptions, validateTitle } from "@/validation/poll";
 
 function reducer(
     state: CreationFormState,
@@ -31,10 +32,10 @@ function reducer(
         index?: number;
     },
 ) {
-    if (type === "method") return { ...state, method: value as number };
-    if (type === "name") return { ...state, name: value as string };
-    if (type === "date") return { ...state, date: setSeconds(value as Date, 0) };
-    if (type === "majority") return { ...state, needsMajority: value as boolean };
+    if (type === "method") return { ...state, votingMethod: value as number };
+    if (type === "title") return { ...state, title: value as string };
+    if (type === "date") return { ...state, closingTime: setSeconds(value as Date, 0) };
+    if (type === "majority") return { ...state, winnerNeedsMajority: value as boolean };
     if (type === "optionsChange") {
         const copy = { ...state, options: [...state.options] };
         copy.options[index as number] = value as string;
@@ -56,10 +57,10 @@ function reducer(
 
 export default function CreationForm({ defaultMethod }: { defaultMethod?: number }) {
     const [state, dispatch] = useReducer(reducer, {
-        method: defaultMethod ?? votingMethods[0].dbId,
-        name: "",
-        date: new Date(""),
-        needsMajority: false,
+        votingMethod: defaultMethod ?? votingMethods[0].dbId,
+        title: "",
+        closingTime: new Date(""),
+        winnerNeedsMajority: false,
         options: ["", ""],
     });
 
@@ -93,7 +94,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                 <div key={i} className="relative mt-4">
                     <Input
                         value={o}
-                        valid={o.length > 0 && o.length <= 100}
+                        valid={validateOption(o)}
                         disabled={formPending}
                         className="w-full"
                         testId={"option" + i}
@@ -129,27 +130,27 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                     value: votingMethods[index].dbId,
                 })
             }
-            ariaLabel={"Select poll type"}
+            ariaLabel="Select poll type"
         />
     );
 
     const pollName = (
         <Input
-            value={state.name}
-            name="name"
-            testId="name"
-            valid={state.name.length > 0 && state.name.length <= 200}
+            value={state.title}
+            name="title"
+            testId="title"
+            valid={validateTitle(state.title)}
             required={true}
             maxLength={200}
             disabled={formPending}
-            setValue={value => dispatch({ type: "name", value })}
-            placeholder="Poll name"
+            setValue={value => dispatch({ type: "title", value })}
+            placeholder="Poll title"
         />
     );
 
     const datePicker = (
         <MobileDateTimePicker
-            value={state.date}
+            value={state.closingTime}
             minDateTime={addMinutes(new Date(), 1)}
             ampmInClock
             onChange={date => dispatch({ type: "date", value: date ?? new Date() })}
@@ -161,7 +162,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         <Checkbox
             testId="majority"
             onChange={e => dispatch({ type: "majority", value: e.target.checked })}
-            checked={state.needsMajority}
+            checked={state.winnerNeedsMajority}
             label="Winner needs majority: "
             disabled={formPending}
             name="majority"
@@ -215,10 +216,9 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-auto"
             onSubmit={e => {
                 if (
-                    state.name.length === 0 ||
-                    state.name.length > 200 ||
-                    new Date(state.date) < addMinutes(new Date(), 1) ||
-                    !state.options.every(x => x.length > 0 && x.length <= 100)
+                    !validateTitle(state.title) ||
+                    !validateClosingTime(new Date(state.closingTime)) ||
+                    !validateOptions(state.options)
                 ) {
                     e.preventDefault();
                     setModalMessage("Please only provide valid values.");

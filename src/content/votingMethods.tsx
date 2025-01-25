@@ -1,15 +1,15 @@
 import Link from "next/link";
 import React from "react";
 
-import { VotingType } from "@/enums";
+import { VotingMethod } from "@/enums";
 import illustrationScore from "@/public/undraw_feedback_re_urmj.svg";
 import illustrationRunoff from "@/public/undraw_jogging_re_k28i.svg";
 import illustrationApproval from "@/public/undraw_like_dislike_re_dwcj.svg";
 import illustrationPositional from "@/public/undraw_upvote_re_qn2k.svg";
 import illustrationPlurality from "@/public/undraw_voting_nvu7.svg";
-import type { VotingMethod } from "@/types";
+import type { VotingMethodDetails } from "@/types";
 
-export const votingMethods: VotingMethod[] = [
+export const votingMethods: VotingMethodDetails[] = [
     {
         name: "Instant-Runoff",
         shortDescription:
@@ -71,7 +71,7 @@ export const votingMethods: VotingMethod[] = [
         ],
         tag: "Recommended",
         learnMoreLink: "https://en.wikipedia.org/wiki/Instant-runoff_voting",
-        dbId: VotingType.INSTANT_RUNOFF_VOTING,
+        dbId: VotingMethod.INSTANT_RUNOFF_VOTING,
     },
     {
         name: "Positional Voting",
@@ -134,7 +134,7 @@ export const votingMethods: VotingMethod[] = [
         ],
         tag: "Recommended",
         learnMoreLink: "https://en.wikipedia.org/wiki/Positional_voting",
-        dbId: VotingType.POSITIONAL_VOTING,
+        dbId: VotingMethod.POSITIONAL_VOTING,
     },
     {
         name: "Score Voting",
@@ -198,7 +198,7 @@ export const votingMethods: VotingMethod[] = [
             </li>,
         ],
         learnMoreLink: "https://en.wikipedia.org/wiki/Score_voting",
-        dbId: VotingType.SCORE_VOTING,
+        dbId: VotingMethod.SCORE_VOTING,
     },
     {
         name: "Approval Voting",
@@ -258,7 +258,7 @@ export const votingMethods: VotingMethod[] = [
             </li>,
         ],
         learnMoreLink: "https://en.wikipedia.org/wiki/Approval_voting",
-        dbId: VotingType.APPROVAL_VOTING,
+        dbId: VotingMethod.APPROVAL_VOTING,
     },
     {
         name: "Plurality Voting",
@@ -316,6 +316,6 @@ export const votingMethods: VotingMethod[] = [
             </li>,
         ],
         learnMoreLink: "https://en.wikipedia.org/wiki/Plurality_voting",
-        dbId: VotingType.PLURALITY_VOTING,
+        dbId: VotingMethod.PLURALITY_VOTING,
     },
 ];
