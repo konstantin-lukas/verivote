@@ -17,11 +17,11 @@ import Input from "@/components/form/Input";
 import BlockButton from "@/components/shared/BlockButton";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
-import type { CreationFormState } from "@/types/poll";
+import type { Poll } from "@/types/poll";
 import { validateClosingTime, validateOption, validateOptions, validateTitle } from "@/validation/poll";
 
 function reducer(
-    state: CreationFormState,
+    state: Poll,
     {
         type,
         value,
