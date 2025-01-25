@@ -1,12 +1,13 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import mongo from "@/database";
+import insertPoll from "@/database/insertPoll";
 import type { CreationFormState, Poll } from "@/types/poll";
 import { validatePoll } from "@/validation/poll";
 
-export default async function createPoll(formData: CreationFormState) {
+export default async function create(formData: CreationFormState) {
     const session = await getServerSession();
     if (!session?.user?.email) {
         return { ok: false, message: "Invalid credentials." };
@@ -26,9 +27,11 @@ export default async function createPoll(formData: CreationFormState) {
         return { ok: false, message: "Invalid form values." };
     }
 
-    const db = mongo.db("verivote");
-    const polls = db.collection("polls");
-    await polls.insertOne(newPoll);
-
-    return { ok: true, message: "Poll created successfully." };
+    let id;
+    try {
+        id = await insertPoll(newPoll);
+    } catch {
+        return { ok: false, message: "An unknown error occurred." };
+    }
+    redirect(`/poll/${id}`);
 }
