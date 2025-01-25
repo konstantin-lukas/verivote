@@ -10,6 +10,7 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import LocalizationProvider from "@/components/providers/LocalizationProvider";
 import SessionProvider from "@/components/providers/SessionProvider";
+import MuiThemeProvider from "@/components/providers/ThemeProvider";
 
 export const metadata: Metadata = {
     title: "Verivote - Voting Matters",
@@ -35,13 +36,15 @@ export default async function RootLayout({
         <html lang="en" suppressHydrationWarning={true} className={jost.className}>
             <body className="bg-neutral-100 transition-colors dark:bg-neutral-900">
                 <ThemeProvider attribute="data-color-scheme" enableSystem={true}>
-                    <SessionProvider basePath="/auth">
-                        <LocalizationProvider>
-                            <Header signedIn={!!session} />
-                            <main>{children}</main>
-                            <Footer />
-                        </LocalizationProvider>
-                    </SessionProvider>
+                    <MuiThemeProvider>
+                        <SessionProvider basePath="/auth">
+                            <LocalizationProvider>
+                                <Header signedIn={!!session} />
+                                <main>{children}</main>
+                                <Footer />
+                            </LocalizationProvider>
+                        </SessionProvider>
+                    </MuiThemeProvider>
                 </ThemeProvider>
             </body>
         </html>
