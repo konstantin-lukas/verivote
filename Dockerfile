@@ -4,20 +4,15 @@ WORKDIR /home/node/verivote
 
 RUN apk add --no-cache libc6-compat
 
-COPY app app
-COPY components components
-COPY data data
+COPY src src
 COPY public public
 COPY package.json .
 COPY package-lock.json .
-COPY .env.local .
-COPY hooks.ts .
-COPY middleware.ts .
+COPY .env .
 COPY next.config.mjs .
 COPY postcss.config.mjs .
 COPY tailwind.config.ts .
 COPY tsconfig.json .
-COPY utils.tsx .
 
 RUN npm ci
 

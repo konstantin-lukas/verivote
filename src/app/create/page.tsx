@@ -18,7 +18,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
             desktop:min-h-[var(--main-height)]"
         >
             <H1 className="mt-28">Create a poll</H1>
-            <CreationForm defaultMethod={votingMethods.find((m) => m.shorthand === type)?.dbId} />
+            <CreationForm defaultMethod={votingMethods.find(m => m.shorthand === type)?.dbId} />
         </Wrapper>
     );
 }
