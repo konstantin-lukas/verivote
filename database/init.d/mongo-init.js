@@ -8,7 +8,7 @@ db.createCollection("polls", {
         $jsonSchema: {
             bsonType: "object",
             title: "Poll Validation",
-            required: ["creationTime", "openUntil", "userEmail", "name", "options", "majority", "method"],
+            required: ["creationTime", "openUntil", "userIdentifier", "name", "options", "majority", "method"],
             properties: {
                 creationTime: {
                     bsonType: "date",
@@ -16,7 +16,7 @@ db.createCollection("polls", {
                 openUntil: {
                     bsonType: "date",
                 },
-                userEmail: {
+                userIdentifier: {
                     bsonType: "string",
                 },
                 name: {
@@ -68,6 +68,10 @@ db.createRole({
         {
             resource: { db: "verivote", collection: "votes" },
             actions: ["find", "update", "insert", "remove"],
+        },
+        {
+            resource: { db: "verivote", collection: "" },
+            actions: ["listCollections"],
         },
     ],
     roles: [],
