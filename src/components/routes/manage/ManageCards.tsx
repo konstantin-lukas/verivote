@@ -14,7 +14,7 @@ import type { Poll } from "@/types";
 import { formatDate } from "@/utils";
 
 function PollCard({ poll }: { poll: Poll }) {
-    const info = votingMethods.find((x) => x.dbId === poll.method);
+    const info = votingMethods.find(x => x.dbId === poll.method);
     return (
         <div className="flex flex-col justify-between">
             <div>
@@ -42,8 +42,8 @@ export default function ManageCards({ defaultPolls }: { defaultPolls: Poll[] }) 
         fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/polls", {
             credentials: "include",
         })
-            .then(async (res) => await res.json())
-            .then((data) => setPolls(data))
+            .then(async res => await res.json())
+            .then(data => setPolls(data))
             .catch(() => {
                 /* */
             });
@@ -54,7 +54,7 @@ export default function ManageCards({ defaultPolls }: { defaultPolls: Poll[] }) 
                 <H1>{polls.length === 0 ? "No polls found" : "Edit your polls"}</H1>
             </div>
             <div className="grid gap-12 md:grid-cols-2 lg:gap-24">
-                {polls.map((x) => (
+                {polls.map(x => (
                     <PollCard key={x.id} poll={x} />
                 ))}
             </div>

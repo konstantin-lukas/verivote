@@ -6,13 +6,7 @@ import React from "react";
 
 import ButtonLink from "@/components/shared/BlockButton";
 
-export default function SignInButton({
-    serviceName,
-    children,
-}: {
-    serviceName: string;
-    children: ReactNode;
-}) {
+export default function SignInButton({ serviceName, children }: { serviceName: string; children: ReactNode }) {
     return (
         <ButtonLink
             onClick={() => signIn(serviceName)}

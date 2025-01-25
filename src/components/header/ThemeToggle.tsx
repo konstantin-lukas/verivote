@@ -14,9 +14,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
             className={className + " group"}
             aria-label="Toggle theme"
             onClick={() => {
-                setTheme(
-                    hasMounted && resolvedTheme === "dark" ? "light" : "dark",
-                );
+                setTheme(hasMounted && resolvedTheme === "dark" ? "light" : "dark");
             }}
         >
             {hasMounted && resolvedTheme === "dark" ? (

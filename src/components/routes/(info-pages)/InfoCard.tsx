@@ -14,12 +14,7 @@ function List({ heading, children }: { heading: string; children: ReactNode }) {
     const color = heading === "Advantages" ? "text-green-600" : "text-red-600";
     return (
         <div className="mt-14 first:mt-4 dark:border-light-font">
-            <span
-                className={
-                    "flex items-center relative rounded-full -top-1.5 text-2xl font-bold uppercase " +
-                    color
-                }
-            >
+            <span className={"flex items-center relative rounded-full -top-1.5 text-2xl font-bold uppercase " + color}>
                 {heading === "Advantages" ? (
                     <BiSolidUpvote className="mr-2 inline" />
                 ) : (
@@ -44,11 +39,7 @@ function List({ heading, children }: { heading: string; children: ReactNode }) {
     );
 }
 
-export default function InfoCard({
-    votingMethod,
-}: {
-    votingMethod: VotingMethod;
-}) {
+export default function InfoCard({ votingMethod }: { votingMethod: VotingMethod }) {
     return (
         <div className="mb-48 mt-32">
             <div className="mb-12">
@@ -67,8 +58,7 @@ export default function InfoCard({
                         />
                         <p className="mb-6">{votingMethod.longDescription}</p>
                         <p>
-                            <b className="font-bold">Best for:</b>{" "}
-                            {votingMethod.bestFor}
+                            <b className="font-bold">Best for:</b> {votingMethod.bestFor}
                         </p>
                     </div>
                 </div>
@@ -85,10 +75,7 @@ export default function InfoCard({
                     href={"/create?type=" + votingMethod.shorthand}
                     className="inline-flex w-full justify-center sm:w-auto"
                 >
-                    <LuBrush
-                        className="relative top-[-.1rem] inline"
-                        size="1rem"
-                    />
+                    <LuBrush className="relative top-[-.1rem] inline" size="1rem" />
                     <span className="ml-1">Start a poll</span>
                 </BlockLink>
                 <BlockLink
@@ -96,10 +83,7 @@ export default function InfoCard({
                     className="inline-flex w-full justify-center sm:w-auto"
                     target={"_blank"}
                 >
-                    <RiExternalLinkLine
-                        className="relative top-[-.1rem] inline"
-                        size="1rem"
-                    />
+                    <RiExternalLinkLine className="relative top-[-.1rem] inline" size="1rem" />
                     <span className="ml-1">Learn More</span>
                 </BlockLink>
             </div>

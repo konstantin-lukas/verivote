@@ -7,18 +7,9 @@ import type { VotingMethod } from "@/types";
 
 export const metadata: Metadata = {
     title: "Plurality Voting - Verivote",
-    description: votingMethods.find((x) => x.name === "Plurality Voting")
-        ?.shortDescription,
+    description: votingMethods.find(x => x.name === "Plurality Voting")?.shortDescription,
 };
 
 export default async function Page() {
-    return (
-        <InfoCard
-            votingMethod={
-                votingMethods.find(
-                    (x) => x.name === "Plurality Voting",
-                ) as VotingMethod
-            }
-        />
-    );
+    return <InfoCard votingMethod={votingMethods.find(x => x.name === "Plurality Voting") as VotingMethod} />;
 }

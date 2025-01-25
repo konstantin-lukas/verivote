@@ -45,7 +45,7 @@ export default function Checkbox({
                 tabIndex={0}
                 data-cy={testId}
                 aria-checked={checked}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                     if (e.key !== "Enter" || !ref.current) return;
                     (ref.current as HTMLInputElement).checked = !(ref.current as HTMLInputElement).checked;
                 }}

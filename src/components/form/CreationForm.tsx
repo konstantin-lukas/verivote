@@ -100,7 +100,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                         name={"options"}
                         maxLength={100}
                         required={true}
-                        setValue={(value) => dispatch({ type: "optionsChange", value, index: i })}
+                        setValue={value => dispatch({ type: "optionsChange", value, index: i })}
                         placeholder={"Option " + (i + 1)}
                     />
                     {i > 1 && (
@@ -120,8 +120,8 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
 
     const pollTypeSelect = (
         <Dropdown
-            options={votingMethods.map((m) => m.name)}
-            defaultOption={votingMethods.findIndex((v) => v.dbId === (defaultMethod ?? votingMethods[0].dbId))}
+            options={votingMethods.map(m => m.name)}
+            defaultOption={votingMethods.findIndex(v => v.dbId === (defaultMethod ?? votingMethods[0].dbId))}
             disabled={formPending}
             getValue={(index: number) =>
                 dispatch({
@@ -142,7 +142,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             required={true}
             maxLength={200}
             disabled={formPending}
-            setValue={(value) => dispatch({ type: "name", value })}
+            setValue={value => dispatch({ type: "name", value })}
             placeholder="Poll name"
         />
     );
@@ -152,7 +152,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             value={state.date}
             minDateTime={addMinutes(new Date(), 1)}
             ampmInClock
-            onChange={(date) => dispatch({ type: "date", value: date ?? new Date() })}
+            onChange={date => dispatch({ type: "date", value: date ?? new Date() })}
             disabled={formPending}
         />
     );
@@ -160,7 +160,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     const needsMajorityCheckbox = (
         <Checkbox
             testId="majority"
-            onChange={(e) => dispatch({ type: "majority", value: e.target.checked })}
+            onChange={e => dispatch({ type: "majority", value: e.target.checked })}
             checked={state.needsMajority}
             label="Winner needs majority: "
             disabled={formPending}
@@ -213,12 +213,12 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         <form
             action={formAction}
             className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-auto"
-            onSubmit={(e) => {
+            onSubmit={e => {
                 if (
                     state.name.length === 0 ||
                     state.name.length > 200 ||
                     new Date(state.date) < addMinutes(new Date(), 1) ||
-                    !state.options.every((x) => x.length > 0 && x.length <= 100)
+                    !state.options.every(x => x.length > 0 && x.length <= 100)
                 ) {
                     e.preventDefault();
                     setModalMessage("Please only provide valid values.");

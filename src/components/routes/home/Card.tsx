@@ -34,17 +34,10 @@ export default function Card({ votingMethod }: { votingMethod: VotingMethod }) {
             </div>
             <div>
                 <p>
-                    <b className="font-bold">Best for:</b>{" "}
-                    {votingMethod.bestFor}
+                    <b className="font-bold">Best for:</b> {votingMethod.bestFor}
                 </p>
-                <BlockLink
-                    href={votingMethod.infoPage}
-                    className="mt-8 flex justify-center"
-                >
-                    <MdArrowForward
-                        className="relative top-[-.1rem] inline"
-                        size="1rem"
-                    />
+                <BlockLink href={votingMethod.infoPage} className="mt-8 flex justify-center">
+                    <MdArrowForward className="relative top-[-.1rem] inline" size="1rem" />
                     <span className="ml-1">Learn more</span>
                 </BlockLink>
             </div>

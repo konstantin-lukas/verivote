@@ -7,12 +7,9 @@ import { RiDiscordLine, RiGithubLine } from "react-icons/ri";
 import SignInButton from "@/components/routes/auth/SignInButton";
 import Wrapper from "@/components/shared/Wrapper";
 
-export default async function SignIn(context: {
-    searchParams: Promise<{ callbackUrl: string }>;
-}) {
+export default async function SignIn(context: { searchParams: Promise<{ callbackUrl: string }> }) {
     const session = await getServerSession();
-    if (session?.user)
-        redirect((await context.searchParams)?.callbackUrl ?? "/");
+    if (session?.user) redirect((await context.searchParams)?.callbackUrl ?? "/");
     return (
         <div className="flex min-h-[var(--main-height-mobile)] items-center justify-center desktop:min-h-[var(--main-height)]">
             <Wrapper>
