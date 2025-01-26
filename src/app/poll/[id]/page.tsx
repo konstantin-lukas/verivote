@@ -40,9 +40,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         }),
     ]);
 
-    if (!poll) {
-        notFound();
-    }
+    if (!poll) notFound();
     const matchingInfo = votingMethods.find(x => x.dbId === poll.votingMethod);
     if (!matchingInfo) notFound();
 
