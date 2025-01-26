@@ -5,6 +5,7 @@ import { LuChartPie } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
 
 import RankedVoting from "@/components/routes/poll/RankedVoting";
+import ScoreVoting from "@/components/routes/poll/ScoreVoting";
 import ShareButton from "@/components/routes/poll/ShareButton";
 import BlockButton from "@/components/shared/BlockButton";
 import H1 from "@/components/shared/H1";
@@ -16,7 +17,6 @@ import { formatDate } from "@/utils";
 
 export default function ViewController({
     poll,
-    results,
     info,
     defaultHasVoted,
 }: {
@@ -81,9 +81,9 @@ export default function ViewController({
                     ["Instant-Runoff", "Positional Voting"].includes(info.name) && (
                         <RankedVoting poll={poll} setHasVoted={setHasVoted} />
                     )}
-                {/*{date >= new Date() && !hasVoted && !showResults && info.name === "Score Voting" && (*/}
-                {/*    <ScoreVoting poll={poll} setHasVoted={setHasVoted} />*/}
-                {/*)}*/}
+                {date >= new Date() && !hasVoted && !showResults && info.name === "Score Voting" && (
+                    <ScoreVoting poll={poll} setHasVoted={setHasVoted} />
+                )}
                 {/*{date >= new Date() && !hasVoted && !showResults && info.name === "Approval Voting" && (*/}
                 {/*    <ApprovalVoting poll={poll} setHasVoted={setHasVoted} />*/}
                 {/*)}*/}

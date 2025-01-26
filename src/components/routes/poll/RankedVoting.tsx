@@ -83,7 +83,7 @@ function PollOption({
     );
 }
 
-export default function RankedVoting({ poll, setHasVoted }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
+export default function RankedVoting({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
     const [options, setOptions] = useState(poll.options.map((_, i) => i.toString()));
     const [sortable, setSortable] = useState<Sortable>();
     const [disabled, setDisabled] = useState(false);
