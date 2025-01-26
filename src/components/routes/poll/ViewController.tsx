@@ -5,6 +5,7 @@ import { LuChartPie } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
 
 import ApprovalVoting from "@/components/routes/poll/ApprovalVoting";
+import PluralityVoting from "@/components/routes/poll/PluralityVoting";
 import RankedVoting from "@/components/routes/poll/RankedVoting";
 import ScoreVoting from "@/components/routes/poll/ScoreVoting";
 import ShareButton from "@/components/routes/poll/ShareButton";
@@ -88,9 +89,9 @@ export default function ViewController({
                 {date >= new Date() && !hasVoted && !showResults && info.name === "Approval Voting" && (
                     <ApprovalVoting poll={poll} setHasVoted={setHasVoted} />
                 )}
-                {/*{date >= new Date() && !hasVoted && !showResults && info.name === "Plurality Voting" && (*/}
-                {/*    <PluralityVoting poll={poll} setHasVoted={setHasVoted} />*/}
-                {/*)}*/}
+                {date >= new Date() && !hasVoted && !showResults && info.name === "Plurality Voting" && (
+                    <PluralityVoting poll={poll} setHasVoted={setHasVoted} />
+                )}
                 {/*{(date < new Date() || hasVoted || showResults) && <PollResults poll={poll} results={pollResults} />}*/}
             </WrapperSmall>
         </>
