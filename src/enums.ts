@@ -5,3 +5,9 @@ export enum VotingMethod {
     APPROVAL_VOTING = 3,
     PLURALITY_VOTING = 4,
 }
+
+export enum Provider {
+    DISCORD = "discord",
+    GITHUB = "github",
+    REDDIT = "reddit",
+}

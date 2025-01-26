@@ -11,6 +11,7 @@ export default function Modal({
     cancelButtonText,
     onCancel,
     onClose,
+    highlightCloseButton,
 }: {
     children?: ReactNode;
     setChildren: (m: ReactNode) => void;
@@ -18,6 +19,7 @@ export default function Modal({
     cancelButtonText?: string;
     onCancel?: () => void;
     onClose?: () => void;
+    highlightCloseButton?: boolean;
 }) {
     const close = () => setChildren(null);
     return (
@@ -32,6 +34,7 @@ export default function Modal({
                         <BlockButton
                             type="button"
                             testId="acceptBtn"
+                            className={highlightCloseButton ? "text-rose-500" : ""}
                             onClick={() => {
                                 if (onClose) onClose();
                                 close();

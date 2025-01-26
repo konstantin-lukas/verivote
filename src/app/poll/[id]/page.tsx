@@ -7,13 +7,13 @@ import BlockLink from "@/components/shared/BlockLink";
 import H3 from "@/components/shared/H3";
 import WrapperSmall from "@/components/shared/WrapperSmall";
 import { votingMethods } from "@/content/votingMethods";
-import findPoll from "@/database/findPoll";
+import { findPollById } from "@/database/poll";
 import { VotingMethod } from "@/enums";
 import type { PollSummary } from "@/types/poll";
 
 export async function generateMetadata(context: { params: Promise<{ id: string }> }) {
     const id = (await context.params).id;
-    const poll = await findPoll(id);
+    const poll = await findPollById(id);
     if (poll) {
         return {
             title: `${poll.title} - Verivote`,
@@ -27,7 +27,7 @@ export async function generateMetadata(context: { params: Promise<{ id: string }
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const [poll, hasVoted, results] = await Promise.all([
-        await findPoll(id),
+        await findPollById(id),
         Promise.resolve(false),
         Promise.resolve<PollSummary>({
             title: "string",

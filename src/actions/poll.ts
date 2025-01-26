@@ -1,22 +1,24 @@
 "use server";
 
+import { ObjectId } from "bson";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 
-import insertPoll from "@/database/insertPoll";
+import mongo from "@/database/connection";
+import { insertPoll } from "@/database/poll";
 import type { Poll } from "@/types/poll";
+import { getUserIdentifier } from "@/utils";
 import { validatePoll } from "@/validation/poll";
 
-export default async function create(formData: Poll) {
-    const session = await getServerSession();
-    if (!session?.user?.email) {
+export async function createPoll(formData: Poll) {
+    const userIdentifier = await getUserIdentifier();
+    if (!userIdentifier) {
         return { ok: false, message: "Invalid credentials." };
     }
 
     const newPoll: Poll = {
         creationTime: new Date(),
         closingTime: formData.closingTime,
-        userIdentifier: session.user.email,
+        userIdentifier,
         title: formData.title,
         options: formData.options,
         winnerNeedsMajority: formData.winnerNeedsMajority,
@@ -34,4 +36,17 @@ export default async function create(formData: Poll) {
         return { ok: false, message: "An unknown error occurred." };
     }
     redirect(`/poll/${id}`);
+}
+
+/**
+ * @returns whether the poll was deleted
+ */
+export async function deletePoll(id: string) {
+    const userIdentifier = await getUserIdentifier();
+    if (!userIdentifier) return false;
+
+    const database = mongo.db("verivote");
+    const polls = database.collection("polls");
+    const result = await polls.deleteOne({ _id: new ObjectId(id), userIdentifier });
+    return result.deletedCount === 1;
 }

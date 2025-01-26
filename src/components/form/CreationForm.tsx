@@ -10,7 +10,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { IoAddSharp } from "react-icons/io5";
 
-import createPoll from "@/actions/poll/create";
+import { createPoll } from "@/actions/poll";
 import Checkbox from "@/components/form/Checkbox";
 import Dropdown from "@/components/form/Dropdown";
 import Input from "@/components/form/Input";

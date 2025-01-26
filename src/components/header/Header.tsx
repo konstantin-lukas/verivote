@@ -51,7 +51,7 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
                     </Link>
                 </li>
                 <li className="leading-none">
-                    <Link href="/create" className="inline-link mr-8" data-cy="create">
+                    <Link href="/create" className="inline-link mr-8" data-cy="poll">
                         Create
                     </Link>
                 </li>

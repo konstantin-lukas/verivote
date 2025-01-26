@@ -65,7 +65,7 @@ export default function MobileMenu() {
                                         <MdOutlinePersonOutline className="inline" size="1rem" />
                                         <span className="ml-1">Account</span>
                                     </MenuLink>
-                                    <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create" testId="create">
+                                    <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create" testId="poll">
                                         <LuBrush className="inline" size="1rem" />
                                         <span className="ml-1">Create</span>
                                     </MenuLink>

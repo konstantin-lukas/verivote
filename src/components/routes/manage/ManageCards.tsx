@@ -1,64 +1,81 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import React, { useState } from "react";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { LuBrush, LuEye } from "react-icons/lu";
 
-import DeleteButton from "@/components/routes/manage/DeleteButton";
+import { deletePoll } from "@/actions/poll";
+import BlockButton from "@/components/shared/BlockButton";
 import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
 import H2 from "@/components/shared/H2";
+import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
 import illustration from "@/public/undraw_the_search_s0xf.svg";
-import type { Poll } from "@/types";
+import type { Poll } from "@/types/poll";
 import { formatDate } from "@/utils";
 
-function PollCard({ poll }: { poll: Poll }) {
-    const info = votingMethods.find(x => x.dbId === poll.method);
+function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () => void }) {
+    const info = votingMethods.find(x => x.dbId === poll.votingMethod);
     return (
         <div className="flex flex-col justify-between">
             <div>
-                <H2>{poll.name}</H2>
+                <H2>{poll.title}</H2>
                 <span className="mb-2 block text-xl font-bold uppercase">{info?.name}</span>
                 <p>Options: {poll.options.join(", ")}</p>
             </div>
             <div>
-                <span>Closing date: {formatDate(new Date(poll.openUntil))}</span>
+                <span>Closing date: {formatDate(poll.closingTime)}</span>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
                     <BlockLink href={`/poll/${poll.id}`} className="mt-6 flex grow justify-center" testId="viewPoll">
                         <LuEye className="mr-1 inline translate-y-[-0.1em]" />
                         <span>View</span>
                     </BlockLink>
-                    <DeleteButton id={poll.id} testId="deletePoll" />
+                    <BlockButton
+                        className="mt-6 flex grow justify-center"
+                        testId="deletePoll"
+                        onClick={setModalContent}
+                    >
+                        <FaRegTrashAlt className="mr-1 inline translate-y-[-0.1em]" />
+                        <span>Delete</span>
+                    </BlockButton>
                 </div>
             </div>
         </div>
     );
 }
 
-export default function ManageCards({ defaultPolls }: { defaultPolls: Poll[] }) {
-    const [polls, setPolls] = useState(defaultPolls);
-    useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/polls", {
-            credentials: "include",
-        })
-            .then(async res => await res.json())
-            .then(data => setPolls(data))
-            .catch(() => {
-                /* */
-            });
-    }, []);
+export default function ManageCards({ polls }: { polls: Poll[] }) {
+    const [remainingPolls, setRemainingPolls] = useState(polls);
+    const [modalState, setModalState] = useState<{ message: ReactNode; deleteAction: () => void }>({
+        message: null,
+        deleteAction: () => null,
+    });
     return (
         <>
             <div className="mb-8 flex justify-center">
-                <H1>{polls.length === 0 ? "No polls found" : "Edit your polls"}</H1>
+                <H1>{remainingPolls.length === 0 ? "No polls found" : "Edit your polls"}</H1>
             </div>
             <div className="grid gap-12 md:grid-cols-2 lg:gap-24">
-                {polls.map(x => (
-                    <PollCard key={x.id} poll={x} />
+                {remainingPolls.map(poll => (
+                    <PollCard
+                        key={poll.id}
+                        poll={poll}
+                        setModalContent={() => {
+                            setModalState({
+                                message: `Are you sure you want to delete the poll titled "${poll.title}"?`,
+                                deleteAction: async () => {
+                                    await deletePoll(poll.id!);
+                                    setRemainingPolls(prevState => prevState.filter(p => p.id !== poll.id));
+                                },
+                            });
+                        }}
+                    />
                 ))}
             </div>
-            {polls.length === 0 && (
+            {remainingPolls.length === 0 && (
                 <div className="flex w-full flex-col items-center justify-center">
                     <Image
                         src={illustration}
@@ -73,6 +90,15 @@ export default function ManageCards({ defaultPolls }: { defaultPolls: Poll[] }) 
                     </BlockLink>
                 </div>
             )}
+            <Modal
+                closeButtonText="Delete"
+                cancelButtonText="Cancel"
+                highlightCloseButton={true}
+                onClose={modalState.deleteAction}
+                setChildren={() => setModalState({ message: null, deleteAction: () => null })}
+            >
+                {modalState.message}
+            </Modal>
         </>
     );
 }
