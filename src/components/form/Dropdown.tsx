@@ -33,7 +33,7 @@ function Dropdown({
                         key={index}
                         role="option"
                         aria-selected="false"
-                        className="mt-4 cursor-pointer rounded-full px-10 py-2 shadow-3d-inset first:mt-0 dark:shadow-dark-3d-inset"
+                        className="mt-4 cursor-pointer rounded-full px-10 py-2 inset-shadow-3d first:mt-0 dark:inset-shadow-dark-3d"
                         tabIndex={0}
                         onKeyDown={e => {
                             if (e.key === " " || e.key === "Enter") setSelected();

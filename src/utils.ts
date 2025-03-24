@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { getServerSession } from "next-auth";
 
 import { Provider } from "@/enums";
+import type { Result } from "@/types";
 
 export function formatDate(date: Date) {
     return format(date, "dd LLLL yyyy hh:mm aa (OOOO)");
@@ -21,4 +22,13 @@ export async function getUserIdentifier() {
     const isValidIdentifier = providers.some(provider => identifier.endsWith(provider));
     if (!isValidIdentifier) return null;
     return identifier;
+}
+
+export async function tryCatch<T, E = Error>(promise: Promise<T>): Promise<Result<T, E>> {
+    try {
+        const data = await promise;
+        return [data, null];
+    } catch (error) {
+        return [null, error as E];
+    }
 }

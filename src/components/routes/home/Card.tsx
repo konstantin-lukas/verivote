@@ -4,9 +4,9 @@ import { MdArrowForward } from "react-icons/md";
 
 import BlockLink from "@/components/shared/BlockLink";
 import H2 from "@/components/shared/H2";
-import type { VotingMethod } from "@/types";
+import type { VotingMethodDetails } from "@/types";
 
-export default function Card({ votingMethod }: { votingMethod: VotingMethod }) {
+export default function Card({ votingMethod }: { votingMethod: VotingMethodDetails }) {
     return (
         <div className="flex flex-col justify-between">
             <div>

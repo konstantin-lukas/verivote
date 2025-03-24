@@ -23,7 +23,6 @@ const config = [
             "next/typescript",
             "plugin:import/recommended",
             "plugin:jsx-a11y/recommended",
-            "plugin:tailwindcss/recommended",
             "plugin:@typescript-eslint/strict",
             "plugin:@typescript-eslint/stylistic",
             "prettier",

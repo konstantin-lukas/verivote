@@ -8,7 +8,7 @@ import { RiExternalLinkLine } from "react-icons/ri";
 import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
 import H2 from "@/components/shared/H2";
-import type { VotingMethod } from "@/types";
+import type { VotingMethodDetails } from "@/types";
 
 function List({ heading, children }: { heading: string; children: ReactNode }) {
     const color = heading === "Advantages" ? "text-green-600" : "text-red-600";
@@ -39,7 +39,7 @@ function List({ heading, children }: { heading: string; children: ReactNode }) {
     );
 }
 
-export default function InfoCard({ votingMethod }: { votingMethod: VotingMethod }) {
+export default function InfoCard({ votingMethod }: { votingMethod: VotingMethodDetails }) {
     return (
         <div className="mb-48 mt-32">
             <div className="mb-12">
@@ -81,7 +81,7 @@ export default function InfoCard({ votingMethod }: { votingMethod: VotingMethod 
                 <BlockLink
                     href={votingMethod.learnMoreLink}
                     className="inline-flex w-full justify-center sm:w-auto"
-                    target={"_blank"}
+                    target="_blank"
                 >
                     <RiExternalLinkLine className="relative top-[-.1rem] inline" size="1rem" />
                     <span className="ml-1">Learn More</span>

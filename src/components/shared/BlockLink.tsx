@@ -19,7 +19,7 @@ export default function BlockLink({
     return (
         <Link
             href={href}
-            className={`group inline-block rounded-full bg-neutral-100 px-10 py-2
+            className={`group block rounded-full bg-neutral-100 px-10 py-2 
                 font-medium shadow-3d transition-all hover:shadow-3d-both dark:bg-neutral-900 dark:shadow-dark-3d 
                 dark:hover:shadow-dark-3d-both ${className ?? ""}`}
             onClick={onClick}

@@ -11,7 +11,7 @@ import illustration from "@/public/undraw_election_day_w842.svg";
 export default async function Page() {
     return (
         <div>
-            <div className="h-dvh w-full overflow-hidden shadow-xl desktop:h-[var(--main-height-front)]">
+            <div className="h-dvh w-full overflow-hidden shadow-xl desktop:h-main-height-front">
                 <Wrapper className="h-full">
                     <div className="relative flex h-full items-center">
                         <span

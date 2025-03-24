@@ -11,15 +11,15 @@ export default async function SignIn(context: { searchParams: Promise<{ callback
     const session = await getServerSession();
     if (session?.user) redirect((await context.searchParams)?.callbackUrl ?? "/");
     return (
-        <div className="flex min-h-[var(--main-height-mobile)] items-center justify-center desktop:min-h-[var(--main-height)]">
+        <div className="flex min-h-main-height-mobile items-center justify-center desktop:min-h-main-height">
             <Wrapper>
                 <div
-                    className="mx-auto box-border flex max-w-72 flex-col items-center justify-center p-8 shadow-3d-inset
-                    dark:shadow-dark-3d-inset"
+                    className="mx-auto box-border flex max-w-72 flex-col items-center justify-center p-8 inset-shadow-3d
+                    dark:inset-shadow-dark-3d"
                 >
                     <span
                         className="inline-block bg-gradient-to-r from-verivote-turquoise to-verivote-cyan bg-clip-text
-                    text-3xl font-bold uppercase text-transparent"
+                        text-3xl font-bold uppercase text-transparent"
                     >
                         Sign In
                     </span>

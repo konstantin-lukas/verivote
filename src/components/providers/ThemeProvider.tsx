@@ -1,32 +1,30 @@
 "use client";
 
-import { createTheme, type PaletteMode } from "@mui/material/styles";
+import type { PaletteMode } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import { ThemeProvider as Provider } from "@mui/system";
 import { useTheme } from "next-themes";
 import type { ReactNode } from "react";
-import resolveConfig from "tailwindcss/resolveConfig";
-
-import tailwindConfig from "@/../tailwind.config";
-
-const config = resolveConfig(tailwindConfig);
+import { useEffect, useState } from "react";
 
 export default function LocalizationProvider({ children }: { children: ReactNode }) {
     const { resolvedTheme } = useTheme();
-    const theme = createTheme({
-        typography: {
-            fontFamily: "Jost",
-        },
-        palette: {
-            mode: resolvedTheme as PaletteMode,
-            primary: {
-                main: config.theme.colors["verivote-turquoise"],
-                contrastText: "#fff",
-            },
-            secondary: {
-                main: config.theme.colors["verivote-cyan"],
-                contrastText: "#fff",
-            },
-        },
-    });
+    const [theme, setTheme] = useState(createTheme());
+
+    useEffect(() => {
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--color-verivote-turquoise");
+        const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--color-verivote-cyan");
+        setTheme(
+            createTheme({
+                palette: {
+                    mode: resolvedTheme as PaletteMode,
+                    primary: { main: primaryColor, contrastText: "#fff" },
+                    secondary: { main: secondaryColor, contrastText: "#fff" },
+                },
+                typography: { fontFamily: "Jost" },
+            }),
+        );
+    }, [resolvedTheme]);
+
     return <Provider theme={theme}>{children}</Provider>;
 }

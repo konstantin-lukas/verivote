@@ -45,14 +45,14 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     if (!matchingInfo) notFound();
 
     return (
-        <div className="min-h-[var(--main-height-mobile)] py-24 desktop:min-h-[var(--main-height)]">
+        <div className="min-h-main-height-mobile py-24 desktop:min-h-main-height">
             <ViewController poll={poll} results={results} info={matchingInfo} defaultHasVoted={hasVoted} />
             <WrapperSmall>
                 <div>
                     <H3>How does this poll work?</H3>
                     <p>{matchingInfo.longDescription}</p>
                 </div>
-                <BlockLink href={matchingInfo.infoPage} className="mt-5">
+                <BlockLink href={matchingInfo.infoPage} className="mt-5 inline-block">
                     <MdArrowForward className="relative top-[-.1rem] inline" size="1rem" />
                     <span className="ml-1">Learn more</span>
                 </BlockLink>

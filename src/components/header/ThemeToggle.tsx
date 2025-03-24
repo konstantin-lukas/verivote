@@ -11,7 +11,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
 
     return (
         <button
-            className={className + " group"}
+            className={className + " cursor-pointer group"}
             aria-label="Toggle theme"
             onClick={() => {
                 setTheme(hasMounted && resolvedTheme === "dark" ? "light" : "dark");

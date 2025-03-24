@@ -9,8 +9,8 @@ export default async function NotFound() {
     return (
         <Wrapper>
             <div
-                className="flex min-h-[var(--main-height-mobile)] flex-col items-center justify-center text-center
-                desktop:min-h-[var(--main-height)]"
+                className="flex flex-col items-center justify-center text-center
+                desktop:min-h-main-height"
             >
                 <H1>Page not found</H1>
                 <Image src={illustration} alt="" className="mt-8 w-[50dvmin] select-none" draggable={false} priority />
