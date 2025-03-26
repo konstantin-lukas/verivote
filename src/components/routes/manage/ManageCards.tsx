@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import type { ReactNode } from "react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuBrush, LuEye } from "react-icons/lu";
 
@@ -13,6 +13,7 @@ import H1 from "@/components/shared/H1";
 import H2 from "@/components/shared/H2";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
+import { LoadingStateContext } from "@/contexts";
 import illustration from "@/public/undraw_the_search_s0xf.svg";
 import type { Poll } from "@/types/poll";
 import { formatDate } from "@/utils";
@@ -53,6 +54,7 @@ export default function ManageCards({ polls }: { polls: Poll[] }) {
         message: null,
         deleteAction: () => null,
     });
+    const [, setIsLoading] = useContext(LoadingStateContext);
     return (
         <>
             <div className="mb-8 flex justify-center">
@@ -67,7 +69,9 @@ export default function ManageCards({ polls }: { polls: Poll[] }) {
                             setModalState({
                                 message: `Are you sure you want to delete the poll titled "${poll.title}"?`,
                                 deleteAction: async () => {
+                                    setIsLoading(true);
                                     await deletePoll(poll.id!);
+                                    setIsLoading(false);
                                     setRemainingPolls(prevState => prevState.filter(p => p.id !== poll.id));
                                 },
                             });

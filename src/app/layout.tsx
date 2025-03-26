@@ -8,6 +8,8 @@ import React, { type ReactNode } from "react";
 
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
+import LoadingIndicator from "@/components/header/LoadingIndicator";
+import LoadingStateProvider from "@/components/providers/LoadingStateProvider";
 import LocalizationProvider from "@/components/providers/LocalizationProvider";
 import SessionProvider from "@/components/providers/SessionProvider";
 import MuiThemeProvider from "@/components/providers/ThemeProvider";
@@ -39,9 +41,12 @@ export default async function RootLayout({
                     <MuiThemeProvider>
                         <SessionProvider basePath="/auth">
                             <LocalizationProvider>
-                                <Header signedIn={!!session} />
-                                <main>{children}</main>
-                                <Footer />
+                                <LoadingStateProvider>
+                                    <LoadingIndicator />
+                                    <Header signedIn={!!session} />
+                                    <main>{children}</main>
+                                    <Footer />
+                                </LoadingStateProvider>
                             </LocalizationProvider>
                         </SessionProvider>
                     </MuiThemeProvider>

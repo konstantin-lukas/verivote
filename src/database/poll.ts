@@ -2,12 +2,7 @@ import { ObjectId } from "bson";
 
 import mongo from "@/database/connection";
 import type { Poll } from "@/types/poll";
-
-function removeUnderscoreFromId(poll: Poll) {
-    const objId = (poll as unknown as { _id: ObjectId })._id.toString();
-    delete (poll as unknown as { _id?: ObjectId })._id;
-    return { ...poll, id: objId };
-}
+import { removeUnderscoreFromId } from "@/utils";
 
 export async function findPollById(id: string) {
     try {
@@ -21,7 +16,7 @@ export async function findPollById(id: string) {
     }
 }
 
-export async function findPollByUserIdentifier(userIdentifier: string) {
+export async function findPollsByUserIdentifier(userIdentifier: string) {
     try {
         const db = mongo.db("verivote");
         const polls = db.collection("polls");

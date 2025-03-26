@@ -5,8 +5,7 @@ import "./CreationForm.css";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import { addDays, addMinutes, setSeconds } from "date-fns";
 import type { ReactNode } from "react";
-import React, { useActionState, useEffect, useMemo, useReducer, useState } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import React, { useActionState, useContext, useEffect, useMemo, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoAddSharp } from "react-icons/io5";
 
@@ -17,6 +16,7 @@ import Input from "@/components/form/Input";
 import BlockButton from "@/components/shared/BlockButton";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
+import { LoadingStateContext } from "@/contexts";
 import type { Poll } from "@/types/poll";
 import { validateClosingTime, validateOption, validateOptions, validateTitle } from "@/validation/poll";
 
@@ -64,10 +64,11 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         options: ["", ""],
     });
 
-    const [formState, formAction, formPending] = useActionState(createPoll.bind(null, state), {
-        ok: false,
-        message: "",
-    });
+    const [[, message], formAction, formPending] = useActionState(createPoll.bind(null, state), [false, ""]);
+    const [, setIsLoading] = useContext(LoadingStateContext);
+    useEffect(() => {
+        setIsLoading(formPending);
+    }, [formPending, setIsLoading]);
 
     /**
      * This effect is used instead of an initial value for the date to prevent a very rate hydration error.
@@ -83,8 +84,8 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     }, []);
 
     useEffect(() => {
-        setModalMessage(formState.message);
-    }, [formState.message]);
+        setModalMessage(message);
+    }, [message]);
 
     const [modalMessage, setModalMessage] = useState<ReactNode>(null);
 
@@ -195,21 +196,6 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         </div>
     );
 
-    const loadingIndicator = formPending && (
-        <>
-            <div
-                className="pointer-events-none absolute left-1/2 top-1/2 box-content size-full -translate-x-1/2
-                            -translate-y-1/2 bg-neutral-100/50 p-4 dark:bg-neutral-900/50"
-            />
-            <div
-                className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-100 p-4
-                            shadow-vague dark:bg-neutral-900 dark:shadow-dark-vague"
-            >
-                <AiOutlineLoading3Quarters className="size-20 animate-spin text-verivote-turquoise" />
-            </div>
-        </>
-    );
-
     return (
         <form
             action={formAction}
@@ -231,7 +217,6 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             {needsMajorityCheckbox}
             {options}
             {formButtons}
-            {loadingIndicator}
             <Modal closeButtonText="Got it" setChildren={setModalMessage}>
                 {modalMessage}
             </Modal>

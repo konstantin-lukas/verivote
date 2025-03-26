@@ -4,7 +4,7 @@ import React from "react";
 
 import ManageCards from "@/components/routes/manage/ManageCards";
 import Wrapper from "@/components/shared/Wrapper";
-import { findPollByUserIdentifier } from "@/database/poll";
+import { findPollsByUserIdentifier } from "@/database/poll";
 import type { Poll } from "@/types/poll";
 import { getUserIdentifier } from "@/utils";
 
@@ -17,8 +17,7 @@ export default async function Page() {
     if (!userIdentifier) {
         notFound();
     }
-    console.log(userIdentifier);
-    const polls: Poll[] = await findPollByUserIdentifier(userIdentifier);
+    const polls: Poll[] = await findPollsByUserIdentifier(userIdentifier);
 
     return (
         <Wrapper className="min-h-main-height-mobile py-24 desktop:min-h-main-height">
