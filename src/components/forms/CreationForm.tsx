@@ -10,9 +10,9 @@ import { IoMdClose } from "react-icons/io";
 import { IoAddSharp } from "react-icons/io5";
 
 import { createPoll } from "@/actions/poll";
-import Checkbox from "@/components/form/Checkbox";
-import Dropdown from "@/components/form/Dropdown";
-import Input from "@/components/form/Input";
+import Checkbox from "@/components/inputs/Checkbox";
+import Dropdown from "@/components/inputs/Dropdown";
+import Input from "@/components/inputs/Input";
 import BlockButton from "@/components/shared/BlockButton";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
@@ -64,8 +64,11 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         options: ["", ""],
     });
 
-    const [[, message], formAction, formPending] = useActionState(createPoll.bind(null, state), [false, ""]);
-    const [, setIsLoading] = useContext(LoadingStateContext);
+    const [{ message }, formAction, formPending] = useActionState(createPoll.bind(null, state), {
+        ok: false,
+        message: "",
+    });
+    const { setIsLoading } = useContext(LoadingStateContext);
     useEffect(() => {
         setIsLoading(formPending);
     }, [formPending, setIsLoading]);

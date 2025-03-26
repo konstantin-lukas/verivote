@@ -1,7 +1,10 @@
 import type { Dispatch, SetStateAction } from "react";
 import { createContext } from "react";
 
-export const LoadingStateContext = createContext<[boolean, Dispatch<SetStateAction<boolean>>]>([
-    false,
-    () => undefined,
-]);
+export const LoadingStateContext = createContext<{
+    isLoading: boolean;
+    setIsLoading: Dispatch<SetStateAction<boolean>>;
+}>({
+    isLoading: false,
+    setIsLoading: () => undefined,
+});

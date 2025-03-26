@@ -13,5 +13,5 @@ export default function LoadingStateProvider({ children }: { children: ReactNode
     useEffect(() => {
         setIsLoading(false);
     }, [pathname, searchParams]);
-    return <LoadingStateContext.Provider value={[isLoading, setIsLoading]}>{children}</LoadingStateContext.Provider>;
+    return <LoadingStateContext.Provider value={{ isLoading, setIsLoading }}>{children}</LoadingStateContext.Provider>;
 }

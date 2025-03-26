@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 
-import CreationForm from "@/components/form/CreationForm";
+import CreationForm from "@/components/forms/CreationForm";
 import H1 from "@/components/shared/H1";
 import Wrapper from "@/components/shared/Wrapper";
 import { votingMethods } from "@/content/votingMethods";

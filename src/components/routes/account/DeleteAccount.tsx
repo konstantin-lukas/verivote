@@ -10,6 +10,18 @@ import Modal from "@/components/shared/Modal";
 
 export default function DeleteAccount() {
     const [modalMessage, setModalMessage] = useState<ReactNode>(null);
+
+    const modal = (
+        <Modal
+            closeButtonText="Yes I'm sure"
+            cancelButtonText="No, take me back"
+            setChildren={setModalMessage}
+            onClose={signOut}
+        >
+            {modalMessage}
+        </Modal>
+    );
+
     return (
         <>
             <BlockButton
@@ -23,14 +35,7 @@ export default function DeleteAccount() {
                 <FaRegTrashAlt className="mr-2 inline translate-y-[-0.1em] text-rose-500" />
                 <span className="text-rose-500">Delete my account</span>
             </BlockButton>
-            <Modal
-                closeButtonText="Yes I'm sure"
-                cancelButtonText="No, take me back"
-                setChildren={setModalMessage}
-                onClose={signOut}
-            >
-                {modalMessage}
-            </Modal>
+            {modal}
         </>
     );
 }

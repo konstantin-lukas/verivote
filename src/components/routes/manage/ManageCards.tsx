@@ -54,55 +54,62 @@ export default function ManageCards({ polls }: { polls: Poll[] }) {
         message: null,
         deleteAction: () => null,
     });
-    const [, setIsLoading] = useContext(LoadingStateContext);
+    const { setIsLoading } = useContext(LoadingStateContext);
+
+    const modal = (
+        <Modal
+            closeButtonText="Delete"
+            cancelButtonText="Cancel"
+            highlightCloseButton={true}
+            onClose={modalState.deleteAction}
+            setChildren={() => setModalState({ message: null, deleteAction: () => null })}
+        >
+            {modalState.message}
+        </Modal>
+    );
+
+    const noPolls = (
+        <div className="flex w-full flex-col items-center justify-center">
+            <Image
+                src={illustration}
+                alt="A man holding a magnifying glass in front of a large mobile phone."
+                priority
+                draggable={false}
+                className="mb-16 h-auto w-1/2 max-w-60"
+            />
+            <BlockLink href="/create">
+                <LuBrush className="relative top-[-.1rem] inline" size="1rem" />
+                <span className="ml-1">Create a poll</span>
+            </BlockLink>
+        </div>
+    );
+
+    const pollCards = remainingPolls.map(poll => (
+        <PollCard
+            key={poll.id}
+            poll={poll}
+            setModalContent={() => {
+                setModalState({
+                    message: `Are you sure you want to delete the poll titled "${poll.title}"?`,
+                    deleteAction: async () => {
+                        setIsLoading(true);
+                        await deletePoll(poll.id!);
+                        setIsLoading(false);
+                        setRemainingPolls(prevState => prevState.filter(p => p.id !== poll.id));
+                    },
+                });
+            }}
+        />
+    ));
+
     return (
         <>
             <div className="mb-8 flex justify-center">
                 <H1>{remainingPolls.length === 0 ? "No polls found" : "Edit your polls"}</H1>
             </div>
-            <div className="grid gap-12 md:grid-cols-2 lg:gap-24">
-                {remainingPolls.map(poll => (
-                    <PollCard
-                        key={poll.id}
-                        poll={poll}
-                        setModalContent={() => {
-                            setModalState({
-                                message: `Are you sure you want to delete the poll titled "${poll.title}"?`,
-                                deleteAction: async () => {
-                                    setIsLoading(true);
-                                    await deletePoll(poll.id!);
-                                    setIsLoading(false);
-                                    setRemainingPolls(prevState => prevState.filter(p => p.id !== poll.id));
-                                },
-                            });
-                        }}
-                    />
-                ))}
-            </div>
-            {remainingPolls.length === 0 && (
-                <div className="flex w-full flex-col items-center justify-center">
-                    <Image
-                        src={illustration}
-                        alt="A man holding a magnifying glass in front of a large mobile phone."
-                        priority
-                        draggable={false}
-                        className="mb-16 h-auto w-1/2 max-w-60"
-                    />
-                    <BlockLink href="/create">
-                        <LuBrush className="relative top-[-.1rem] inline" size="1rem" />
-                        <span className="ml-1">Create a poll</span>
-                    </BlockLink>
-                </div>
-            )}
-            <Modal
-                closeButtonText="Delete"
-                cancelButtonText="Cancel"
-                highlightCloseButton={true}
-                onClose={modalState.deleteAction}
-                setChildren={() => setModalState({ message: null, deleteAction: () => null })}
-            >
-                {modalState.message}
-            </Modal>
+            <div className="grid gap-12 md:grid-cols-2 lg:gap-24">{pollCards}</div>
+            {remainingPolls.length === 0 && noPolls}
+            {modal}
         </>
     );
 }
