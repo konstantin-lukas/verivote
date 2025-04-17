@@ -18,7 +18,7 @@ import ErrorList from "@/components/shared/ErrorList";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
 import useLoadingState from "@/hooks/useLoadingState";
-import { PollCreateClientSchema } from "@/schemas/poll";
+import { PollCreateClientSchema, PollOptionSchema, PollTitleSchema } from "@/schemas/poll";
 import type { Poll } from "@/types/poll";
 import { parseSchema } from "@/utils/shared";
 
@@ -95,6 +95,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
 
     const options = useMemo(() => {
         return state.options.map((o, i) => {
+            const valid = parseSchema(PollOptionSchema, o);
             return (
                 <div key={i} className="relative mt-4">
                     <Input
@@ -104,6 +105,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                         testId={`option${i}`}
                         name={"options"}
                         maxLength={100}
+                        valid={!valid}
                         required={true}
                         setValue={value => dispatch({ type: "optionsChange", value, index: i })}
                         placeholder={`Option ${i + 1}`}
@@ -138,12 +140,14 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         />
     );
 
+    const valid = parseSchema(PollTitleSchema, state.title);
     const pollName = (
         <Input
             value={state.title}
             name="title"
             testId="title"
             required={true}
+            valid={!valid}
             maxLength={200}
             disabled={formPending}
             setValue={value => dispatch({ type: "title", value })}
