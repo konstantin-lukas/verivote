@@ -1,0 +1,42 @@
+import { addMinutes } from "date-fns";
+import { z } from "zod";
+
+import { UNKNOWN_SERVER_ERROR } from "@/const/error";
+import { MAX_POLL_OPTIONS } from "@/const/poll";
+
+export const PollCreateClientSchema = z.object({
+    title: z
+        .string()
+        .min(1, { message: "The poll title has to be at least one character long" })
+        .max(200, { message: "The poll title has to be no longer than 200 characters" }),
+    closingTime: z
+        .date({ message: "The closing time must be a valid date" })
+        .refine(date => date >= addMinutes(new Date(), 1), {
+            message: "The closing time has to be at least one minute from now",
+        }),
+    options: z
+        .array(
+            z
+                .string({ message: "Each option's name must be string" })
+                .min(1, { message: "Each option's name must be at least one character long" })
+                .max(100, { message: "Each option's name must be no longer than 100 characters" }),
+        )
+        .min(2, { message: "A poll needs at least two options" })
+        .max(MAX_POLL_OPTIONS, {
+            message: `A poll can have no more than ${MAX_POLL_OPTIONS} options.`,
+        }),
+    winnerNeedsMajority: z.boolean({
+        message: "The information whether this poll's winner needs a majority is missing",
+    }),
+});
+
+export type PollCreateClientType = z.infer<typeof PollCreateClientSchema>;
+
+export const PollCreateServerSchema = PollCreateClientSchema.extend({
+    userIdentifier: z
+        .string({ message: UNKNOWN_SERVER_ERROR })
+        .regex(/\w+(github|reddit|discord)$/, { message: UNKNOWN_SERVER_ERROR }),
+    creationTime: z.date({ message: UNKNOWN_SERVER_ERROR }).max(new Date(), { message: UNKNOWN_SERVER_ERROR }),
+});
+
+export type PollCreateServerType = z.infer<typeof PollCreateServerSchema>;

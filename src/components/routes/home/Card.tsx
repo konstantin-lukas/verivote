@@ -4,7 +4,7 @@ import { MdArrowForward } from "react-icons/md";
 
 import BlockLink from "@/components/shared/BlockLink";
 import H2 from "@/components/shared/H2";
-import type { VotingMethodDetails } from "@/types";
+import type { VotingMethodDetails } from "@/types/votingMethod";
 
 export default function Card({ votingMethod }: { votingMethod: VotingMethodDetails }) {
     const heading = (

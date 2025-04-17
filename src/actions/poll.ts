@@ -3,12 +3,14 @@
 import { ObjectId } from "bson";
 import { redirect } from "next/navigation";
 
+import { UNKNOWN_SERVER_ERROR } from "@/const/error";
 import mongo from "@/database/connection";
 import { insertPoll } from "@/database/poll";
-import type { ActionResult } from "@/types";
+import { PollCreateServerSchema } from "@/schemas/poll";
 import type { Poll } from "@/types/poll";
-import { getUserIdentifier, tryCatch } from "@/utils";
-import { validatePoll } from "@/validation/poll";
+import type { ActionResult } from "@/types/result";
+import { getUserIdentifier } from "@/utils/server";
+import { parseSchema, tryCatch } from "@/utils/shared";
 
 export async function createPoll(formData: Poll): ActionResult {
     const userIdentifier = await getUserIdentifier();
@@ -25,12 +27,11 @@ export async function createPoll(formData: Poll): ActionResult {
         votingMethod: formData.votingMethod,
     };
 
-    if (!validatePoll(newPoll)) {
-        return { ok: false, message: "Invalid form values." };
-    }
+    const errors = parseSchema(PollCreateServerSchema, newPoll);
+    if (errors) return { ok: false, message: UNKNOWN_SERVER_ERROR };
 
-    const [id, error] = await tryCatch(insertPoll(newPoll));
-    if (error) return { ok: false, message: "An unknown error occurred." };
+    const { data: id, error: e } = await tryCatch(insertPoll(newPoll));
+    if (e) return { ok: false, message: UNKNOWN_SERVER_ERROR };
     redirect(`/poll/${id}`);
 }
 

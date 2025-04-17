@@ -13,9 +13,9 @@ import BlockButton from "@/components/shared/BlockButton";
 import H1 from "@/components/shared/H1";
 import Wrapper from "@/components/shared/Wrapper";
 import WrapperSmall from "@/components/shared/WrapperSmall";
-import type { VotingMethodDetails } from "@/types";
 import type { Poll, PollSummary } from "@/types/poll";
-import { formatDate } from "@/utils";
+import type { VotingMethodDetails } from "@/types/votingMethod";
+import { formatDate } from "@/utils/shared";
 
 export default function ViewController({
     poll,

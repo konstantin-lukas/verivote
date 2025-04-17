@@ -16,7 +16,7 @@ import { votingMethods } from "@/content/votingMethods";
 import { LoadingStateContext } from "@/contexts";
 import illustration from "@/public/undraw_the_search_s0xf.svg";
 import type { Poll } from "@/types/poll";
-import { formatDate } from "@/utils";
+import { formatDate } from "@/utils/shared";
 
 function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () => void }) {
     const info = votingMethods.find(x => x.dbId === poll.votingMethod);

@@ -7,7 +7,7 @@ import illustrationRunoff from "@/public/undraw_jogging_re_k28i.svg";
 import illustrationApproval from "@/public/undraw_like_dislike_re_dwcj.svg";
 import illustrationPositional from "@/public/undraw_upvote_re_qn2k.svg";
 import illustrationPlurality from "@/public/undraw_voting_nvu7.svg";
-import type { VotingMethodDetails } from "@/types";
+import type { VotingMethodDetails } from "@/types/votingMethod";
 
 export const votingMethods: VotingMethodDetails[] = [
     {

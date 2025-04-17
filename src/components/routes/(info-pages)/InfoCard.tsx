@@ -8,7 +8,7 @@ import { RiExternalLinkLine } from "react-icons/ri";
 import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
 import H2 from "@/components/shared/H2";
-import type { VotingMethodDetails } from "@/types";
+import type { VotingMethodDetails } from "@/types/votingMethod";
 
 function List({ heading, children }: { heading: string; children: ReactNode }) {
     const color = heading === "Advantages" ? "text-green-600" : "text-red-600";

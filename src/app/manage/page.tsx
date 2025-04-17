@@ -6,7 +6,7 @@ import ManageCards from "@/components/routes/manage/ManageCards";
 import Wrapper from "@/components/shared/Wrapper";
 import { findPollsByUserIdentifier } from "@/database/poll";
 import type { Poll } from "@/types/poll";
-import { getUserIdentifier } from "@/utils";
+import { getUserIdentifier } from "@/utils/server";
 
 export const metadata: Metadata = {
     title: "Manage - Verivote",

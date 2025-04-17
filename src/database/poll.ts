@@ -2,7 +2,7 @@ import { ObjectId } from "bson";
 
 import mongo from "@/database/connection";
 import type { Poll } from "@/types/poll";
-import { removeUnderscoreFromId } from "@/utils";
+import { removeUnderscoreFromId } from "@/utils/shared";
 
 export async function findPollById(id: string) {
     try {

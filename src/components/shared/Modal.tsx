@@ -25,7 +25,7 @@ export default function Modal({
     return (
         <MUIModal open={!!children} onClose={close} className="flex items-center justify-center">
             <aside className="shadow-vague dark:shadow-dark-vague flex max-w-[85dvw] flex-col items-center justify-center rounded-2xl border-none bg-neutral-100 p-8 sm:max-w-[30rem] dark:bg-neutral-900">
-                <p className="mb-6 text-center">{children}</p>
+                <div className="mb-6 text-center">{children}</div>
                 <div className="flex gap-8">
                     {closeButtonText && (
                         <BlockButton

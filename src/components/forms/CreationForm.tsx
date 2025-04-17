@@ -14,11 +14,13 @@ import Checkbox from "@/components/inputs/Checkbox";
 import Dropdown from "@/components/inputs/Dropdown";
 import Input from "@/components/inputs/Input";
 import BlockButton from "@/components/shared/BlockButton";
+import ErrorList from "@/components/shared/ErrorList";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
 import { LoadingStateContext } from "@/contexts";
+import { PollCreateClientSchema } from "@/schemas/poll";
 import type { Poll } from "@/types/poll";
-import { validateClosingTime, validateOption, validateOptions, validateTitle } from "@/validation/poll";
+import { parseSchema } from "@/utils/shared";
 
 function reducer(
     state: Poll,
@@ -97,7 +99,6 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                 <div key={i} className="relative mt-4">
                     <Input
                         value={o}
-                        valid={validateOption(o)}
                         disabled={formPending}
                         className="w-full"
                         testId={`option${i}`}
@@ -142,7 +143,6 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             value={state.title}
             name="title"
             testId="title"
-            valid={validateTitle(state.title)}
             required={true}
             maxLength={200}
             disabled={formPending}
@@ -202,13 +202,10 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             action={formAction}
             className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-auto"
             onSubmit={e => {
-                if (
-                    !validateTitle(state.title) ||
-                    !validateClosingTime(new Date(state.closingTime)) ||
-                    !validateOptions(state.options)
-                ) {
+                const errors = parseSchema(PollCreateClientSchema, state);
+                if (errors) {
                     e.preventDefault();
-                    setModalMessage("Please only provide valid values.");
+                    setModalMessage(<ErrorList errors={errors} />);
                 }
             }}
         >
