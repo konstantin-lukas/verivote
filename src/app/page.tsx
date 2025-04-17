@@ -11,21 +11,16 @@ import illustration from "@/public/undraw_election_day_w842.svg";
 export default async function Page() {
     return (
         <div>
-            <div className="h-dvh w-full overflow-hidden shadow-xl desktop:h-main-height-front">
+            <div className="desktop:h-main-height-front h-dvh w-full overflow-hidden shadow-xl">
                 <Wrapper className="h-full">
                     <div className="relative flex h-full items-center">
-                        <span
-                            className="absolute bottom-0 right-0 hidden size-[75dvmax] max-h-[1440px]
-                            max-w-[1440px] translate-x-1/2 translate-y-1/2 rounded-full bg-gradient-to-r
-                            from-verivote-turquoise to-verivote-cyan md:block [@media(max-height:420px)]:hidden"
-                        />
+                        <span className="from-verivote-turquoise to-verivote-cyan absolute bottom-0 right-0 hidden size-[75dvmax] max-h-[1440px] max-w-[1440px] translate-x-1/2 translate-y-1/2 rounded-full bg-gradient-to-r md:block [@media(max-height:420px)]:hidden" />
                         <Image
                             src={illustration}
                             alt=""
                             priority
                             draggable={false}
-                            className="absolute hidden md:bottom-0 md:right-0 md:block md:h-[115dvh] md:w-auto
-                            md:translate-x-1/3 md:translate-y-1/3"
+                            className="absolute hidden md:bottom-0 md:right-0 md:block md:h-[115dvh] md:w-auto md:translate-x-1/3 md:translate-y-1/3"
                         />
                         <div className="md:w-1/2 md:-translate-y-16 [@media(max-height:530px)]:translate-y-0">
                             <H1>Voting Matters</H1>

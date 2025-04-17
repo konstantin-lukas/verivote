@@ -51,7 +51,7 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
     );
 
     return (
-        <header className="relative flex h-header-height justify-center bg-neutral-100 shadow-header transition-all dark:bg-neutral-900 dark:shadow-dark-header">
+        <header className="h-header-height shadow-header dark:shadow-dark-header relative flex justify-center bg-neutral-100 transition-all dark:bg-neutral-900">
             <Wrapper>
                 <div className="flex h-full items-center justify-between">
                     <nav className="flex h-full items-center">

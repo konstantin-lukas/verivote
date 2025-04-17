@@ -29,8 +29,7 @@ function PollOption({
                     }}
                 />
                 <span
-                    className="relative mr-4 block size-10 shrink-0 grow rounded-full bg-red-500
-                    peer-checked:bg-verivote-turquoise"
+                    className="peer-checked:bg-verivote-turquoise relative mr-4 block size-10 shrink-0 grow rounded-full bg-red-500"
                     role="radio"
                     tabIndex={0}
                     aria-label={children as string}
@@ -44,10 +43,7 @@ function PollOption({
                     {selected === idx && <IoMdCheckmark className="center-absolute size-6 text-white" />}
                     {selected !== idx && <IoMdClose className="center-absolute size-6 text-white" />}
                 </span>
-                <span
-                    className="relative block w-full overflow-hidden text-ellipsis text-nowrap rounded-full bg-neutral-100
-                    px-10 py-2 inset-shadow-3d transition-all placeholder:text-neutral-500 dark:bg-neutral-900 dark:inset-shadow-dark-3d"
-                >
+                <span className="inset-shadow-3d dark:inset-shadow-dark-3d relative block w-full overflow-hidden text-ellipsis text-nowrap rounded-full bg-neutral-100 px-10 py-2 transition-all placeholder:text-neutral-500 dark:bg-neutral-900">
                     {children}
                 </span>
             </label>

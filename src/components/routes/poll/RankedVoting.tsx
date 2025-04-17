@@ -32,10 +32,7 @@ function PollOption({
             style={{ cursor: disabled ? "wait" : "move" }}
             data-cy="pollOption"
         >
-            <span
-                className="relative block w-full overflow-hidden text-ellipsis text-nowrap rounded-full bg-neutral-100 px-10 py-2
-                inset-shadow-3d transition-all placeholder:text-neutral-500 dark:bg-neutral-900 dark:inset-shadow-dark-3d"
-            >
+            <span className="inset-shadow-3d dark:inset-shadow-dark-3d relative block w-full overflow-hidden text-ellipsis text-nowrap rounded-full bg-neutral-100 px-10 py-2 transition-all placeholder:text-neutral-500 dark:bg-neutral-900">
                 <MdDragIndicator className="absolute left-4 top-1/2 size-4 -translate-y-1/2" />
                 <span>{children}</span>
             </span>
@@ -43,8 +40,7 @@ function PollOption({
                 <button
                     type="button"
                     disabled={disabled}
-                    className="group relative size-8 rounded-full shadow-3d transition-shadow
-                    hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
+                    className="shadow-3d hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both group relative size-8 rounded-full transition-shadow"
                     onClick={() => {
                         if (!sortable) return;
                         const arrayCopy = [...options];
@@ -62,8 +58,7 @@ function PollOption({
                 <button
                     type="button"
                     disabled={disabled}
-                    className="group relative size-8 rounded-full shadow-3d transition-shadow
-                    hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
+                    className="shadow-3d hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both group relative size-8 rounded-full transition-shadow"
                     onClick={() => {
                         if (!sortable) return;
                         const arrayCopy = [...options];

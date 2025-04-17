@@ -9,7 +9,7 @@ export default function LoadingIndicator() {
     const { isLoading } = useContext(LoadingStateContext);
     if (!isLoading) return null;
     return (
-        <div className="fixed w-full z-10 desktop:top-header-height">
+        <div className="desktop:top-header-height fixed z-10 w-full">
             <LinearProgress />
         </div>
     );

@@ -46,16 +46,14 @@ export default function MobileMenu() {
             <CSSTransition in={isOpen} timeout={200} nodeRef={menuRef} classNames="menu" unmountOnExit>
                 <div
                     ref={menuRef}
-                    className="fixed left-0 top-0 flex h-dvh w-dvw flex-col items-center justify-center bg-neutral-100
-                    transition-colors dark:bg-neutral-900"
+                    className="fixed left-0 top-0 flex h-dvh w-dvw flex-col items-center justify-center bg-neutral-100 transition-colors dark:bg-neutral-900"
                 >
                     <Link href="/" onClick={() => forceSetIsOpen(false)}>
                         <Logo className="size-auto h-full w-[60dvmin]" alt="Navigate to home page" />
                     </Link>
                     <nav className="w-full">
                         <ul
-                            className={`flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 
-                                landscape:grid landscape:w-96 landscape:gap-6 ${buttonsClass}`}
+                            className={`flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 landscape:grid landscape:w-96 landscape:gap-6 ${buttonsClass}`}
                         >
                             {session ? (
                                 <>

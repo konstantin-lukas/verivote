@@ -20,7 +20,7 @@ export default async function Page() {
     const polls: Poll[] = await findPollsByUserIdentifier(userIdentifier);
 
     return (
-        <Wrapper className="min-h-main-height-mobile py-24 desktop:min-h-main-height">
+        <Wrapper className="min-h-main-height-mobile desktop:min-h-main-height py-24">
             <ManageCards polls={polls} />
         </Wrapper>
     );

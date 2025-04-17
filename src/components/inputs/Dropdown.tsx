@@ -33,7 +33,7 @@ function Dropdown({
                         key={index}
                         role="option"
                         aria-selected="false"
-                        className="mt-4 cursor-pointer rounded-full px-10 py-2 inset-shadow-3d first:mt-0 dark:inset-shadow-dark-3d"
+                        className="inset-shadow-3d dark:inset-shadow-dark-3d mt-4 cursor-pointer rounded-full px-10 py-2 first:mt-0"
                         tabIndex={0}
                         onKeyDown={e => {
                             if (e.key === " " || e.key === "Enter") setSelected();
@@ -64,21 +64,21 @@ function Dropdown({
                     if (e.key === " " || e.key === "Enter") setIsOpen(!isOpen);
                 }}
                 role="option"
-                className={`mb-6 sm:min-w-60 rounded-full px-10 py-2 transition-all ${
-                    isOpen ? "shadow-3d-both dark:shadow-dark-3d-both " : "shadow-3d dark:shadow-dark-3d "
+                className={`mb-6 rounded-full px-10 py-2 transition-all sm:min-w-60 ${
+                    isOpen ? "shadow-3d-both dark:shadow-dark-3d-both" : "shadow-3d dark:shadow-dark-3d"
                 }${disabled ? "cursor-wait" : "cursor-pointer"}`}
                 aria-selected="true"
                 tabIndex={0}
             >
-                <div className={`flex items-center transition-transform justify-between ${isOpen ? "scale-95" : ""}`}>
+                <div className={`flex items-center justify-between transition-transform ${isOpen ? "scale-95" : ""}`}>
                     <div data-nosnippet="true" className={disabled ? "text-[gray]" : ""}>
                         {options[selectedOption]}
                     </div>
-                    <BiExpandVertical className={`ml-2${disabled ? " text-[gray]" : ""}`} />
+                    <BiExpandVertical className={`ml-2${disabled ? "text-[gray]" : ""}`} />
                 </div>
             </div>
             {isOpen && (
-                <div className="absolute z-20 w-full rounded-3xl bg-neutral-100 p-4 shadow-3d dark:bg-neutral-900 dark:shadow-dark-3d">
+                <div className="shadow-3d dark:shadow-dark-3d absolute z-20 w-full rounded-3xl bg-neutral-100 p-4 dark:bg-neutral-900">
                     {elements}
                 </div>
             )}

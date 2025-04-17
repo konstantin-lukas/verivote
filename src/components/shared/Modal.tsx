@@ -24,10 +24,7 @@ export default function Modal({
     const close = () => setChildren(null);
     return (
         <MUIModal open={!!children} onClose={close} className="flex items-center justify-center">
-            <aside
-                className="flex max-w-[85dvw] flex-col items-center justify-center rounded-2xl border-none bg-neutral-100
-                p-8 shadow-vague sm:max-w-[30rem] dark:bg-neutral-900 dark:shadow-dark-vague"
-            >
+            <aside className="shadow-vague dark:shadow-dark-vague flex max-w-[85dvw] flex-col items-center justify-center rounded-2xl border-none bg-neutral-100 p-8 sm:max-w-[30rem] dark:bg-neutral-900">
                 <p className="mb-6 text-center">{children}</p>
                 <div className="flex gap-8">
                     {closeButtonText && (

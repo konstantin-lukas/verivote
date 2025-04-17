@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
     return (
-        <WrapperSmall className="flex min-h-main-height-mobile flex-col items-center justify-center desktop:min-h-main-height">
+        <WrapperSmall className="min-h-main-height-mobile desktop:min-h-main-height flex flex-col items-center justify-center">
             <Image src={illustration} alt="" priority draggable={false} className="mb-12 w-full max-w-96" />
             <DeleteAccount />
         </WrapperSmall>

@@ -176,8 +176,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         <div className="mt-6 flex gap-6">
             {state.options.length < parseInt(process.env.NEXT_PUBLIC_MAX_OPTIONS_PER_POLL ?? "20") && (
                 <button
-                    className="group flex size-10 items-center justify-center rounded-full shadow-3d
-                        transition-shadow hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both"
+                    className="shadow-3d hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both group flex size-10 items-center justify-center rounded-full transition-shadow"
                     onClick={() => {
                         dispatch({ type: "optionsAdd" });
                         window.scrollTo({

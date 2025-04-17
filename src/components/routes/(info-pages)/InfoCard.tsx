@@ -20,9 +20,9 @@ function List({ heading, children }: { heading: string; children: ReactNode }) {
         );
 
     return (
-        <div className="mt-14 first:mt-4 dark:border-light-font">
+        <div className="dark:border-light-font mt-14 first:mt-4">
             <span
-                className={`flex items-center relative rounded-full -top-1.5 text-2xl font-bold -translate-x-2 uppercase ${
+                className={`relative -top-1.5 flex -translate-x-2 items-center rounded-full text-2xl font-bold uppercase ${
                     color
                 }`}
             >
@@ -30,12 +30,7 @@ function List({ heading, children }: { heading: string; children: ReactNode }) {
                 {heading}
                 {arrow}
             </span>
-            <ul
-                className="relative top-1 [&>li::after]:absolute [&>li::after]:left-0 [&>li::after]:top-1/2
-            [&>li::after]:h-[calc(100%-.75rem)] [&>li::after]:w-[2px] [&>li::after]:-translate-y-1/2
-            [&>li::after]:bg-dark-font [&>li::after]:content-[''] [&>li::after]:dark:bg-light-font [&>li:first-of-type]:mt-0
-            [&>li]:relative [&>li]:mt-4 [&>li]:pl-4"
-            >
+            <ul className="[&>li::after]:bg-dark-font [&>li::after]:dark:bg-light-font relative top-1 [&>li::after]:absolute [&>li::after]:left-0 [&>li::after]:top-1/2 [&>li::after]:h-[calc(100%-.75rem)] [&>li::after]:w-[2px] [&>li::after]:-translate-y-1/2 [&>li::after]:content-[''] [&>li:first-of-type]:mt-0 [&>li]:relative [&>li]:mt-4 [&>li]:pl-4">
                 {children}
             </ul>
         </div>

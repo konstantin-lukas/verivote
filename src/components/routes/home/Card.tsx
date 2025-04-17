@@ -11,10 +11,7 @@ export default function Card({ votingMethod }: { votingMethod: VotingMethodDetai
         <div className="relative inline-block">
             <H2>{votingMethod.name}</H2>
             {votingMethod?.tag && (
-                <span
-                    className="absolute left-0 top-0 translate-y-[calc(-100%-1rem)] rounded-full bg-red-600
-                            px-2 text-[0.8rem] text-white"
-                >
+                <span className="absolute left-0 top-0 translate-y-[calc(-100%-1rem)] rounded-full bg-red-600 px-2 text-[0.8rem] text-white">
                     {votingMethod.tag}
                 </span>
             )}

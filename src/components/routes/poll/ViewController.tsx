@@ -50,11 +50,11 @@ export default function ViewController({
 
     return (
         <>
-            <Wrapper className="flex  flex-col items-center">
+            <Wrapper className="flex flex-col items-center">
                 <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">
                     {poll.title}
                 </H1>
-                <h2 className="mb-2 text-lg font-bold uppercase text-dark-font sm:text-xl md:text-2xl dark:text-light-font">
+                <h2 className="text-dark-font dark:text-light-font mb-2 text-lg font-bold uppercase sm:text-xl md:text-2xl">
                     {info.name}
                 </h2>
                 <span className="text-center text-neutral-500">

@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Footer() {
     return (
-        <footer className="flex h-footer-height items-center justify-center gap-6">
+        <footer className="h-footer-height flex items-center justify-center gap-6">
             <Link href="/legal-notice" className="inline-link">
                 Legal notice
             </Link>

@@ -11,16 +11,16 @@ export default function ThemeToggle({ className }: { className?: string }) {
 
     return (
         <button
-            className={`${className} cursor-pointer group`}
+            className={`${className} group cursor-pointer`}
             aria-label="Toggle theme"
             onClick={() => {
                 setTheme(hasMounted && resolvedTheme === "dark" ? "light" : "dark");
             }}
         >
             {hasMounted && resolvedTheme === "dark" ? (
-                <CiSun className="size-full fill-light-font transition-all group-hover:scale-110" />
+                <CiSun className="fill-light-font size-full transition-all group-hover:scale-110" />
             ) : (
-                <CiCloudMoon className="size-full fill-dark-font transition-all group-hover:scale-110" />
+                <CiCloudMoon className="fill-dark-font size-full transition-all group-hover:scale-110" />
             )}
         </button>
     );

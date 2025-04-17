@@ -32,10 +32,7 @@ export default function Checkbox({
                 name={name}
             />
             <span
-                className="relative h-10 w-28 overflow-hidden rounded-full border-2 border-rose-500 bg-rose-500
-                transition-colors peer-checked:border-verivote-turquoise peer-checked:bg-verivote-turquoise
-                peer-checked:[&_span]:animate-[ltr-checkbox_300ms_cubic-bezier(0,.65,0,.99)_forwards]
-                peer-checked:[&_span]:border-verivote-turquoise"
+                className="peer-checked:border-verivote-turquoise peer-checked:bg-verivote-turquoise peer-checked:[&_span]:border-verivote-turquoise relative h-10 w-28 overflow-hidden rounded-full border-2 border-rose-500 bg-rose-500 transition-colors peer-checked:[&_span]:animate-[ltr-checkbox_300ms_cubic-bezier(0,.65,0,.99)_forwards]"
                 style={{
                     backgroundColor: disabled ? "gray" : undefined,
                     borderColor: disabled ? "gray" : undefined,
@@ -51,8 +48,7 @@ export default function Checkbox({
                 }}
             >
                 <span
-                    className="absolute left-2 flex h-full w-1/2 animate-[rtl-checkbox_300ms_cubic-bezier(0,.65,0,.99)_forwards]
-                    rounded-full border-4 border-rose-500 bg-neutral-100 transition-colors dark:bg-neutral-900"
+                    className="absolute left-2 flex h-full w-1/2 animate-[rtl-checkbox_300ms_cubic-bezier(0,.65,0,.99)_forwards] rounded-full border-4 border-rose-500 bg-neutral-100 transition-colors dark:bg-neutral-900"
                     style={{
                         borderColor: disabled ? "gray" : undefined,
                     }}

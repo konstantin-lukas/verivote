@@ -45,7 +45,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     if (!matchingInfo) notFound();
 
     return (
-        <div className="min-h-main-height-mobile py-24 desktop:min-h-main-height">
+        <div className="min-h-main-height-mobile desktop:min-h-main-height py-24">
             <ViewController poll={poll} results={results} info={matchingInfo} defaultHasVoted={hasVoted} />
             <WrapperSmall>
                 <div>
