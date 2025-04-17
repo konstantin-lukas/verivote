@@ -1,4 +1,4 @@
-import type { VotingMethod } from "@/enums";
+import type { VotingMethod } from "@/enum/poll";
 
 export interface Poll {
     id?: string;

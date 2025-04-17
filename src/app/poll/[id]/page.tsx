@@ -8,7 +8,7 @@ import H3 from "@/components/shared/H3";
 import WrapperSmall from "@/components/shared/WrapperSmall";
 import { votingMethods } from "@/content/votingMethods";
 import { findPollById } from "@/database/poll";
-import { VotingMethod } from "@/enums";
+import { VotingMethod } from "@/enum/poll";
 import type { PollSummary } from "@/types/poll";
 
 export async function generateMetadata(context: { params: Promise<{ id: string }> }) {

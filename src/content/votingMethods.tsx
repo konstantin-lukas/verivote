@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-import { VotingMethod } from "@/enums";
+import { VotingMethod } from "@/enum/poll";
 import illustrationScore from "@/public/undraw_feedback_re_urmj.svg";
 import illustrationRunoff from "@/public/undraw_jogging_re_k28i.svg";
 import illustrationApproval from "@/public/undraw_like_dislike_re_dwcj.svg";

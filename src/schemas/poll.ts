@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { UNKNOWN_SERVER_ERROR } from "@/const/error";
 import { MAX_POLL_OPTIONS } from "@/const/poll";
+import { AuthProvider } from "@/enum/auth";
 
 export const PollCreateClientSchema = z.object({
     title: z
@@ -35,7 +36,7 @@ export type PollCreateClientType = z.infer<typeof PollCreateClientSchema>;
 export const PollCreateServerSchema = PollCreateClientSchema.extend({
     userIdentifier: z
         .string({ message: UNKNOWN_SERVER_ERROR })
-        .regex(/\w+(github|reddit|discord)$/, { message: UNKNOWN_SERVER_ERROR }),
+        .regex(new RegExp(`\\w+(${Object.values(AuthProvider).join("|")})$`), { message: UNKNOWN_SERVER_ERROR }),
     creationTime: z.date({ message: UNKNOWN_SERVER_ERROR }).max(new Date(), { message: UNKNOWN_SERVER_ERROR }),
 });
 

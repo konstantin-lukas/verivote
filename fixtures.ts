@@ -2,7 +2,7 @@ import { addDays } from "date-fns";
 import * as dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 
-import { VotingMethod } from "@/enums";
+import { VotingMethod } from "@/enum/poll";
 
 dotenv.config();
 
