@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import type { ReactNode } from "react";
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuBrush, LuEye } from "react-icons/lu";
 
@@ -13,7 +13,7 @@ import H1 from "@/components/shared/H1";
 import H2 from "@/components/shared/H2";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
-import { LoadingStateContext } from "@/contexts";
+import useLoadingState from "@/hooks/useLoadingState";
 import illustration from "@/public/undraw_the_search_s0xf.svg";
 import type { Poll } from "@/types/poll";
 import { formatDate } from "@/utils/shared";
@@ -54,7 +54,7 @@ export default function ManageCards({ polls }: { polls: Poll[] }) {
         message: null,
         deleteAction: () => null,
     });
-    const { setIsLoading } = useContext(LoadingStateContext);
+    const { setIsLoading } = useLoadingState();
 
     const modal = (
         <Modal

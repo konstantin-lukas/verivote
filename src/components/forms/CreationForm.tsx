@@ -5,7 +5,7 @@ import "./CreationForm.css";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import { addDays, addMinutes, setSeconds } from "date-fns";
 import type { ReactNode } from "react";
-import React, { useActionState, useContext, useEffect, useMemo, useReducer, useState } from "react";
+import React, { useActionState, useEffect, useMemo, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoAddSharp } from "react-icons/io5";
 
@@ -17,7 +17,7 @@ import BlockButton from "@/components/shared/BlockButton";
 import ErrorList from "@/components/shared/ErrorList";
 import Modal from "@/components/shared/Modal";
 import { votingMethods } from "@/content/votingMethods";
-import { LoadingStateContext } from "@/contexts";
+import useLoadingState from "@/hooks/useLoadingState";
 import { PollCreateClientSchema } from "@/schemas/poll";
 import type { Poll } from "@/types/poll";
 import { parseSchema } from "@/utils/shared";
@@ -71,7 +71,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         ok: false,
         message: "",
     });
-    const { setIsLoading } = useContext(LoadingStateContext);
+    const { setIsLoading } = useLoadingState();
     useEffect(() => {
         setIsLoading(formPending);
     }, [formPending, setIsLoading]);
@@ -91,7 +91,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
 
     useEffect(() => {
         setModalMessage(message);
-    }, [message]);
+    }, [message, formPending]);
 
     const options = useMemo(() => {
         return state.options.map((o, i) => {
