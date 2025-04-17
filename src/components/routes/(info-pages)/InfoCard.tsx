@@ -22,10 +22,9 @@ function List({ heading, children }: { heading: string; children: ReactNode }) {
     return (
         <div className="mt-14 first:mt-4 dark:border-light-font">
             <span
-                className={
-                    "flex items-center relative rounded-full -top-1.5 text-2xl font-bold -translate-x-2 uppercase " +
+                className={`flex items-center relative rounded-full -top-1.5 text-2xl font-bold -translate-x-2 uppercase ${
                     color
-                }
+                }`}
             >
                 {arrow}
                 {heading}
@@ -82,7 +81,7 @@ export default function InfoCard({ votingMethod }: { votingMethod: VotingMethodD
     const buttons = (
         <div className="mt-16 flex flex-col justify-center gap-8 border-t-2 border-neutral-300 pt-16 sm:flex-row dark:border-neutral-700">
             <BlockLink
-                href={"/create?type=" + votingMethod.shorthand}
+                href={`/create?type=${votingMethod.shorthand}`}
                 className="inline-flex w-full justify-center sm:w-auto"
             >
                 <LuBrush className="relative top-[-.1rem] inline" size="1rem" />

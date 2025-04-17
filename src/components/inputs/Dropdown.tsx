@@ -64,19 +64,17 @@ function Dropdown({
                     if (e.key === " " || e.key === "Enter") setIsOpen(!isOpen);
                 }}
                 role="option"
-                className={
-                    "mb-6 sm:min-w-60 rounded-full px-10 py-2 transition-all " +
-                    (isOpen ? "shadow-3d-both dark:shadow-dark-3d-both " : "shadow-3d dark:shadow-dark-3d ") +
-                    (disabled ? "cursor-wait" : "cursor-pointer")
-                }
+                className={`mb-6 sm:min-w-60 rounded-full px-10 py-2 transition-all ${
+                    isOpen ? "shadow-3d-both dark:shadow-dark-3d-both " : "shadow-3d dark:shadow-dark-3d "
+                }${disabled ? "cursor-wait" : "cursor-pointer"}`}
                 aria-selected="true"
                 tabIndex={0}
             >
-                <div className={"flex items-center transition-transform justify-between " + (isOpen ? "scale-95" : "")}>
+                <div className={`flex items-center transition-transform justify-between ${isOpen ? "scale-95" : ""}`}>
                     <div data-nosnippet="true" className={disabled ? "text-[gray]" : ""}>
                         {options[selectedOption]}
                     </div>
-                    <BiExpandVertical className={"ml-2" + (disabled ? " text-[gray]" : "")} />
+                    <BiExpandVertical className={`ml-2${disabled ? " text-[gray]" : ""}`} />
                 </div>
             </div>
             {isOpen && (

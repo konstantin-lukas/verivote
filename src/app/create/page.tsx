@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ type?: string }> }) {
-    const type = (await searchParams).type;
+    const { type } = await searchParams;
     return (
         <Wrapper
             className="flex min-h-main-height-mobile flex-col items-center justify-center

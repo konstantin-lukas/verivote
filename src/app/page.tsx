@@ -18,7 +18,7 @@ export default async function Page() {
                             className="absolute bottom-0 right-0 hidden size-[75dvmax] max-h-[1440px]
                             max-w-[1440px] translate-x-1/2 translate-y-1/2 rounded-full bg-gradient-to-r
                             from-verivote-turquoise to-verivote-cyan md:block [@media(max-height:420px)]:hidden"
-                        ></span>
+                        />
                         <Image
                             src={illustration}
                             alt=""

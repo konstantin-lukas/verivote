@@ -15,10 +15,9 @@ export default function Logo({ className, alt }: { className?: string; alt: stri
     const src = (() => {
         if (mounted && resolvedTheme === "dark") {
             return logoDark;
-        } else {
-            return logo;
         }
+        return logo;
     })();
 
-    return <Image className={"select-none " + className} src={src} alt={alt} priority draggable={false} />;
+    return <Image className={`select-none ${className}`} src={src} alt={alt} priority draggable={false} />;
 }

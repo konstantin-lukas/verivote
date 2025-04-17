@@ -54,10 +54,8 @@ export default function MobileMenu() {
                     </Link>
                     <nav className="w-full">
                         <ul
-                            className={
-                                `flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 
-                                landscape:grid landscape:w-96 landscape:gap-6 ` + buttonsClass
-                            }
+                            className={`flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 
+                                landscape:grid landscape:w-96 landscape:gap-6 ${buttonsClass}`}
                         >
                             {session ? (
                                 <>

@@ -12,7 +12,7 @@ import { VotingMethod } from "@/enums";
 import type { PollSummary } from "@/types/poll";
 
 export async function generateMetadata(context: { params: Promise<{ id: string }> }) {
-    const id = (await context.params).id;
+    const { id } = await context.params;
     const poll = await findPollById(id);
     if (poll) {
         return {

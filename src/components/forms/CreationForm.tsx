@@ -63,6 +63,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         winnerNeedsMajority: false,
         options: ["", ""],
     });
+    const [modalMessage, setModalMessage] = useState<ReactNode>(null);
 
     const [{ message }, formAction, formPending] = useActionState(createPoll.bind(null, state), {
         ok: false,
@@ -90,8 +91,6 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         setModalMessage(message);
     }, [message]);
 
-    const [modalMessage, setModalMessage] = useState<ReactNode>(null);
-
     const options = useMemo(() => {
         return state.options.map((o, i) => {
             return (
@@ -101,12 +100,12 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                         valid={validateOption(o)}
                         disabled={formPending}
                         className="w-full"
-                        testId={"option" + i}
+                        testId={`option${i}`}
                         name={"options"}
                         maxLength={100}
                         required={true}
                         setValue={value => dispatch({ type: "optionsChange", value, index: i })}
-                        placeholder={"Option " + (i + 1)}
+                        placeholder={`Option ${i + 1}`}
                     />
                     {i > 1 && (
                         <button
