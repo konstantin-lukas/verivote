@@ -37,7 +37,7 @@ export default function Checkbox({
                     backgroundColor: disabled ? "gray" : undefined,
                     borderColor: disabled ? "gray" : undefined,
                 }}
-                aria-label="Winner needs majority"
+                aria-label={label}
                 role="checkbox"
                 tabIndex={0}
                 data-cy={testId}

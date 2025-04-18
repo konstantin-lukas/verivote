@@ -175,7 +175,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             testId="majority"
             onChange={e => dispatch({ type: "majority", value: e.target.checked })}
             checked={state.winnerNeedsMajority}
-            label="Winner needs majority: "
+            label={`Winner needs majority: ${state.winnerNeedsMajority ? "yes" : "no"}`}
             disabled={formPending}
             name="majority"
         />
@@ -209,7 +209,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     return (
         <form
             action={formAction}
-            className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-auto"
+            className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-80"
             onSubmit={e => {
                 const errors = parseSchema(PollCreateClientSchema, state);
                 if (errors) {
