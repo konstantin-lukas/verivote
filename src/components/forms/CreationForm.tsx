@@ -15,6 +15,7 @@ import BlockButton from "@/components/shared/BlockButton";
 import ErrorList from "@/components/shared/ErrorList";
 import Modal from "@/components/shared/Modal";
 import { VOTING_METHODS } from "@/const/misc";
+import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
 import useLoadingState from "@/hooks/useLoadingState";
 import { PollClosingTimeSchema, PollCreateClientSchema, PollOptionSchema, PollTitleSchema } from "@/schemas/poll";
 import type { Poll } from "@/types/poll";
@@ -65,9 +66,9 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     });
     const [modalMessage, setModalMessage] = useState<ReactNode>(null);
 
-    const [{ message }, formAction, formPending] = useActionState(createPoll.bind(null, state), {
-        ok: false,
-        message: "",
+    const [{ successMessage, errorMessages }, formAction, formPending] = useActionState(createPoll.bind(null, state), {
+        successMessage: "",
+        errorMessages: null,
     });
     const { setIsLoading } = useLoadingState();
     useEffect(() => {
@@ -90,8 +91,14 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     }, []);
 
     useEffect(() => {
-        setModalMessage(message);
-    }, [message, formPending]);
+        if (!formPending) {
+            if (successMessage !== null) {
+                setModalMessage(successMessage);
+                return;
+            }
+            setModalMessage(<ErrorList errors={errorMessages} isServerSideError={true} />);
+        }
+    }, [successMessage, errorMessages, formPending]);
 
     const options = useMemo(() => {
         return state.options.map((o, i) => (
@@ -100,8 +107,8 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                     value={o}
                     disabled={formPending}
                     className="w-full"
-                    name={"options"}
-                    maxLength={100}
+                    name="options"
+                    maxLength={MAX_POLL_OPTION_TITLE_LENGTH}
                     valid={!parseSchema(PollOptionSchema, o)}
                     required={true}
                     onChange={value => dispatch({ type: "optionsChange", value, index: i })}
@@ -142,7 +149,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             name="title"
             required={true}
             valid={!parseSchema(PollTitleSchema, state.title)}
-            maxLength={200}
+            maxLength={MAX_POLL_TITLE_LENGTH}
             disabled={formPending}
             onChange={value => dispatch({ type: "title", value })}
             placeholder="Poll title"

@@ -2,7 +2,8 @@ import { ObjectId } from "bson";
 
 import mongo from "@/database/connection";
 import type { Poll } from "@/types/poll";
-import { makeBSONSerializable, tryCatch } from "@/utils/shared";
+import { makeBSONSerializable } from "@/utils/server";
+import { tryCatch } from "@/utils/shared";
 
 function getCollection() {
     const db = mongo.db("verivote");

@@ -3,7 +3,7 @@
 import { ObjectId } from "bson";
 import { redirect } from "next/navigation";
 
-import { UNKNOWN_SERVER_ERROR } from "@/const/error";
+import { INVALID_CREDENTIALS_ERROR } from "@/const/error";
 import mongo from "@/database/connection";
 import { insertPoll } from "@/database/poll";
 import { PollCreateServerSchema } from "@/schemas/poll";
@@ -15,7 +15,7 @@ import { parseSchema, tryCatch } from "@/utils/shared";
 export async function createPoll(formData: Poll): ActionResult {
     const userIdentifier = await getUserIdentifier();
     if (!userIdentifier) {
-        return { ok: false, message: "Invalid credentials." };
+        return { successMessage: null, errorMessages: [INVALID_CREDENTIALS_ERROR] };
     }
     const newPoll: Poll = {
         creationTime: new Date(),
@@ -28,20 +28,21 @@ export async function createPoll(formData: Poll): ActionResult {
     };
 
     const errors = parseSchema(PollCreateServerSchema, newPoll);
-    if (errors) return { ok: false, message: UNKNOWN_SERVER_ERROR };
+    if (errors) return { successMessage: null, errorMessages: errors };
 
-    const { data: id, error: e } = await tryCatch(insertPoll(newPoll));
-    if (e) return { ok: false, message: UNKNOWN_SERVER_ERROR };
-    redirect(`/poll/${id}`);
+    const { data, error } = await tryCatch(insertPoll(newPoll));
+    if (error) return { successMessage: null, errorMessages: ["An error occurred while creating poll"] };
+    redirect(`/poll/${data}`);
 }
 
 export async function deletePoll(id: string): ActionResult {
     const userIdentifier = await getUserIdentifier();
-    if (!userIdentifier) return { ok: false, message: "Invalid credentials." };
+    if (!userIdentifier) return { successMessage: null, errorMessages: [INVALID_CREDENTIALS_ERROR] };
 
     const database = mongo.db("verivote");
     const polls = database.collection("polls");
     const result = await polls.deleteOne({ _id: new ObjectId(id), userIdentifier });
     const success = result.deletedCount === 1;
-    return { ok: success, message: success ? "Poll successfully deleted." : "Poll not found." };
+    if (success) return { successMessage: "Poll successfully deleted.", errorMessages: null };
+    return { successMessage: null, errorMessages: ["Poll not found."] };
 }

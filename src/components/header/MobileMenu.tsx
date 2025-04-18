@@ -96,6 +96,7 @@ export default function MobileMenu() {
                 onClick={() => {
                     setIsOpen(!isOpen);
                 }}
+                aria-label="open menu"
                 className="fixed left-6 top-6 size-10"
             >
                 <CSSTransition

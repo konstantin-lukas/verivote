@@ -1,19 +1,22 @@
 import { addMinutes } from "date-fns";
 import { z } from "zod";
 
-import { UNKNOWN_SERVER_ERROR } from "@/const/error";
-import { MAX_POLL_OPTIONS } from "@/const/poll";
+import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_OPTIONS, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
 import { AuthProvider } from "@/enum/auth";
 
 export const PollOptionSchema = z
     .string({ message: "Each option's name must be string" })
     .min(1, { message: "Each option's name must be at least one character long" })
-    .max(100, { message: "Each option's name must be no longer than 100 characters" });
+    .max(MAX_POLL_OPTION_TITLE_LENGTH, {
+        message: `Each option's name must be no longer than ${MAX_POLL_OPTION_TITLE_LENGTH} characters`,
+    });
 
 export const PollTitleSchema = z
     .string()
     .min(1, { message: "The poll title has to be at least one character long" })
-    .max(200, { message: "The poll title has to be no longer than 200 characters" });
+    .max(MAX_POLL_TITLE_LENGTH, {
+        message: `The poll title has to be no longer than ${MAX_POLL_TITLE_LENGTH} characters`,
+    });
 
 export const PollClosingTimeSchema = z
     .date({ message: "The closing time must be a valid date" })
@@ -37,7 +40,11 @@ export const PollCreateClientSchema = z.object({
 
 export const PollCreateServerSchema = PollCreateClientSchema.extend({
     userIdentifier: z
-        .string({ message: UNKNOWN_SERVER_ERROR })
-        .regex(new RegExp(`\\w+(${Object.values(AuthProvider).join("|")})$`), { message: UNKNOWN_SERVER_ERROR }),
-    creationTime: z.date({ message: UNKNOWN_SERVER_ERROR }).max(new Date(), { message: UNKNOWN_SERVER_ERROR }),
+        .string({ message: "The user identifier has to be a string" })
+        .regex(new RegExp(`\\w+(${Object.values(AuthProvider).join("|")})$`), {
+            message: "An invalid user identifier was provided",
+        }),
+    creationTime: z.date({ message: "The creation time has to be a valid date" }).refine(date => date <= new Date(), {
+        message: "The creation time cannot lie in the future",
+    }),
 });

@@ -7,4 +7,13 @@ interface Failure<E> {
     error: E;
 }
 export type Result<T, E = Error> = Success<T> | Failure<E>;
-export type ActionResult = Promise<{ ok: boolean; message: string }>;
+
+interface ActionSuccess {
+    successMessage: string;
+    errorMessages: null;
+}
+interface ActionFailure {
+    successMessage: null;
+    errorMessages: string[];
+}
+export type ActionResult = Promise<ActionSuccess | ActionFailure>;

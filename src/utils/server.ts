@@ -1,3 +1,4 @@
+import type { ObjectId } from "bson";
 import { getServerSession } from "next-auth";
 
 import { AuthProvider } from "@/enum/auth";
@@ -14,4 +15,10 @@ export async function getUserIdentifier() {
     const isValidIdentifier = providers.some(provider => identifier.endsWith(provider));
     if (!isValidIdentifier) return null;
     return identifier;
+}
+
+export function makeBSONSerializable<T>(obj: T): T {
+    const objId = (obj as unknown as { _id: ObjectId })._id.toString();
+    delete (obj as unknown as { _id?: ObjectId })._id;
+    return { ...obj, id: objId };
 }

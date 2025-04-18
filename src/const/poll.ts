@@ -1,1 +1,3 @@
 export const MAX_POLL_OPTIONS = 20;
+export const MAX_POLL_TITLE_LENGTH = 200;
+export const MAX_POLL_OPTION_TITLE_LENGTH = 100;

@@ -1,4 +1,3 @@
-import type { ObjectId } from "bson";
 import type { ZodError, ZodSchema } from "zod";
 
 import type { Result } from "@/types/result";
@@ -19,12 +18,6 @@ export function tryCatchSync<T, E = Error>(fn: () => T): Result<T, E> {
     } catch (error) {
         return { data: null, error: error as E };
     }
-}
-
-export function makeBSONSerializable<T>(obj: T): T {
-    const objId = (obj as unknown as { _id: ObjectId })._id.toString();
-    delete (obj as unknown as { _id?: ObjectId })._id;
-    return { ...obj, id: objId };
 }
 
 /**
