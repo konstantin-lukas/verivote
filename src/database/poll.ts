@@ -17,6 +17,12 @@ export async function findPollById(id: string) {
     return makeBSONSerializable(data);
 }
 
+export async function deletePollByIdAndUserIdentifier(id: string, userIdentifier: string) {
+    const polls = getCollection();
+    const { data, error } = await tryCatch(polls.deleteOne({ _id: new ObjectId(id), userIdentifier }));
+    return !error && data.deletedCount === 1;
+}
+
 export async function findPollsByUserIdentifier(userIdentifier: string) {
     const polls = getCollection();
     const { data, error } = await tryCatch(polls.find<Poll>({ userIdentifier }).toArray());
