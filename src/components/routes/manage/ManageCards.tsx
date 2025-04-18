@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { useState } from "react";
@@ -12,11 +13,11 @@ import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
 import H2 from "@/components/shared/H2";
 import Modal from "@/components/shared/Modal";
+import { LONG_DATE_FORMAT } from "@/const/date";
 import { VOTING_METHODS } from "@/const/misc";
 import useLoadingState from "@/hooks/useLoadingState";
 import illustration from "@/public/undraw_the_search_s0xf.svg";
 import type { Poll } from "@/types/poll";
-import { formatDate } from "@/utils/shared";
 
 function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () => void }) {
     const info = VOTING_METHODS.find(x => x.dbId === poll.votingMethod);
@@ -28,7 +29,7 @@ function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () =
                 <p>Options: {poll.options.join(", ")}</p>
             </div>
             <div>
-                <span>Closing date: {formatDate(poll.closingTime)}</span>
+                <span>Closing date: {format(poll.closingTime, LONG_DATE_FORMAT)}</span>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
                     <BlockLink href={`/poll/${poll.id}`} className="mt-6 flex grow justify-center" testId="viewPoll">
                         <LuEye className="mr-1 inline translate-y-[-0.1em]" />

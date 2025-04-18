@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import React, { useState } from "react";
 import { LuChartPie } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
@@ -13,9 +14,9 @@ import BlockButton from "@/components/shared/BlockButton";
 import H1 from "@/components/shared/H1";
 import Wrapper from "@/components/shared/Wrapper";
 import WrapperSmall from "@/components/shared/WrapperSmall";
+import { LONG_DATE_FORMAT } from "@/const/date";
 import type { Poll, PollSummary } from "@/types/poll";
 import type { VotingMethodDetails } from "@/types/votingMethod";
-import { formatDate } from "@/utils/shared";
 
 export default function ViewController({
     poll,
@@ -58,7 +59,7 @@ export default function ViewController({
                     {info.name}
                 </h2>
                 <span className="text-center text-neutral-500">
-                    {date >= new Date() ? "Closing time" : "This poll ended on"}: {formatDate(date)}
+                    {date >= new Date() ? "Closing time" : "This poll ended on"}: {format(date, LONG_DATE_FORMAT)}
                 </span>
                 <div className="mt-6 flex flex-wrap justify-center gap-6">
                     <ShareButton url={`${process.env.NEXT_PUBLIC_ORIGIN}/poll/${poll.id}`} />

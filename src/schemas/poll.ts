@@ -15,13 +15,15 @@ export const PollTitleSchema = z
     .min(1, { message: "The poll title has to be at least one character long" })
     .max(200, { message: "The poll title has to be no longer than 200 characters" });
 
+export const PollClosingTimeSchema = z
+    .date({ message: "The closing time must be a valid date" })
+    .refine(date => date >= addMinutes(new Date(), 1), {
+        message: "The closing time has to be at least one minute from now",
+    });
+
 export const PollCreateClientSchema = z.object({
     title: PollTitleSchema,
-    closingTime: z
-        .date({ message: "The closing time must be a valid date" })
-        .refine(date => date >= addMinutes(new Date(), 1), {
-            message: "The closing time has to be at least one minute from now",
-        }),
+    closingTime: PollClosingTimeSchema,
     options: z
         .array(PollOptionSchema)
         .min(2, { message: "A poll needs at least two options" })

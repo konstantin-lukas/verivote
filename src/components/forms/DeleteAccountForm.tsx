@@ -8,7 +8,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import BlockButton from "@/components/shared/BlockButton";
 import Modal from "@/components/shared/Modal";
 
-export default function DeleteAccount() {
+export default function DeleteAccountForm() {
     const [modalMessage, setModalMessage] = useState<ReactNode>(null);
 
     const modal = (

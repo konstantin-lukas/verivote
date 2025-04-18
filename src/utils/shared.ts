@@ -5,10 +5,6 @@ import type { ZodError, ZodSchema } from "zod";
 import type { Poll } from "@/types/poll";
 import type { Result } from "@/types/result";
 
-export function formatDate(date: Date) {
-    return format(date, "dd LLLL yyyy hh:mm aa (OOOO)");
-}
-
 export async function tryCatch<T, E = Error>(promise: Promise<T>): Promise<Result<T, E>> {
     try {
         const data = await promise;

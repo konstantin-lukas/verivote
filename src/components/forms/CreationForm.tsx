@@ -1,8 +1,5 @@
 "use client";
 
-import "./CreationForm.css";
-
-import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import { addDays, addMinutes, setSeconds } from "date-fns";
 import type { ReactNode } from "react";
 import React, { useActionState, useEffect, useMemo, useReducer, useState } from "react";
@@ -11,6 +8,7 @@ import { IoAddSharp } from "react-icons/io5";
 
 import { createPoll } from "@/actions/poll";
 import Checkbox from "@/components/inputs/Checkbox";
+import DateTimePicker from "@/components/inputs/DateTimePicker";
 import Dropdown from "@/components/inputs/Dropdown";
 import Input from "@/components/inputs/Input";
 import BlockButton from "@/components/shared/BlockButton";
@@ -18,7 +16,7 @@ import ErrorList from "@/components/shared/ErrorList";
 import Modal from "@/components/shared/Modal";
 import { VOTING_METHODS } from "@/const/misc";
 import useLoadingState from "@/hooks/useLoadingState";
-import { PollCreateClientSchema, PollOptionSchema, PollTitleSchema } from "@/schemas/poll";
+import { PollClosingTimeSchema, PollCreateClientSchema, PollOptionSchema, PollTitleSchema } from "@/schemas/poll";
 import type { Poll } from "@/types/poll";
 import { parseSchema } from "@/utils/shared";
 
@@ -77,16 +75,18 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     }, [formPending, setIsLoading]);
 
     /**
-     * This effect is used instead of an initial value for the date to prevent a very rate hydration error.
+     * This effect and state is used instead of an initial value for the date to prevent a very rate hydration error.
      * The hours and minutes of the date are displayed by the material ui datetime picker.
      * If a client makes a request at the end of a minute and the response arrives in the next minute, the displayed
      * HTML will differ. Setting an empty string as a date prevents that because the initial value is static.
      */
+    const [minDateTime, setMinDateTime] = useState<Date | undefined>();
     useEffect(() => {
         dispatch({
             type: "date",
             value: setSeconds(addDays(new Date(), 1), 0),
         });
+        setMinDateTime(addMinutes(new Date(), 1));
     }, []);
 
     useEffect(() => {
@@ -94,35 +94,31 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     }, [message, formPending]);
 
     const options = useMemo(() => {
-        return state.options.map((o, i) => {
-            const valid = parseSchema(PollOptionSchema, o);
-            return (
-                <div key={i} className="relative mt-4">
-                    <Input
-                        value={o}
+        return state.options.map((o, i) => (
+            <div key={i} className="relative mt-4">
+                <Input
+                    value={o}
+                    disabled={formPending}
+                    className="w-full"
+                    name={"options"}
+                    maxLength={100}
+                    valid={!parseSchema(PollOptionSchema, o)}
+                    required={true}
+                    onChange={value => dispatch({ type: "optionsChange", value, index: i })}
+                    placeholder={`Option ${i + 1}`}
+                />
+                {i > 1 && (
+                    <button
+                        className="group absolute right-4 top-1/2 -translate-y-1/2"
+                        onClick={() => dispatch({ type: "optionsDelete", index: i })}
                         disabled={formPending}
-                        className="w-full"
-                        testId={`option${i}`}
-                        name={"options"}
-                        maxLength={100}
-                        valid={!valid}
-                        required={true}
-                        setValue={value => dispatch({ type: "optionsChange", value, index: i })}
-                        placeholder={`Option ${i + 1}`}
-                    />
-                    {i > 1 && (
-                        <button
-                            className="group absolute right-4 top-1/2 -translate-y-1/2"
-                            onClick={() => dispatch({ type: "optionsDelete", index: i })}
-                            disabled={formPending}
-                            type="button"
-                        >
-                            <IoMdClose className="size-6 transition-colors group-hover:text-rose-500" />
-                        </button>
-                    )}
-                </div>
-            );
-        });
+                        type="button"
+                    >
+                        <IoMdClose className="size-6 transition-colors group-hover:text-rose-500" />
+                    </button>
+                )}
+            </div>
+        ));
     }, [state, formPending]);
 
     const pollTypeSelect = (
@@ -140,28 +136,30 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         />
     );
 
-    const valid = parseSchema(PollTitleSchema, state.title);
     const pollName = (
         <Input
             value={state.title}
             name="title"
-            testId="title"
             required={true}
-            valid={!valid}
+            valid={!parseSchema(PollTitleSchema, state.title)}
             maxLength={200}
             disabled={formPending}
-            setValue={value => dispatch({ type: "title", value })}
+            onChange={value => dispatch({ type: "title", value })}
             placeholder="Poll title"
         />
     );
 
     const datePicker = (
-        <MobileDateTimePicker
+        <DateTimePicker
             value={state.closingTime}
-            minDateTime={addMinutes(new Date(), 1)}
-            ampmInClock
-            onChange={date => dispatch({ type: "date", value: date ?? new Date() })}
+            minDateTime={minDateTime}
+            valid={!parseSchema(PollClosingTimeSchema, state.closingTime)}
+            onChange={date => {
+                dispatch({ type: "date", value: date ?? new Date() });
+                setMinDateTime(addMinutes(new Date(), 1));
+            }}
             disabled={formPending}
+            style={{ marginTop: "1rem" }}
         />
     );
 

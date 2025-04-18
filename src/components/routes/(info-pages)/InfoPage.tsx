@@ -22,9 +22,7 @@ function List({ heading, children }: { heading: string; children: ReactNode }) {
     return (
         <div className="dark:border-light-font mt-14 first:mt-4">
             <span
-                className={`relative -top-1.5 flex -translate-x-2 items-center rounded-full text-2xl font-bold uppercase ${
-                    color
-                }`}
+                className={`relative -top-1.5 flex -translate-x-2 items-center rounded-full text-2xl font-bold uppercase ${color}`}
             >
                 {arrow}
                 {heading}
@@ -37,7 +35,7 @@ function List({ heading, children }: { heading: string; children: ReactNode }) {
     );
 }
 
-export default function InfoCard({ votingMethod }: { votingMethod: VotingMethodDetails }) {
+export default function InfoPage({ votingMethod }: { votingMethod: VotingMethodDetails }) {
     const heading = (
         <div className="mb-12">
             <H1>{votingMethod.name}</H1>
