@@ -5,7 +5,7 @@ import Card from "@/components/routes/home/Card";
 import H1 from "@/components/shared/H1";
 import ScrollDownButton from "@/components/shared/ScrollButton";
 import Wrapper from "@/components/shared/Wrapper";
-import { votingMethods } from "@/content/votingMethods";
+import { VOTING_METHODS } from "@/const/misc";
 import illustration from "@/public/undraw_election_day_w842.svg";
 
 export default async function Page() {
@@ -38,7 +38,7 @@ export default async function Page() {
             <Wrapper>
                 <div className="py-32" id="anchor">
                     <div className="grid grid-cols-1 gap-x-16 gap-y-24 md:grid-cols-2 xl:grid-cols-3">
-                        {votingMethods.map(method => (
+                        {VOTING_METHODS.map(method => (
                             <Card votingMethod={method} key={method.name} />
                         ))}
                     </div>

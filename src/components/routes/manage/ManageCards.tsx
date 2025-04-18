@@ -12,14 +12,14 @@ import BlockLink from "@/components/shared/BlockLink";
 import H1 from "@/components/shared/H1";
 import H2 from "@/components/shared/H2";
 import Modal from "@/components/shared/Modal";
-import { votingMethods } from "@/content/votingMethods";
+import { VOTING_METHODS } from "@/const/misc";
 import useLoadingState from "@/hooks/useLoadingState";
 import illustration from "@/public/undraw_the_search_s0xf.svg";
 import type { Poll } from "@/types/poll";
 import { formatDate } from "@/utils/shared";
 
 function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () => void }) {
-    const info = votingMethods.find(x => x.dbId === poll.votingMethod);
+    const info = VOTING_METHODS.find(x => x.dbId === poll.votingMethod);
     return (
         <div className="flex flex-col justify-between">
             <div>

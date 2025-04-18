@@ -4,7 +4,7 @@ import { useClickOutside } from "anzol";
 import React, { useEffect, useMemo, useState } from "react";
 import { BiExpandVertical } from "react-icons/bi";
 
-function Dropdown({
+export default function Dropdown({
     options,
     defaultOption,
     getValue,
@@ -54,6 +54,8 @@ function Dropdown({
         if (disabled) setIsOpen(false);
     }, [disabled]);
 
+    const shadowStyle = isOpen ? "shadow-3d-both dark:shadow-dark-3d-both" : "shadow-3d dark:shadow-dark-3d";
+    const cursorStyle = disabled ? "cursor-wait" : "cursor-pointer";
     return (
         <div ref={ref} role="listbox" aria-label={ariaLabel} className="relative inline-block">
             <div
@@ -64,9 +66,7 @@ function Dropdown({
                     if (e.key === " " || e.key === "Enter") setIsOpen(!isOpen);
                 }}
                 role="option"
-                className={`mb-6 rounded-full px-10 py-2 transition-all sm:min-w-60 ${
-                    isOpen ? "shadow-3d-both dark:shadow-dark-3d-both" : "shadow-3d dark:shadow-dark-3d"
-                }${disabled ? "cursor-wait" : "cursor-pointer"}`}
+                className={`mb-6 rounded-full px-10 py-2 transition-all sm:min-w-60 ${shadowStyle} ${cursorStyle}`}
                 aria-selected="true"
                 tabIndex={0}
             >
@@ -85,5 +85,3 @@ function Dropdown({
         </div>
     );
 }
-
-export default Dropdown;

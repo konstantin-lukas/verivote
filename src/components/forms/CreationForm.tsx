@@ -16,7 +16,7 @@ import Input from "@/components/inputs/Input";
 import BlockButton from "@/components/shared/BlockButton";
 import ErrorList from "@/components/shared/ErrorList";
 import Modal from "@/components/shared/Modal";
-import { votingMethods } from "@/content/votingMethods";
+import { VOTING_METHODS } from "@/const/misc";
 import useLoadingState from "@/hooks/useLoadingState";
 import { PollCreateClientSchema, PollOptionSchema, PollTitleSchema } from "@/schemas/poll";
 import type { Poll } from "@/types/poll";
@@ -59,7 +59,7 @@ function reducer(
 
 export default function CreationForm({ defaultMethod }: { defaultMethod?: number }) {
     const [state, dispatch] = useReducer(reducer, {
-        votingMethod: defaultMethod ?? votingMethods[0].dbId,
+        votingMethod: defaultMethod ?? VOTING_METHODS[0].dbId,
         title: "",
         closingTime: new Date(""),
         winnerNeedsMajority: false,
@@ -127,13 +127,13 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
 
     const pollTypeSelect = (
         <Dropdown
-            options={votingMethods.map(m => m.name)}
-            defaultOption={votingMethods.findIndex(v => v.dbId === (defaultMethod ?? votingMethods[0].dbId))}
+            options={VOTING_METHODS.map(m => m.name)}
+            defaultOption={VOTING_METHODS.findIndex(v => v.dbId === (defaultMethod ?? VOTING_METHODS[0].dbId))}
             disabled={formPending}
             getValue={(index: number) =>
                 dispatch({
                     type: "method",
-                    value: votingMethods[index].dbId,
+                    value: VOTING_METHODS[index].dbId,
                 })
             }
             ariaLabel="Select poll type"

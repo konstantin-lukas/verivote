@@ -6,7 +6,7 @@ import ViewController from "@/components/routes/poll/ViewController";
 import BlockLink from "@/components/shared/BlockLink";
 import H3 from "@/components/shared/H3";
 import WrapperSmall from "@/components/shared/WrapperSmall";
-import { votingMethods } from "@/content/votingMethods";
+import { VOTING_METHODS } from "@/const/misc";
 import { findPollById } from "@/database/poll";
 import { VotingMethod } from "@/enum/poll";
 import type { PollSummary } from "@/types/poll";
@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     ]);
 
     if (!poll) notFound();
-    const matchingInfo = votingMethods.find(x => x.dbId === poll.votingMethod);
+    const matchingInfo = VOTING_METHODS.find(x => x.dbId === poll.votingMethod);
     if (!matchingInfo) notFound();
 
     return (
