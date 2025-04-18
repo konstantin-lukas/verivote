@@ -1,3 +1,4 @@
+import type { ObjectId } from "bson";
 import type { ZodError, ZodSchema } from "zod";
 
 import type { Result } from "@/types/result";
@@ -20,8 +21,14 @@ export function tryCatchSync<T, E = Error>(fn: () => T): Result<T, E> {
     }
 }
 
+export function makeBSONSerializable<T>(obj: T): T {
+    const objId = (obj as unknown as { _id: ObjectId })._id.toString();
+    delete (obj as unknown as { _id?: ObjectId })._id;
+    return { ...obj, id: objId };
+}
+
 /**
- * @returns A list of errors as strings or null if parsing was successful.
+ * @returns An error string or null if parsing was successful.
  */
 export function parseSchema(schema: ZodSchema, data: unknown) {
     const { error } = tryCatchSync<unknown, ZodError>(() => schema.parse(data));
