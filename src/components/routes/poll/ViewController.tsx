@@ -6,13 +6,13 @@ import { LuChartPie } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
 
 import BlockButton from "@/components/interaction/BlockButton";
+import ShareButton from "@/components/interaction/ShareButton";
 import Wrapper from "@/components/layout/Wrapper";
 import WrapperSmall from "@/components/layout/WrapperSmall";
 import ApprovalVoting from "@/components/routes/poll/ApprovalVoting";
 import PluralityVoting from "@/components/routes/poll/PluralityVoting";
 import RankedVoting from "@/components/routes/poll/RankedVoting";
 import ScoreVoting from "@/components/routes/poll/ScoreVoting";
-import ShareButton from "@/components/routes/poll/ShareButton";
 import H1 from "@/components/typography/H1";
 import { LONG_DATE_FORMAT } from "@/const/date";
 import type { Poll, PollSummary } from "@/types/poll";

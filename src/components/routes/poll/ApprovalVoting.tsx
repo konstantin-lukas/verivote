@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
-import VoteButton from "@/components/routes/poll/VoteButton";
+import VoteButton from "@/components/interaction/VoteButton";
 import H3 from "@/components/typography/H3";
 import type { Poll } from "@/types/poll";
 

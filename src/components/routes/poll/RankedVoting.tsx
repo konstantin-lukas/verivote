@@ -3,7 +3,7 @@ import { MdArrowDownward, MdArrowUpward, MdDragIndicator } from "react-icons/md"
 // eslint-disable-next-line import/no-named-as-default
 import Sortable from "sortablejs";
 
-import VoteButton from "@/components/routes/poll/VoteButton";
+import VoteButton from "@/components/interaction/VoteButton";
 import H3 from "@/components/typography/H3";
 import type { Poll } from "@/types/poll";
 
