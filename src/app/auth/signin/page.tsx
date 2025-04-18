@@ -4,8 +4,8 @@ import React from "react";
 import { PiRedditLogo } from "react-icons/pi";
 import { RiDiscordLine, RiGithubLine } from "react-icons/ri";
 
-import SignInButton from "@/components/routes/auth/SignInButton";
-import Wrapper from "@/components/shared/Wrapper";
+import SignInButton from "@/components/interaction/SignInButton";
+import Wrapper from "@/components/layout/Wrapper";
 
 export default async function SignIn(context: { searchParams: Promise<{ callbackUrl: string }> }) {
     const session = await getServerSession();

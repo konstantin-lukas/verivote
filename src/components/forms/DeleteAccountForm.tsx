@@ -5,8 +5,8 @@ import type { ReactNode } from "react";
 import React, { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-import BlockButton from "@/components/shared/BlockButton";
-import Modal from "@/components/shared/Modal";
+import Modal from "@/components/alert/Modal";
+import BlockButton from "@/components/interaction/BlockButton";
 
 export default function DeleteAccountForm() {
     const [modalMessage, setModalMessage] = useState<ReactNode>(null);

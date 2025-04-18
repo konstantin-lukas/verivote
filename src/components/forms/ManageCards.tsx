@@ -8,11 +8,11 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { LuBrush, LuEye } from "react-icons/lu";
 
 import { deletePoll } from "@/actions/poll";
-import BlockButton from "@/components/shared/BlockButton";
-import BlockLink from "@/components/shared/BlockLink";
-import H1 from "@/components/shared/H1";
-import H2 from "@/components/shared/H2";
-import Modal from "@/components/shared/Modal";
+import Modal from "@/components/alert/Modal";
+import BlockButton from "@/components/interaction/BlockButton";
+import BlockLink from "@/components/navigation/BlockLink";
+import H1 from "@/components/typography/H1";
+import H2 from "@/components/typography/H2";
 import { LONG_DATE_FORMAT } from "@/const/date";
 import { VOTING_METHODS } from "@/const/misc";
 import useLoadingState from "@/hooks/useLoadingState";

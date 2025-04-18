@@ -3,7 +3,7 @@
 import React from "react";
 import { RiArrowDownDoubleFill } from "react-icons/ri";
 
-import BlockButton from "@/components/shared/BlockButton";
+import BlockButton from "@/components/interaction/BlockButton";
 
 export default function ScrollDownButton() {
     return (

@@ -1,12 +1,10 @@
-import "./RankedVoting.css";
-
 import React, { useEffect, useRef, useState } from "react";
 import { MdArrowDownward, MdArrowUpward, MdDragIndicator } from "react-icons/md";
 // eslint-disable-next-line import/no-named-as-default
 import Sortable from "sortablejs";
 
 import VoteButton from "@/components/routes/poll/VoteButton";
-import H3 from "@/components/shared/H3";
+import H3 from "@/components/typography/H3";
 import type { Poll } from "@/types/poll";
 
 function PollOption({

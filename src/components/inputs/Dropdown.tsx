@@ -1,7 +1,5 @@
-"use client";
-
 import { useClickOutside } from "anzol";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiExpandVertical } from "react-icons/bi";
 
 export default function Dropdown({
@@ -19,40 +17,38 @@ export default function Dropdown({
 }) {
     const [selectedOption, setSelectedOption] = useState(defaultOption);
     const [isOpen, setIsOpen] = useState(false);
-    const elements = useMemo(() => {
-        return options
-            .map((str, index) => {
-                const setSelected = () => {
-                    setIsOpen(false);
-                    setSelectedOption(index);
-                    getValue(index);
-                };
-                return (
-                    <div
-                        onClick={setSelected}
-                        key={index}
-                        role="option"
-                        aria-selected="false"
-                        className="inset-shadow-3d dark:inset-shadow-dark-3d mt-4 cursor-pointer rounded-full px-10 py-2 first:mt-0"
-                        tabIndex={0}
-                        onKeyDown={e => {
-                            if (e.key === " " || e.key === "Enter") setSelected();
-                        }}
-                    >
-                        <div data-nosnippet="true">{str}</div>
-                    </div>
-                );
-            })
-            .filter(jsx => {
-                return parseInt(jsx.key as string) !== selectedOption;
-            });
-    }, [options, getValue, selectedOption]);
-
     const ref = useClickOutside(() => setIsOpen(false));
 
     useEffect(() => {
         if (disabled) setIsOpen(false);
     }, [disabled]);
+
+    const elements = options
+        .map((str, index) => {
+            const setSelected = () => {
+                setIsOpen(false);
+                setSelectedOption(index);
+                getValue(index);
+            };
+            return (
+                <div
+                    onClick={setSelected}
+                    key={index}
+                    role="option"
+                    aria-selected="false"
+                    className="inset-shadow-3d dark:inset-shadow-dark-3d mt-4 cursor-pointer rounded-full px-10 py-2 first:mt-0"
+                    tabIndex={0}
+                    onKeyDown={e => {
+                        if (e.key === " " || e.key === "Enter") setSelected();
+                    }}
+                >
+                    <div data-nosnippet="true">{str}</div>
+                </div>
+            );
+        })
+        .filter(jsx => {
+            return parseInt(jsx.key as string) !== selectedOption;
+        });
 
     const shadowStyle = isOpen ? "shadow-3d-both dark:shadow-dark-3d-both" : "shadow-3d dark:shadow-dark-3d";
     const cursorStyle = disabled ? "cursor-wait" : "cursor-pointer";

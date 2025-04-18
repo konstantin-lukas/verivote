@@ -4,7 +4,7 @@ import { MongoClient } from "mongodb";
 
 import { VotingMethod } from "@/enum/poll";
 
-dotenv.config();
+dotenv.config({ path: ".env.local", override: true });
 
 function getRandomVotingMethod() {
     const enumValues = Object.values(VotingMethod).filter(value => typeof value === "number");

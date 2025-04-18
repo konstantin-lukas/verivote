@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import type { ReactNode } from "react";
 import React from "react";
 
-import ButtonLink from "@/components/shared/BlockButton";
+import ButtonLink from "@/components/interaction/BlockButton";
 
 export default function SignInButton({ serviceName, children }: { serviceName: string; children: ReactNode }) {
     return (

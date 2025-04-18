@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import React from "react";
 
 import CreationForm from "@/components/forms/CreationForm";
-import H1 from "@/components/shared/H1";
-import Wrapper from "@/components/shared/Wrapper";
+import Wrapper from "@/components/layout/Wrapper";
+import H1 from "@/components/typography/H1";
 import { VOTING_METHODS } from "@/const/misc";
 
 export const metadata: Metadata = {

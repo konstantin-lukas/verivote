@@ -3,9 +3,9 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import React from "react";
 
-import H1 from "@/components/shared/H1";
-import H2 from "@/components/shared/H2";
-import WrapperSmall from "@/components/shared/WrapperSmall";
+import WrapperSmall from "@/components/layout/WrapperSmall";
+import H1 from "@/components/typography/H1";
+import H2 from "@/components/typography/H2";
 
 export const metadata: Metadata = {
     title: "Privacy Policy - Verivote",

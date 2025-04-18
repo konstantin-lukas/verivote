@@ -2,8 +2,8 @@ import Image from "next/image";
 import React from "react";
 import { MdArrowForward } from "react-icons/md";
 
-import BlockLink from "@/components/shared/BlockLink";
-import H2 from "@/components/shared/H2";
+import BlockLink from "@/components/navigation/BlockLink";
+import H2 from "@/components/typography/H2";
 import type { VotingMethodDetails } from "@/types/votingMethod";
 
 export default function Card({ votingMethod }: { votingMethod: VotingMethodDetails }) {

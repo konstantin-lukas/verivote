@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoAddSharp } from "react-icons/io5";
 
+import ErrorList from "@/components/alert/ErrorList";
+import Modal from "@/components/alert/Modal";
 import Checkbox from "@/components/inputs/Checkbox";
 import DateTimePicker from "@/components/inputs/DateTimePicker";
 import Dropdown from "@/components/inputs/Dropdown";
 import Input from "@/components/inputs/Input";
-import BlockButton from "@/components/shared/BlockButton";
-import ErrorList from "@/components/shared/ErrorList";
-import Modal from "@/components/shared/Modal";
+import BlockButton from "@/components/interaction/BlockButton";
 import { VOTING_METHODS } from "@/const/misc";
 import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_OPTIONS, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
 import useCreationFormActionState from "@/hooks/actionStates/useCreationFormActionState";

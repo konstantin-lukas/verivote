@@ -5,9 +5,9 @@ import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
 import { LuBrush } from "react-icons/lu";
 import { RiExternalLinkLine } from "react-icons/ri";
 
-import BlockLink from "@/components/shared/BlockLink";
-import H1 from "@/components/shared/H1";
-import H2 from "@/components/shared/H2";
+import BlockLink from "@/components/navigation/BlockLink";
+import H1 from "@/components/typography/H1";
+import H2 from "@/components/typography/H2";
 import type { VotingMethodDetails } from "@/types/votingMethod";
 
 function List({ heading, children }: { heading: string; children: ReactNode }) {

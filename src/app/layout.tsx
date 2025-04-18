@@ -6,9 +6,9 @@ import { getServerSession } from "next-auth";
 import { ThemeProvider } from "next-themes";
 import React, { type ReactNode } from "react";
 
-import Footer from "@/components/footer/Footer";
-import Header from "@/components/header/Header";
-import LoadingIndicator from "@/components/header/LoadingIndicator";
+import LoadingIndicator from "@/components/misc/LoadingIndicator";
+import Footer from "@/components/navigation/Footer";
+import Header from "@/components/navigation/Header";
 import LoadingStateProvider from "@/components/providers/LoadingStateProvider";
 import LocalizationProvider from "@/components/providers/LocalizationProvider";
 import SessionProvider from "@/components/providers/SessionProvider";

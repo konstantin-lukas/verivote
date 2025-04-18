@@ -5,11 +5,11 @@ import { signIn, signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { MdLogin, MdLogout } from "react-icons/md";
 
-import MobileMenu from "@/components/header/MobileMenu";
-import ThemeToggle from "@/components/header/ThemeToggle";
-import BlockButton from "@/components/shared/BlockButton";
-import Logo from "@/components/shared/Logo";
-import Wrapper from "@/components/shared/Wrapper";
+import BlockButton from "@/components/interaction/BlockButton";
+import ThemeToggle from "@/components/interaction/ThemeToggle";
+import Wrapper from "@/components/layout/Wrapper";
+import Logo from "@/components/misc/Logo";
+import MobileMenu from "@/components/navigation/MobileMenu";
 
 export default function Header({ signedIn }: { signedIn: boolean }) {
     const [isDesktop, setIsDesktop] = useState(true);
@@ -28,7 +28,7 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
 
     if (!isDesktop) return <MobileMenu />;
 
-    const signedInComponents = signedIn && (
+    const navigation = signedIn && (
         <nav className="flex items-center">
             <ul className="flex">
                 <li className="leading-none">
@@ -50,28 +50,34 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
         </nav>
     );
 
+    const signInOutButton = (
+        <BlockButton onClick={signedIn ? () => signOut({ callbackUrl: "/" }) : () => signIn()}>
+            <span className="flex items-center justify-center">
+                {signedIn ? <MdLogout className="inline" size="1rem" /> : <MdLogin className="inline" size="1rem" />}
+                <span className="ml-1">{signedIn ? "Sign Out" : "Sign In"}</span>
+            </span>
+        </BlockButton>
+    );
+
+    const themeToggle = <ThemeToggle className="mr-8 size-10" />;
+
+    const verivoteLogo = (
+        <nav className="flex h-full items-center">
+            <Link href="/" className="h-10">
+                <Logo className="h-full w-auto" alt="Navigate to home page" />
+            </Link>
+        </nav>
+    );
+
     return (
         <header className="h-header-height shadow-header dark:shadow-dark-header relative flex justify-center bg-neutral-100 transition-all dark:bg-neutral-900">
             <Wrapper>
                 <div className="flex h-full items-center justify-between">
-                    <nav className="flex h-full items-center">
-                        <Link href="/" className="h-10">
-                            <Logo className="h-full w-auto" alt="Navigate to home page" />
-                        </Link>
-                    </nav>
+                    {verivoteLogo}
                     <div className="flex">
-                        {signedInComponents}
-                        <ThemeToggle className="mr-8 size-10" />
-                        <BlockButton onClick={signedIn ? () => signOut({ callbackUrl: "/" }) : () => signIn()}>
-                            <span className="flex items-center justify-center">
-                                {signedIn ? (
-                                    <MdLogout className="inline" size="1rem" />
-                                ) : (
-                                    <MdLogin className="inline" size="1rem" />
-                                )}
-                                <span className="ml-1">{signedIn ? "Sign Out" : "Sign In"}</span>
-                            </span>
-                        </BlockButton>
+                        {navigation}
+                        {themeToggle}
+                        {signInOutButton}
                     </div>
                 </div>
             </Wrapper>

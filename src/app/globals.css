@@ -261,6 +261,10 @@
         background-color: white;
     }
 
+    .sortable-ghost {
+        visibility: hidden;
+    }
+
 }
 
 @layer utilities {

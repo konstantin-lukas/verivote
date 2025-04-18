@@ -1,7 +1,7 @@
 import React from "react";
 import { MdOutlineHowToVote } from "react-icons/md";
 
-import BlockButton from "@/components/shared/BlockButton";
+import BlockButton from "@/components/interaction/BlockButton";
 
 export default function VoteButton({ disabled }: { disabled: boolean }) {
     return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import VoteButton from "@/components/routes/poll/VoteButton";
-import H3 from "@/components/shared/H3";
+import H3 from "@/components/typography/H3";
 import type { Poll } from "@/types/poll";
 
 const colorSteps = [

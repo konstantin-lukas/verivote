@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FiClipboard } from "react-icons/fi";
 
-import BlockButton from "@/components/shared/BlockButton";
+import BlockButton from "@/components/interaction/BlockButton";
 
 export default function ShareButton({ url }: { url: string }) {
     const [showMessage, setShowMessage] = useState(false);

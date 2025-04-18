@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
 
-import ManageCards from "@/components/routes/manage/ManageCards";
-import Wrapper from "@/components/shared/Wrapper";
+import ManageCards from "@/components/forms/ManageCards";
+import Wrapper from "@/components/layout/Wrapper";
 import { findPollsByUserIdentifier } from "@/database/poll";
 import type { Poll } from "@/types/poll";
 import { getUserIdentifier } from "@/utils/server";
@@ -14,9 +14,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
     const userIdentifier = await getUserIdentifier();
-    if (!userIdentifier) {
-        notFound();
-    }
+    if (!userIdentifier) notFound();
     const polls: Poll[] = await findPollsByUserIdentifier(userIdentifier);
 
     return (
