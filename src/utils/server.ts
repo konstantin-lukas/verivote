@@ -8,9 +8,7 @@ import { AuthProvider } from "@/enum/auth";
 export async function getUserIdentifier() {
     const session = await getServerSession();
     let identifier = session?.user?.email;
-    if (!identifier) {
-        identifier = session?.user?.name;
-    }
+    if (!identifier) identifier = session?.user?.name;
     if (!identifier) return null;
     const providers = Object.values(AuthProvider);
     const isValidIdentifier = providers.some(provider => identifier.endsWith(provider));

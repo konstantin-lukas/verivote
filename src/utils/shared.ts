@@ -1,8 +1,5 @@
-import type { ObjectId } from "bson";
-import { format } from "date-fns";
 import type { ZodError, ZodSchema } from "zod";
 
-import type { Poll } from "@/types/poll";
 import type { Result } from "@/types/result";
 
 export async function tryCatch<T, E = Error>(promise: Promise<T>): Promise<Result<T, E>> {
@@ -23,14 +20,8 @@ export function tryCatchSync<T, E = Error>(fn: () => T): Result<T, E> {
     }
 }
 
-export function removeUnderscoreFromId(poll: Poll) {
-    const objId = (poll as unknown as { _id: ObjectId })._id.toString();
-    delete (poll as unknown as { _id?: ObjectId })._id;
-    return { ...poll, id: objId };
-}
-
 /**
- * @returns An error string or null if parsing was successful.
+ * @returns A list of errors as strings or null if parsing was successful.
  */
 export function parseSchema(schema: ZodSchema, data: unknown) {
     const { error } = tryCatchSync<unknown, ZodError>(() => schema.parse(data));

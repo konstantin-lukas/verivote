@@ -1,7 +1,9 @@
+import type { ObjectId } from "bson";
+
 import type { VotingMethod } from "@/enum/poll";
 
 export interface Poll {
-    id?: string;
+    _id?: ObjectId;
     creationTime?: Date;
     closingTime: Date;
     userIdentifier?: string;

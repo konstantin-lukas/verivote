@@ -29,6 +29,7 @@ export default function DateTimePicker({
                 placeholder="Select date & time"
                 value={date}
                 onClick={() => setPickerOpen(true)}
+                onKeyDown={e => e.key === "Enter" && setPickerOpen(true)}
                 readOnly
                 valid={valid}
                 disabled={disabled}
