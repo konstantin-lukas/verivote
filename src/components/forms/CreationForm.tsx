@@ -2,11 +2,10 @@
 
 import { addDays, addMinutes, setSeconds } from "date-fns";
 import type { ReactNode } from "react";
-import React, { useActionState, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoAddSharp } from "react-icons/io5";
 
-import { createPoll } from "@/actions/poll";
 import Checkbox from "@/components/inputs/Checkbox";
 import DateTimePicker from "@/components/inputs/DateTimePicker";
 import Dropdown from "@/components/inputs/Dropdown";
@@ -15,9 +14,9 @@ import BlockButton from "@/components/shared/BlockButton";
 import ErrorList from "@/components/shared/ErrorList";
 import Modal from "@/components/shared/Modal";
 import { VOTING_METHODS } from "@/const/misc";
-import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
-import useCreationFormReducer from "@/hooks/reducers/CreationFormReducer";
-import useLoadingState from "@/hooks/useLoadingState";
+import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_OPTIONS, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
+import useCreationFormActionState from "@/hooks/actionStates/useCreationFormActionState";
+import useCreationFormReducer from "@/hooks/reducers/useCreationFormReducer";
 import { PollClosingTimeSchema, PollCreateClientSchema, PollOptionSchema, PollTitleSchema } from "@/schemas/poll";
 import { parseSchema } from "@/utils/shared";
 
@@ -26,19 +25,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     const [minDateTime, setMinDateTime] = useState<Date | undefined>();
 
     const [state, dispatch] = useCreationFormReducer(defaultMethod);
-    const { setIsLoading } = useLoadingState();
-
-    const [{ data: successMessage, error: errorMessages }, formAction, formPending] = useActionState(
-        createPoll.bind(null, state),
-        {
-            data: "",
-            error: null,
-        },
-    );
-
-    useEffect(() => {
-        setIsLoading(formPending);
-    }, [formPending, setIsLoading]);
+    const { successMessage, errorMessages, action, pending } = useCreationFormActionState(state);
 
     useEffect(() => {
         dispatch({
@@ -49,20 +36,20 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
     }, [dispatch]);
 
     useEffect(() => {
-        if (!formPending) {
+        if (!pending) {
             if (successMessage !== null) {
                 setModalMessage(successMessage);
                 return;
             }
             setModalMessage(<ErrorList errors={errorMessages} isServerSideError={true} />);
         }
-    }, [successMessage, errorMessages, formPending]);
+    }, [successMessage, errorMessages, pending]);
 
     const options = state.options.map((o, i) => (
         <div key={i} className="relative mt-4">
             <Input
                 value={o}
-                disabled={formPending}
+                disabled={pending}
                 className="w-full"
                 name="options"
                 maxLength={MAX_POLL_OPTION_TITLE_LENGTH}
@@ -71,11 +58,11 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                 onChange={value => dispatch({ type: "optionsChange", value, index: i })}
                 placeholder={`Option ${i + 1}`}
             />
-            {i > 1 && (
+            {i >= 2 && (
                 <button
                     className="group absolute right-4 top-1/2 -translate-y-1/2"
                     onClick={() => dispatch({ type: "optionsDelete", index: i })}
-                    disabled={formPending}
+                    disabled={pending}
                     type="button"
                 >
                     <IoMdClose className="size-6 transition-colors group-hover:text-rose-500" />
@@ -88,7 +75,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
         <Dropdown
             options={VOTING_METHODS.map(m => m.name)}
             defaultOption={VOTING_METHODS.findIndex(v => v.dbId === (defaultMethod ?? VOTING_METHODS[0].dbId))}
-            disabled={formPending}
+            disabled={pending}
             getValue={(index: number) =>
                 dispatch({
                     type: "method",
@@ -106,7 +93,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             required={true}
             valid={!parseSchema(PollTitleSchema, state.title)}
             maxLength={MAX_POLL_TITLE_LENGTH}
-            disabled={formPending}
+            disabled={pending}
             onChange={value => dispatch({ type: "title", value })}
             placeholder="Poll title"
         />
@@ -121,7 +108,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                 dispatch({ type: "date", value: date ?? new Date() });
                 setMinDateTime(addMinutes(new Date(), 1));
             }}
-            disabled={formPending}
+            disabled={pending}
             style={{ marginTop: "1rem" }}
         />
     );
@@ -132,31 +119,33 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
             onChange={e => dispatch({ type: "majority", value: e.target.checked })}
             checked={state.winnerNeedsMajority}
             label={`Winner needs majority: ${state.winnerNeedsMajority ? "yes" : "no"}`}
-            disabled={formPending}
+            disabled={pending}
             name="majority"
         />
     );
 
     const formButtons = (
         <div className="mt-6 flex gap-6">
-            {state.options.length < parseInt(process.env.NEXT_PUBLIC_MAX_OPTIONS_PER_POLL ?? "20") && (
+            {state.options.length < MAX_POLL_OPTIONS && (
                 <button
                     className="shadow-3d hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both group flex size-10 items-center justify-center rounded-full transition-shadow"
                     onClick={() => {
-                        dispatch({ type: "optionsAdd" });
-                        window.scrollTo({
-                            top: document.body.scrollHeight,
-                            behavior: "smooth",
-                        });
+                        if (state.options.length < MAX_POLL_OPTIONS) {
+                            dispatch({ type: "optionsAdd" });
+                            window.scrollTo({
+                                top: document.body.scrollHeight,
+                                behavior: "smooth",
+                            });
+                        }
                     }}
                     type="button"
-                    disabled={formPending}
+                    disabled={pending}
                     aria-label="Add another poll option"
                 >
                     <IoAddSharp aria-hidden="true" className="size-7 transition-transform group-hover:scale-90" />
                 </button>
             )}
-            <BlockButton className="grow" type="submit" disabled={formPending} testId="submit">
+            <BlockButton className="grow" type="submit" disabled={pending} testId="submit">
                 Create
             </BlockButton>
         </div>
@@ -164,7 +153,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
 
     return (
         <form
-            action={formAction}
+            action={action}
             className="relative mx-auto mb-24 mt-12 inline-flex w-full flex-col sm:w-80"
             onSubmit={e => {
                 const errors = parseSchema(PollCreateClientSchema, state);
