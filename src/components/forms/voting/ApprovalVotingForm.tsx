@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import type { ReactNode } from "react";
+import { useState } from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
 import VoteButton from "@/components/interaction/VoteButton";
@@ -13,7 +14,7 @@ function PollOption({
     idx,
     disabled,
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
     selected: boolean[];
     setSelected: (scores: boolean[]) => void;
     idx: number;

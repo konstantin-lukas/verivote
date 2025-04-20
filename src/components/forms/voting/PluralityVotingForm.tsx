@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
 import VoteButton from "@/components/interaction/VoteButton";

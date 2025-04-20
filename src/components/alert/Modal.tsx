@@ -1,6 +1,5 @@
 import { Modal as MUIModal } from "@mui/material";
 import type { ReactNode } from "react";
-import React from "react";
 
 import BlockButton from "@/components/interaction/BlockButton";
 

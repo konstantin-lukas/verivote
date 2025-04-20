@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import React from "react";
 
 import DeleteAccountForm from "@/components/forms/account/DeleteAccountForm";
 import WrapperSmall from "@/components/layout/WrapperSmall";

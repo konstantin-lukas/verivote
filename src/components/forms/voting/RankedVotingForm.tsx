@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdArrowDownward, MdArrowUpward, MdDragIndicator } from "react-icons/md";
-// eslint-disable-next-line import/no-named-as-default
-import Sortable from "sortablejs";
+import { default as Sortable } from "sortablejs";
 
 import VoteButton from "@/components/interaction/VoteButton";
 import H3 from "@/components/typography/H3";
+import useCreateVote from "@/hooks/actions/useCreateVote";
 import type { Poll } from "@/types/poll";
 
 function PollOption({
@@ -78,31 +78,21 @@ function PollOption({
 export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
     const [options, setOptions] = useState(poll.options.map((_, i) => i.toString()));
     const [sortable, setSortable] = useState<Sortable>();
-    const [disabled, setDisabled] = useState(false);
+    const { pending, action } = useCreateVote();
 
     const list = useRef(null);
     useEffect(() => {
-        if (!list.current || disabled) return;
+        if (!list.current || pending) return;
         const s = Sortable.create(list.current, { animation: 150 });
         s.options.onUpdate = () => setOptions(s.toArray());
         setSortable(s);
         return () => {
             if (s) s.destroy();
         };
-    }, [disabled]);
+    }, [pending]);
 
     return (
-        <form
-            className="my-24"
-            onSubmit={e => {
-                e.preventDefault();
-                console.log({
-                    pollId: poll.id,
-                    selection: options.map(x => parseInt(x, 10)),
-                });
-                setDisabled(true);
-            }}
-        >
+        <form className="my-24" action={action}>
             <H3>Rank the choices by preference</H3>
             <span>Drag your favorite to the top, least favorite to the bottom</span>
             <ul ref={list} className="mt-4">
@@ -112,14 +102,14 @@ export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v
                         id={i.toString()}
                         sortable={sortable}
                         options={options}
-                        disabled={disabled}
+                        disabled={pending}
                         setOptions={setOptions}
                     >
                         {x}
                     </PollOption>
                 ))}
             </ul>
-            <VoteButton disabled={disabled} />
+            <VoteButton disabled={pending} />
         </form>
     );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { RiArrowDownDoubleFill } from "react-icons/ri";
 
 import BlockButton from "@/components/interaction/BlockButton";

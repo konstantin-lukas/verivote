@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import React, { useState } from "react";
+import { useState } from "react";
 import { LuChartPie } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
 

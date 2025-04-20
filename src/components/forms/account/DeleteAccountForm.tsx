@@ -2,7 +2,7 @@
 
 import { Snackbar } from "@mui/material";
 import type { ReactNode } from "react";
-import React, { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 import Modal from "@/components/alert/Modal";

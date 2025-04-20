@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
-import React from "react";
 import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
 import { LuBrush } from "react-icons/lu";
 import { RiExternalLinkLine } from "react-icons/ri";

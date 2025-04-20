@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import React from "react";
 import { MdArrowForward } from "react-icons/md";
 
 import PollViewController from "@/components/layout/PollViewController";

@@ -1,7 +1,7 @@
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import { format, isValid } from "date-fns";
 import type { CSSProperties } from "react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Input from "@/components/inputs/Input";
 import { SHORT_DATE_FORMAT } from "@/const/date";

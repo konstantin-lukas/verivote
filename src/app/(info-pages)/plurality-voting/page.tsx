@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import React from "react";
 
 import InfoPage from "@/components/informational/InfoPage";
 import { VOTING_METHODS } from "@/const/misc";

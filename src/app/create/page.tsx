@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import React from "react";
 
 import CreatePollForm from "@/components/forms/polls/CreatePollForm";
 import Wrapper from "@/components/layout/Wrapper";

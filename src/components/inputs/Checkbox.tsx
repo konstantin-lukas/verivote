@@ -1,7 +1,7 @@
 "use client";
 
 import type { ChangeEventHandler } from "react";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 export default function Checkbox({
     onChange,

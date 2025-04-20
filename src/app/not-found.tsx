@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 
 import Wrapper from "@/components/layout/Wrapper";
 import H1 from "@/components/typography/H1";

@@ -1,5 +1,4 @@
 import type { KeyboardEventHandler, MouseEventHandler } from "react";
-import React from "react";
 
 export default function ButtonLink({
     children,

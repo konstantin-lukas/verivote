@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import React from "react";
 
 import WrapperSmall from "@/components/layout/WrapperSmall";
 import H1 from "@/components/typography/H1";

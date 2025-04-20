@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import { getServerSession } from "next-auth";
 import { ThemeProvider } from "next-themes";
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import LoadingIndicator from "@/components/misc/LoadingIndicator";
 import Footer from "@/components/navigation/Footer";

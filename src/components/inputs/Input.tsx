@@ -1,5 +1,4 @@
 import type { CSSProperties, KeyboardEventHandler, MouseEventHandler, RefObject } from "react";
-import React from "react";
 
 export default function Input({
     value,

@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import React from "react";
 
 export default function H1({
     children,

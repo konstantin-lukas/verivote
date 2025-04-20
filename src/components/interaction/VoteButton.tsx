@@ -1,4 +1,3 @@
-import React from "react";
 import { MdOutlineHowToVote } from "react-icons/md";
 
 import BlockButton from "@/components/interaction/BlockButton";

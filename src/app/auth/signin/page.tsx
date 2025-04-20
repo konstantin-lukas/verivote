@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import React from "react";
 import { PiRedditLogo } from "react-icons/pi";
 import { RiDiscordLine, RiGithubLine } from "react-icons/ri";
 import { SiKeycloak } from "react-icons/si";

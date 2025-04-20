@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { FiClipboard } from "react-icons/fi";
 
 import BlockButton from "@/components/interaction/BlockButton";

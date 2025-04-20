@@ -2,7 +2,6 @@
 
 import { useHasMounted } from "anzol";
 import { useTheme } from "next-themes";
-import React from "react";
 import { CiCloudMoon, CiSun } from "react-icons/ci";
 
 export default function ThemeToggle({ className }: { className?: string }) {

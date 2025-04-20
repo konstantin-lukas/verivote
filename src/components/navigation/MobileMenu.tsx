@@ -2,7 +2,7 @@ import { useCooldownState as useToggle } from "anzol";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import type { ReactNode } from "react";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { LuBrush } from "react-icons/lu";
 import { MdArrowBack, MdLogin, MdLogout, MdOutlinePersonOutline } from "react-icons/md";

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { signIn, signOut } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdLogin, MdLogout } from "react-icons/md";
 
 import BlockButton from "@/components/interaction/BlockButton";

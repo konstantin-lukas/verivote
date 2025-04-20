@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 
 import Card from "@/components/informational/Card";
 import ScrollDownButton from "@/components/interaction/ScrollButton";

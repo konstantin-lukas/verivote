@@ -3,7 +3,6 @@
 import { useHasMounted } from "anzol";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import React from "react";
 
 import logo from "@/public/verivote_logo.svg";
 import logoDark from "@/public/verivote_logo_dark.svg";

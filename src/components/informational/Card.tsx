@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 import { MdArrowForward } from "react-icons/md";
 
 import BlockLink from "@/components/navigation/BlockLink";
