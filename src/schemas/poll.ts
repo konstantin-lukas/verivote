@@ -12,7 +12,7 @@ export const PollOptionSchema = z
     });
 
 export const PollTitleSchema = z
-    .string()
+    .string({ message: "The poll must have a title" })
     .min(1, { message: "The poll title has to be at least one character long" })
     .max(MAX_POLL_TITLE_LENGTH, {
         message: `The poll title has to be no longer than ${MAX_POLL_TITLE_LENGTH} characters`,
@@ -28,7 +28,7 @@ export const PollCreateClientSchema = z.object({
     title: PollTitleSchema,
     closingTime: PollClosingTimeSchema,
     options: z
-        .array(PollOptionSchema)
+        .array(PollOptionSchema, { message: "The poll must have options" })
         .min(2, { message: "A poll needs at least two options" })
         .max(MAX_POLL_OPTIONS, {
             message: `A poll can have no more than ${MAX_POLL_OPTIONS} options.`,
