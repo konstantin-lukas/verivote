@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { INVALID_CREDENTIALS_ERROR } from "@/const/error";
 import { deletePollByIdAndUserIdentifier, insertPoll } from "@/database/poll";
 import { PollCreateServerSchema } from "@/schemas/poll";
-import type { Poll } from "@/types/poll";
+import type { PollFormState } from "@/types/poll";
 import type { ActionResult } from "@/types/result";
 import { getUserIdentifier } from "@/utils/server";
 import { parseSchema, tryCatch } from "@/utils/shared";
@@ -16,12 +16,13 @@ export async function createPoll({
     options,
     winnerNeedsMajority,
     votingMethod,
-}: Poll): ActionResult<string> {
+}: PollFormState): ActionResult<string> {
     const userIdentifier = await getUserIdentifier();
     if (!userIdentifier) return { data: null, error: [INVALID_CREDENTIALS_ERROR] };
 
-    const newPoll: Poll = {
+    const newPoll = {
         creationTime: new Date(),
+        votes: [],
         closingTime,
         userIdentifier,
         title,

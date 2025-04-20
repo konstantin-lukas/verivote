@@ -94,9 +94,9 @@ export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v
 
     return (
         <form
-            method="POST"
             className="my-24"
-            onSubmit={() => {
+            onSubmit={e => {
+                e.preventDefault();
                 console.log({
                     pollId: poll.id,
                     selection: options.map(x => parseInt(x, 10)),
@@ -105,22 +105,20 @@ export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v
             }}
         >
             <H3>Rank the choices by preference</H3>
-            <span>Favorite at the top, least favorite at the bottom</span>
+            <span>Drag your favorite to the top, least favorite to the bottom</span>
             <ul ref={list} className="mt-4">
-                {poll.options.map((x, i) => {
-                    return (
-                        <PollOption
-                            key={i}
-                            id={i.toString()}
-                            sortable={sortable}
-                            options={options}
-                            disabled={disabled}
-                            setOptions={setOptions}
-                        >
-                            {x}
-                        </PollOption>
-                    );
-                })}
+                {poll.options.map((x, i) => (
+                    <PollOption
+                        key={i}
+                        id={i.toString()}
+                        sortable={sortable}
+                        options={options}
+                        disabled={disabled}
+                        setOptions={setOptions}
+                    >
+                        {x}
+                    </PollOption>
+                ))}
             </ul>
             <VoteButton disabled={disabled} />
         </form>

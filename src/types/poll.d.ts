@@ -1,15 +1,11 @@
-import type { VotingMethod } from "@/enum/poll";
+import type { z } from "zod";
 
-export interface Poll {
-    id?: string;
-    creationTime?: Date;
-    closingTime: Date;
-    userIdentifier?: string;
-    title: string;
-    options: string[];
-    winnerNeedsMajority: boolean;
-    votingMethod: VotingMethod;
-}
+import type { VotingMethod } from "@/enum/poll";
+import type { PollCreateServerSchema } from "@/schemas/poll";
+
+export type Poll = z.infer<typeof PollCreateServerSchema> & { id: string };
+
+export type PollFormState = Pick<Poll, "votingMethod" | "title" | "closingTime" | "winnerNeedsMajority" | "options">;
 
 export interface PollSummary {
     title: string;

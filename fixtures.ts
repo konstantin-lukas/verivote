@@ -75,6 +75,7 @@ const pollFixtures = [
             userIdentifier: process.env.FIXTURE_USER_IDENTIFIER,
             winnerNeedsMajority: true,
             votingMethod: getRandomVotingMethod(),
+            votes: [],
         })),
     );
     await client.close();

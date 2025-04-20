@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_OPTIONS, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
 import { AuthProvider } from "@/enum/auth";
+import { VotingMethod } from "@/enum/poll";
 
 export const PollOptionSchema = z
     .string({ message: "Each option's name must be string" })
@@ -47,4 +48,11 @@ export const PollCreateServerSchema = PollCreateClientSchema.extend({
     creationTime: z.date({ message: "The creation time has to be a valid date" }).refine(date => date <= new Date(), {
         message: "The creation time cannot lie in the future",
     }),
+    votingMethod: z.nativeEnum(VotingMethod),
+    votes: z.array(
+        z.object({
+            ip: z.string().ip(),
+            selection: z.array(z.number()),
+        }),
+    ),
 });

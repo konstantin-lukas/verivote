@@ -2,10 +2,10 @@ import { setSeconds } from "date-fns";
 import { useReducer } from "react";
 
 import { VOTING_METHODS } from "@/const/misc";
-import type { Poll } from "@/types/poll";
+import type { PollFormState } from "@/types/poll";
 
-function CreationFormReducer(
-    state: Poll,
+function creationFormReducer(
+    state: PollFormState,
     {
         type,
         value,
@@ -40,7 +40,7 @@ function CreationFormReducer(
 }
 
 export default function useCreationFormReducer(defaultMethod?: number) {
-    return useReducer(CreationFormReducer, {
+    return useReducer(creationFormReducer, {
         votingMethod: defaultMethod ?? VOTING_METHODS[0].dbId,
         title: "",
         closingTime: new Date(""),

@@ -16,6 +16,7 @@ db.createCollection("polls", {
                 "options",
                 "winnerNeedsMajority",
                 "votingMethod",
+                "votes",
             ],
             properties: {
                 creationTime: {
@@ -40,41 +41,32 @@ db.createCollection("polls", {
                 votingMethod: {
                     bsonType: "int",
                 },
-            },
-        },
-    },
-});
-db.createCollection("votes", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            title: "Vote Validation",
-            required: ["ip", "pollId", "selection"],
-            properties: {
-                ip: {
-                    bsonType: "string",
-                },
-                pollId: {
-                    bsonType: "objectId",
-                },
-                selection: {
+                votes: {
                     bsonType: "array",
-                    items: { bsonType: "int" },
+                    items: {
+                        bsonType: "object",
+                        title: "Vote Validation",
+                        required: ["ip", "pollId", "selection"],
+                        properties: {
+                            ip: {
+                                bsonType: "string",
+                            },
+                            selection: {
+                                bsonType: "array",
+                                items: { bsonType: "int" },
+                            },
+                        },
+                    },
                 },
             },
         },
     },
 });
-db.votes.createIndex({ ip: 1, pollId: 1 }, { unique: true });
 db.createRole({
     role: "verivoteRole",
     privileges: [
         {
             resource: { db: "verivote", collection: "polls" },
-            actions: ["find", "update", "insert", "remove"],
-        },
-        {
-            resource: { db: "verivote", collection: "votes" },
             actions: ["find", "update", "insert", "remove"],
         },
         {

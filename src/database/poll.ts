@@ -30,7 +30,7 @@ export async function findPollsByUserIdentifier(userIdentifier: string) {
     return data.map(datum => makeBSONSerializable(datum));
 }
 
-export async function insertPoll(poll: Poll) {
+export async function insertPoll(poll: Omit<Poll, "id">) {
     const polls = getCollection();
     const { data, error } = await tryCatch(polls.insertOne(poll));
     if (error) return null;
