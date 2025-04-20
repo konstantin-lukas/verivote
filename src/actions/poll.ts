@@ -18,9 +18,7 @@ export async function createPoll({
     votingMethod,
 }: Poll): ActionResult<string> {
     const userIdentifier = await getUserIdentifier();
-    if (!userIdentifier) {
-        return { data: null, error: [INVALID_CREDENTIALS_ERROR] };
-    }
+    if (!userIdentifier) return { data: null, error: [INVALID_CREDENTIALS_ERROR] };
 
     const newPoll: Poll = {
         creationTime: new Date(),

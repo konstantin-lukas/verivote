@@ -63,7 +63,7 @@ export default function UpdatePollsForm({ polls }: { polls: Poll[] }) {
             highlightCloseButton={true}
             onClose={() => {
                 setRemainingPolls(prevState => prevState.filter(p => p.id !== modalState.id));
-                startTransition(() => action());
+                startTransition(action);
             }}
             setChildren={() => setModalState({ message: null, id: "" })}
         >

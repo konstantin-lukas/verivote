@@ -1,7 +1,15 @@
-// import { Result } from "@/types";
-// import { getUserIdentifier } from "@/utils";
+"use server";
+
+import { INVALID_CREDENTIALS_ERROR } from "@/const/error";
+import { deletePollsByUserIdentifier } from "@/database/poll";
+import { getUserIdentifier } from "@/utils/server";
 
 export async function deleteAccount() {
-    console.log(1);
-    // const userIdentifier = await getUserIdentifier();
+    const userIdentifier = await getUserIdentifier();
+    if (!userIdentifier) return { data: null, error: [INVALID_CREDENTIALS_ERROR] };
+    await deletePollsByUserIdentifier(userIdentifier);
+    return {
+        data: true,
+        error: null,
+    };
 }

@@ -36,3 +36,9 @@ export async function insertPoll(poll: Poll) {
     if (error) return null;
     return data.insertedId.toString();
 }
+
+export async function deletePollsByUserIdentifier(userIdentifier: string) {
+    const polls = getCollection();
+    const { error } = await tryCatch(polls.deleteMany({ userIdentifier }));
+    return !error;
+}
