@@ -31,15 +31,11 @@ function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () =
             <div>
                 <span>Closing date: {format(poll.closingTime, LONG_DATE_FORMAT)}</span>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
-                    <BlockLink href={`/poll/${poll.id}`} className="mt-6 flex grow justify-center" testId="viewPoll">
+                    <BlockLink href={`/poll/${poll.id}`} className="mt-6 flex grow justify-center">
                         <LuEye className="mr-1 inline translate-y-[-0.1em]" />
                         <span>View</span>
                     </BlockLink>
-                    <BlockButton
-                        className="mt-6 flex grow justify-center"
-                        testId="deletePoll"
-                        onClick={setModalContent}
-                    >
+                    <BlockButton className="mt-6 flex grow justify-center" onClick={setModalContent}>
                         <FaRegTrashAlt className="mr-1 inline translate-y-[-0.1em]" />
                         <span>Delete</span>
                     </BlockButton>

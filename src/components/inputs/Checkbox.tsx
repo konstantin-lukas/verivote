@@ -9,14 +9,12 @@ export default function Checkbox({
     label,
     disabled,
     name,
-    testId,
 }: {
     onChange: ChangeEventHandler<HTMLInputElement>;
     checked: boolean;
     label: string;
     disabled?: boolean;
     name?: string;
-    testId?: string;
 }) {
     const ref = useRef(null);
     return (
@@ -40,7 +38,6 @@ export default function Checkbox({
                 aria-label={label}
                 role="checkbox"
                 tabIndex={0}
-                data-cy={testId}
                 aria-checked={checked}
                 onKeyDown={e => {
                     if (e.key !== "Enter" || !ref.current) return;

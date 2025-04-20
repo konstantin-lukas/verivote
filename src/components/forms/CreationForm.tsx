@@ -115,7 +115,6 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
 
     const needsMajorityCheckbox = (
         <Checkbox
-            testId="majority"
             onChange={e => dispatch({ type: "majority", value: e.target.checked })}
             checked={state.winnerNeedsMajority}
             label={`Winner needs majority: ${state.winnerNeedsMajority ? "yes" : "no"}`}
@@ -145,7 +144,7 @@ export default function CreationForm({ defaultMethod }: { defaultMethod?: number
                     <IoAddSharp aria-hidden="true" className="size-7 transition-transform group-hover:scale-90" />
                 </button>
             )}
-            <BlockButton className="grow" type="submit" disabled={pending} testId="submit">
+            <BlockButton className="grow" type="submit" disabled={pending}>
                 Create
             </BlockButton>
         </div>

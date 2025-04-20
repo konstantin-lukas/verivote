@@ -18,16 +18,16 @@ function MenuLink({
     href,
     children,
     closeMenu,
-    testId,
+    "data-test-id": testId,
 }: {
-    href: string;
-    children: ReactNode;
-    closeMenu: () => void;
-    testId?: string;
+    "href": string;
+    "children": ReactNode;
+    "closeMenu": () => void;
+    "data-test-id"?: string;
 }) {
     return (
         <li className="group mt-8 flex size-full items-center justify-center first:mt-12 landscape:mt-0 landscape:first:mt-0">
-            <BlockLink href={href} onClick={closeMenu} testId={testId}>
+            <BlockLink href={href} onClick={closeMenu} data-test-id={testId}>
                 <div className="flex w-24 items-center justify-center transition-all">{children}</div>
             </BlockLink>
         </li>
@@ -45,15 +45,15 @@ export default function MobileMenu() {
 
     const menuLinks = (
         <>
-            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account" testId="account">
+            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/account" data-test-id="account">
                 <MdOutlinePersonOutline className="inline" size="1rem" />
                 <span className="ml-1">Account</span>
             </MenuLink>
-            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create" testId="poll">
+            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/create" data-test-id="poll">
                 <LuBrush className="inline" size="1rem" />
                 <span className="ml-1">Create</span>
             </MenuLink>
-            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/manage" testId="manage">
+            <MenuLink closeMenu={() => forceSetIsOpen(false)} href="/manage" data-test-id="manage">
                 <HiOutlineCog6Tooth className="inline" size="1rem" />
                 <span className="ml-1">Manage</span>
             </MenuLink>

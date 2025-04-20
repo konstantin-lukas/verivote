@@ -30,7 +30,7 @@ export default function Modal({
                     {closeButtonText && (
                         <BlockButton
                             type="button"
-                            testId="acceptBtn"
+                            data-test-id="acceptBtn"
                             className={highlightCloseButton ? "text-rose-500" : ""}
                             onClick={() => {
                                 if (onClose) onClose();
@@ -43,7 +43,7 @@ export default function Modal({
                     {cancelButtonText && (
                         <BlockButton
                             type="button"
-                            testId="cancelBtn"
+                            data-test-id="cancelBtn"
                             onClick={() => {
                                 if (onCancel) onCancel();
                                 close();
