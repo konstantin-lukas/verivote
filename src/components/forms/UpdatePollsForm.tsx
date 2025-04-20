@@ -25,10 +25,14 @@ function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () =
             <div>
                 <H2>{poll.title}</H2>
                 <span className="mb-2 block text-xl font-bold uppercase">{info?.name}</span>
-                <p>Options: {poll.options.join(", ")}</p>
+                <p>
+                    <b>Options:</b> {poll.options.join(", ")}
+                </p>
             </div>
             <div>
-                <span>Closing date: {format(poll.closingTime, LONG_DATE_FORMAT)}</span>
+                <span>
+                    <b>Closing date:</b> {format(poll.closingTime, LONG_DATE_FORMAT)}
+                </span>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
                     <BlockLink href={`/poll/${poll.id}`} className="mt-6 flex grow justify-center">
                         <LuEye className="mr-1 inline translate-y-[-0.1em]" />

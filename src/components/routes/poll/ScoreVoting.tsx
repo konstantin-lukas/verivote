@@ -47,7 +47,7 @@ function PollOption({
                     copy[idx] = parseInt(e.target.value);
                     setScores(copy);
                 }}
-                className="w-full"
+                className="w-full cursor-col-resize"
             />
             <div>
                 <span
@@ -67,7 +67,7 @@ export default function ScoreVoting({ poll }: { poll: Poll; setHasVoted: (v: boo
     return (
         <form method="POST" className="my-24">
             <H3>Assign each choice a score</H3>
-            <span>Rate each choice separately based on how much you like it</span>
+            <span>Adjust the sliders based on how much you like each choice</span>
             <ul className="mt-4">
                 {poll.options.map((x, i) => (
                     <PollOption disabled={disabled} key={i} idx={i} scores={scores} setScores={setScores}>
