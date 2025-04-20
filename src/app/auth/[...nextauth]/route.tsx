@@ -25,8 +25,8 @@ const authOptions: AuthOptions = {
             : [
                   KeycloakProvider({
                       clientId: "nextauth-client",
-                      clientSecret: "YOUR_CLIENT_SECRET",
-                      issuer: "http://localhost:8080/realms/e2e-test",
+                      clientSecret: "test-client-secret",
+                      issuer: "http://localhost:8080/realms/dev-test",
                   }),
               ],
     pages: {
