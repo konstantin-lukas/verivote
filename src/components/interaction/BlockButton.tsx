@@ -25,9 +25,11 @@ export default function ButtonLink({
             type={type}
             data-test-id={testId}
             disabled={disabled}
-            className={`shadow-3d hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both group inline-block cursor-pointer rounded-full bg-neutral-100 px-10 py-2 font-medium transition-all dark:bg-neutral-900 ${className ?? ""}`}
+            className={`shadow-3d enabled:hover:shadow-3d-both dark:shadow-dark-3d dark:enabled:hover:shadow-dark-3d-both group inline-block cursor-pointer rounded-full bg-neutral-100 px-10 py-2 font-medium transition-all disabled:cursor-not-allowed dark:bg-neutral-900 ${className ?? ""}`}
         >
-            <span className="m-0 block font-medium transition-transform group-hover:scale-95">{children}</span>
+            <span className="m-0 block font-medium transition-transform group-enabled:group-hover:scale-95">
+                {children}
+            </span>
         </button>
     );
 }

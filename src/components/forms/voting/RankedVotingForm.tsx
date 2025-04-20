@@ -38,7 +38,7 @@ function PollOption({
                 <button
                     type="button"
                     disabled={disabled}
-                    className="shadow-3d hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both group relative size-8 rounded-full transition-shadow"
+                    className="shadow-3d hover:enabled:shadow-3d-both dark:shadow-dark-3d dark:hover:enabled:shadow-dark-3d-both group relative size-8 rounded-full transition-shadow"
                     onClick={() => {
                         if (!sortable) return;
                         const arrayCopy = [...options];
@@ -51,12 +51,12 @@ function PollOption({
                         setOptions(arrayCopy);
                     }}
                 >
-                    <MdArrowUpward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-90" />
+                    <MdArrowUpward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:group-enabled:scale-90" />
                 </button>
                 <button
                     type="button"
                     disabled={disabled}
-                    className="shadow-3d hover:shadow-3d-both dark:shadow-dark-3d dark:hover:shadow-dark-3d-both group relative size-8 rounded-full transition-shadow"
+                    className="shadow-3d hover:enabled:shadow-3d-both dark:shadow-dark-3d dark:hover:enabled:shadow-dark-3d-both group relative size-8 rounded-full transition-shadow"
                     onClick={() => {
                         if (!sortable) return;
                         const arrayCopy = [...options];
@@ -69,7 +69,7 @@ function PollOption({
                         setOptions(arrayCopy);
                     }}
                 >
-                    <MdArrowDownward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-90" />
+                    <MdArrowDownward className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:group-enabled:scale-90" />
                 </button>
             </div>
         </li>
