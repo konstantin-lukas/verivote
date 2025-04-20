@@ -3,6 +3,7 @@ import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
 import VoteButton from "@/components/interaction/VoteButton";
 import H3 from "@/components/typography/H3";
+import useCreateVote from "@/hooks/actions/useCreateVote";
 import type { Poll } from "@/types/poll";
 
 function PollOption({
@@ -56,8 +57,9 @@ function PollOption({
 export default function ApprovalVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
     const [selected, setSelected] = useState(poll.options.map(() => false));
     const [disabled] = useState(false);
+    const { action } = useCreateVote();
     return (
-        <form method="POST" className="my-24">
+        <form action={action} className="my-24">
             <H3>Check all choices you approve</H3>
             <span>You can check as many options as you like</span>
             <ul className="mt-4">

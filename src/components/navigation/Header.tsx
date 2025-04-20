@@ -72,7 +72,7 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
     );
 
     return (
-        <header className="h-header-height shadow-header dark:shadow-dark-header relative flex justify-center bg-neutral-100 transition-all dark:bg-neutral-900">
+        <header className="h-header-height shadow-header dark:shadow-dark-header fixed left-0 top-0 z-50 flex w-full justify-center bg-neutral-100 transition-all dark:bg-neutral-900">
             <Wrapper>
                 <div className="flex h-full items-center justify-between">
                     {verivoteLogo}

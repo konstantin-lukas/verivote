@@ -44,7 +44,7 @@ export default async function RootLayout({
                                 <LoadingStateProvider>
                                     <LoadingIndicator />
                                     <Header signedIn={!!session} />
-                                    <main className="min-h-main-height-mobile desktop:min-h-main-height">
+                                    <main className="min-h-main-height-mobile desktop:min-h-main-height desktop:pt-header-height">
                                         {children}
                                     </main>
                                     <Footer />
