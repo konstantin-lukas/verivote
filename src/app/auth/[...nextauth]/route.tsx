@@ -2,23 +2,33 @@ import type { AuthOptions, Session } from "next-auth";
 import NextAuth from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
+import KeycloakProvider from "next-auth/providers/keycloak";
 import RedditProvider from "next-auth/providers/reddit";
 
 const authOptions: AuthOptions = {
-    providers: [
-        GithubProvider({
-            clientId: process.env.GITHUB_ID ?? "",
-            clientSecret: process.env.GITHUB_SECRET ?? "",
-        }),
-        DiscordProvider({
-            clientId: process.env.DISCORD_ID ?? "",
-            clientSecret: process.env.DISCORD_SECRET ?? "",
-        }),
-        RedditProvider({
-            clientId: process.env.REDDIT_ID ?? "",
-            clientSecret: process.env.REDDIT_SECRET ?? "",
-        }),
-    ],
+    providers:
+        process.env.NODE_ENV === "production"
+            ? [
+                  GithubProvider({
+                      clientId: process.env.GITHUB_ID ?? "",
+                      clientSecret: process.env.GITHUB_SECRET ?? "",
+                  }),
+                  DiscordProvider({
+                      clientId: process.env.DISCORD_ID ?? "",
+                      clientSecret: process.env.DISCORD_SECRET ?? "",
+                  }),
+                  RedditProvider({
+                      clientId: process.env.REDDIT_ID ?? "",
+                      clientSecret: process.env.REDDIT_SECRET ?? "",
+                  }),
+              ]
+            : [
+                  KeycloakProvider({
+                      clientId: "nextauth-client",
+                      clientSecret: "YOUR_CLIENT_SECRET",
+                      issuer: "http://localhost:8080/realms/e2e-test",
+                  }),
+              ],
     pages: {
         signIn: "/signin",
     },

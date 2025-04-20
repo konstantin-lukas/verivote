@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { PiRedditLogo } from "react-icons/pi";
 import { RiDiscordLine, RiGithubLine } from "react-icons/ri";
+import { SiKeycloak } from "react-icons/si";
 
 import SignInButton from "@/components/interaction/SignInButton";
 import Wrapper from "@/components/layout/Wrapper";
@@ -17,22 +18,28 @@ export default async function SignIn(context: { searchParams: Promise<{ callback
         </span>
     );
 
-    const buttons = (
-        <>
-            <SignInButton serviceName="discord">
-                <RiDiscordLine className="mr-2 inline" />
-                <span>Discord</span>
+    const buttons =
+        process.env.NODE_ENV === "production" ? (
+            <>
+                <SignInButton serviceName="discord">
+                    <RiDiscordLine className="mr-2 inline" />
+                    <span>Discord</span>
+                </SignInButton>
+                <SignInButton serviceName="github">
+                    <RiGithubLine className="mr-2 inline" />
+                    <span>GitHub</span>
+                </SignInButton>
+                <SignInButton serviceName="reddit">
+                    <PiRedditLogo className="mr-2 inline" />
+                    <span>Reddit</span>
+                </SignInButton>
+            </>
+        ) : (
+            <SignInButton serviceName="keycloak">
+                <SiKeycloak className="mr-2 inline" />
+                <span>KeyCloak</span>
             </SignInButton>
-            <SignInButton serviceName="github">
-                <RiGithubLine className="mr-2 inline" />
-                <span>GitHub</span>
-            </SignInButton>
-            <SignInButton serviceName="reddit">
-                <PiRedditLogo className="mr-2 inline" />
-                <span>Reddit</span>
-            </SignInButton>
-        </>
-    );
+        );
 
     return (
         <div className="min-h-main-height-mobile desktop:min-h-main-height flex items-center justify-center">
