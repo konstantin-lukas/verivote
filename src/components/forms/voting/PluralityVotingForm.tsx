@@ -17,7 +17,7 @@ function PollOption({
     idx: number;
 }) {
     return (
-        <li className="py-3" data-cy="pollOption">
+        <li className="py-3">
             <label className="flex cursor-pointer">
                 <input
                     type="radio"

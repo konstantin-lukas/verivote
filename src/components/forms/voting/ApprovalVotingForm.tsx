@@ -25,7 +25,7 @@ function PollOption({
         setSelected(copy);
     };
     return (
-        <li className="py-3" data-cy="pollOption">
+        <li className="py-3">
             <label className="flex" style={{ cursor: disabled ? "wait" : "pointer" }}>
                 <input
                     type="checkbox"

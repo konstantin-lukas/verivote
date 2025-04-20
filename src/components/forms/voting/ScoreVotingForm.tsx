@@ -31,7 +31,7 @@ function PollOption({
     disabled: boolean;
 }) {
     return (
-        <li className="relative mt-6 flex items-center gap-6 last:mb-4" data-cy="pollOption">
+        <li className="relative mt-6 flex items-center gap-6 last:mb-4">
             <span className="text-light-font pointer-events-none absolute left-8 top-1/2 w-[calc(100%-8.5rem)] translate-y-[calc(-50%-0.05rem)] overflow-hidden text-ellipsis text-nowrap mix-blend-difference">
                 {children}
             </span>
