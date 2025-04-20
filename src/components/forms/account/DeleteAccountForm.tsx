@@ -1,22 +1,18 @@
 "use client";
 
-import { Snackbar } from "@mui/material";
 import type { ReactNode } from "react";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useMemo, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 
+import ErrorList from "@/components/alert/ErrorList";
 import Modal from "@/components/alert/Modal";
+import Snackbar from "@/components/alert/Snackbar";
 import BlockButton from "@/components/interaction/BlockButton";
 import useDeleteAccount from "@/hooks/actions/useDeleteAccount";
 
 export default function DeleteAccountForm() {
     const [modalMessage, setModalMessage] = useState<ReactNode>(null);
     const { action, error } = useDeleteAccount();
-    const [isOpen, setIsOpen] = useState(false);
-    useEffect(() => {
-        setIsOpen(!!error);
-    }, [error]);
-
     const modal = (
         <Modal
             closeButtonText="Yes I'm sure"
@@ -28,6 +24,8 @@ export default function DeleteAccountForm() {
             {modalMessage}
         </Modal>
     );
+
+    const errorList = useMemo(() => error && <ErrorList errors={error} />, [error]);
 
     return (
         <>
@@ -43,12 +41,7 @@ export default function DeleteAccountForm() {
                 <span className="text-rose-500">Delete my account</span>
             </BlockButton>
             {modal}
-            <Snackbar
-                open={isOpen}
-                autoHideDuration={5000}
-                message={`Error: ${error?.join(" | ")}`}
-                onClose={() => setIsOpen(false)}
-            />
+            <Snackbar message={errorList} />
         </>
     );
 }

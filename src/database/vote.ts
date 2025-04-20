@@ -6,6 +6,11 @@ import { tryCatch } from "@/utils/shared";
 
 export async function insertVoteByPollId(pollId: string, vote: Vote) {
     const polls = getPollCollection();
-    const { error } = await tryCatch(polls.updateOne({ _id: new ObjectId(pollId) }, { $push: { votes: vote } }));
-    return !error;
+    const { data, error } = await tryCatch(
+        polls.updateOne(
+            { _id: new ObjectId(pollId), votes: { $not: { $elemMatch: { ip: vote.ip } } } },
+            { $push: { votes: vote } },
+        ),
+    );
+    return !error && data?.matchedCount === 1;
 }

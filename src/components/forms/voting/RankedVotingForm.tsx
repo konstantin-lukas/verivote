@@ -116,7 +116,7 @@ export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v
                 ))}
             </ul>
             <VoteButton disabled={pending} />
-            <Snackbar message={error && <ErrorList errors={error} />} toggle={pending} />
+            <Snackbar message={error && <ErrorList errors={error} />} />
         </form>
     );
 }
