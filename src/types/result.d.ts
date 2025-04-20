@@ -10,21 +10,9 @@ interface Failure<E> {
 
 export type Result<T, E = Error> = Success<T> | Failure<E>;
 
-export type ActionResult = Promise<Success<string> | Failure<string[]>>;
+export type ActionResult<T> = Promise<Success<T> | Failure<string[]>>;
 
-interface ActionState {
+export type ActionStateResult<T> = (Success<T> | Failure<string[]>) & {
     action: () => void;
     pending: boolean;
-}
-
-export interface ActionStateSuccess extends ActionState {
-    successMessage: string;
-    errorMessages: null;
-}
-
-export interface ActionStateFailure extends ActionState {
-    successMessage: null;
-    errorMessages: string[];
-}
-
-export type ActionStateResult = ActionStateSuccess | ActionStateFailure;
+};

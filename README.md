@@ -15,7 +15,8 @@ alternative voting systems. You are welcome to deploy this website yourself or f
 # OAuth
 
 For testing the project comes with a containerized KeyCloak that is only used for development and tests.
-For production, you can choose which OAuth providers you want to use.
+For production, you can choose which OAuth providers you want to use. The login credentials for KeyCloak are "user" and
+"password".
 
 To use an OAuth provider, you need to register the app in the developer portal of each provider you
 would like to use and make sure it is registered in `@/app/auth/[...nextauth]/route.ts`. Since the login page has

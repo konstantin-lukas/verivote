@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 
-import CreationForm from "@/components/forms/CreationForm";
+import CreatePollForm from "@/components/forms/CreatePollForm";
 import Wrapper from "@/components/layout/Wrapper";
 import H1 from "@/components/typography/H1";
 import { VOTING_METHODS } from "@/const/misc";
@@ -15,7 +15,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
     return (
         <Wrapper className="min-h-main-height-mobile desktop:min-h-main-height flex flex-col items-center justify-center">
             <H1 className="mt-28">Create a poll</H1>
-            <CreationForm defaultMethod={VOTING_METHODS.find(m => m.shorthand === type)?.dbId} />
+            <CreatePollForm defaultMethod={VOTING_METHODS.find(m => m.shorthand === type)?.dbId} />
         </Wrapper>
     );
 }

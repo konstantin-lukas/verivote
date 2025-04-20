@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
 
-import ManageCards from "@/components/forms/ManageCards";
+import UpdatePollsForm from "@/components/forms/UpdatePollsForm";
 import Wrapper from "@/components/layout/Wrapper";
 import { findPollsByUserIdentifier } from "@/database/poll";
 import type { Poll } from "@/types/poll";
@@ -19,7 +19,7 @@ export default async function Page() {
 
     return (
         <Wrapper className="min-h-main-height-mobile desktop:min-h-main-height py-24">
-            <ManageCards polls={polls} />
+            <UpdatePollsForm polls={polls} />
         </Wrapper>
     );
 }

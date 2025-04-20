@@ -1,6 +1,5 @@
 "use client";
 
-import { signOut } from "next-auth/react";
 import type { ReactNode } from "react";
 import React, { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -16,7 +15,8 @@ export default function DeleteAccountForm() {
             closeButtonText="Yes I'm sure"
             cancelButtonText="No, take me back"
             setChildren={setModalMessage}
-            onClose={signOut}
+            onClose={() => undefined}
+            onCancel={() => setModalMessage(null)}
         >
             {modalMessage}
         </Modal>

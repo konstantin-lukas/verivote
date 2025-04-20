@@ -16,7 +16,7 @@ export async function createPoll({
     options,
     winnerNeedsMajority,
     votingMethod,
-}: Poll): ActionResult {
+}: Poll): ActionResult<string> {
     const userIdentifier = await getUserIdentifier();
     if (!userIdentifier) {
         return { data: null, error: [INVALID_CREDENTIALS_ERROR] };
@@ -40,7 +40,7 @@ export async function createPoll({
     redirect(`/poll/${data}`);
 }
 
-export async function deletePoll(id: string): ActionResult {
+export async function deletePoll(id: string): ActionResult<string> {
     const userIdentifier = await getUserIdentifier();
     if (!userIdentifier) return { data: null, error: [INVALID_CREDENTIALS_ERROR] };
     const ok = await deletePollByIdAndUserIdentifier(id, userIdentifier);

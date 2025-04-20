@@ -15,17 +15,17 @@ import Input from "@/components/inputs/Input";
 import BlockButton from "@/components/interaction/BlockButton";
 import { VOTING_METHODS } from "@/const/misc";
 import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_OPTIONS, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
-import useCreationFormActionState from "@/hooks/actionStates/useCreationFormActionState";
+import useCreatePoll from "@/hooks/actions/useCreatePoll";
 import useCreationFormReducer from "@/hooks/reducers/useCreationFormReducer";
 import { PollClosingTimeSchema, PollCreateClientSchema, PollOptionSchema, PollTitleSchema } from "@/schemas/poll";
 import { parseSchema } from "@/utils/shared";
 
-export default function CreationForm({ defaultMethod }: { defaultMethod?: number }) {
+export default function CreatePollForm({ defaultMethod }: { defaultMethod?: number }) {
     const [modalMessage, setModalMessage] = useState<ReactNode>(null);
     const [minDateTime, setMinDateTime] = useState<Date | undefined>();
 
     const [state, dispatch] = useCreationFormReducer(defaultMethod);
-    const { successMessage, errorMessages, action, pending } = useCreationFormActionState(state);
+    const { data: successMessage, error: errorMessages, action, pending } = useCreatePoll(state);
 
     useEffect(() => {
         dispatch({

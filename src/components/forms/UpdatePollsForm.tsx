@@ -3,11 +3,10 @@
 import { format } from "date-fns";
 import Image from "next/image";
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { startTransition, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuBrush, LuEye } from "react-icons/lu";
 
-import { deletePoll } from "@/actions/poll";
 import Modal from "@/components/alert/Modal";
 import BlockButton from "@/components/interaction/BlockButton";
 import BlockLink from "@/components/navigation/BlockLink";
@@ -15,7 +14,7 @@ import H1 from "@/components/typography/H1";
 import H2 from "@/components/typography/H2";
 import { LONG_DATE_FORMAT } from "@/const/date";
 import { VOTING_METHODS } from "@/const/misc";
-import useLoadingState from "@/hooks/useLoadingState";
+import useDeletePoll from "@/hooks/actions/useDeletePoll";
 import illustration from "@/public/undraw_the_search_s0xf.svg";
 import type { Poll } from "@/types/poll";
 
@@ -45,21 +44,24 @@ function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () =
     );
 }
 
-export default function ManageCards({ polls }: { polls: Poll[] }) {
+export default function UpdatePollsForm({ polls }: { polls: Poll[] }) {
     const [remainingPolls, setRemainingPolls] = useState(polls);
-    const [modalState, setModalState] = useState<{ message: ReactNode; deleteAction: () => void }>({
+    const [modalState, setModalState] = useState<{ message: ReactNode; id: string }>({
         message: null,
-        deleteAction: () => null,
+        id: "",
     });
-    const { setIsLoading } = useLoadingState();
+    const { action } = useDeletePoll(modalState.id);
 
     const modal = (
         <Modal
             closeButtonText="Delete"
             cancelButtonText="Cancel"
             highlightCloseButton={true}
-            onClose={modalState.deleteAction}
-            setChildren={() => setModalState({ message: null, deleteAction: () => null })}
+            onClose={() => {
+                setRemainingPolls(prevState => prevState.filter(p => p.id !== modalState.id));
+                startTransition(() => action());
+            }}
+            setChildren={() => setModalState({ message: null, id: "" })}
         >
             {modalState.message}
         </Modal>
@@ -88,12 +90,7 @@ export default function ManageCards({ polls }: { polls: Poll[] }) {
             setModalContent={() => {
                 setModalState({
                     message: `Are you sure you want to delete the poll titled "${poll.title}"?`,
-                    deleteAction: async () => {
-                        setIsLoading(true);
-                        await deletePoll(poll.id!);
-                        setIsLoading(false);
-                        setRemainingPolls(prevState => prevState.filter(p => p.id !== poll.id));
-                    },
+                    id: poll.id!,
                 });
             }}
         />
