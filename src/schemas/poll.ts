@@ -48,11 +48,17 @@ export const PollCreateServerSchema = PollCreateClientSchema.extend({
     creationTime: z.date({ message: "The creation time has to be a valid date" }).refine(date => date <= new Date(), {
         message: "The creation time cannot lie in the future",
     }),
-    votingMethod: z.nativeEnum(VotingMethod),
+    votingMethod: z.nativeEnum(VotingMethod, { message: "No valid voting method was provided" }),
     votes: z.array(
         z.object({
-            ip: z.string().ip(),
-            selection: z.array(z.number()),
+            ip: z
+                .string({ message: "No IP address was provided" })
+                .ip({ message: "The provided IP address is invalid" }),
+            selection: z.array(
+                z.number({ message: "A choice has to be selected by its order in the list of options" }),
+                { message: "A vote must have a selection of choices" },
+            ),
         }),
+        { message: "The poll must have a list of votes" },
     ),
 });
