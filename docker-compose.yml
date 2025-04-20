@@ -31,7 +31,7 @@ services:
 
     keycloak:
         image: quay.io/keycloak/keycloak:24.0.1
-        container_name: keycloak
+        container_name: verivote-keycloak
         ports:
             - "8080:8080"
         environment:
@@ -40,3 +40,21 @@ services:
         volumes:
             - ./keycloak-config:/opt/keycloak/data/import
         command: start-dev --import-realm
+
+    playwright:
+        image: mcr.microsoft.com/playwright:v1.52.0-noble
+        container_name: verivote-playwright
+        entrypoint: [ "npx", "playwright", "test" ]
+        volumes:
+            - .:/tests/e2e
+        working_dir: /tests/e2e
+        environment:
+            - DISPLAY=${DISPLAY}
+            - TZ=UTC
+        network_mode: "host"
+        depends_on: [ ]
+        ipc: host
+        privileged: true
+        devices:
+            - /dev/dri
+        shm_size: 1gb

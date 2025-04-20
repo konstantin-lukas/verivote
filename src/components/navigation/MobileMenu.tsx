@@ -74,7 +74,9 @@ export default function MobileMenu() {
                             ) : (
                                 <MdLogout className="inline" size="1rem" />
                             )}
-                            <span className="ml-1">{!isAuthenticated ? "Sign In" : "Sign Out"}</span>
+                            <span className="ml-1" data-test-id="sign-in-out-button-text">
+                                {!isAuthenticated ? "Sign In" : "Sign Out"}
+                            </span>
                         </span>
                     </BlockButton>
                 </li>

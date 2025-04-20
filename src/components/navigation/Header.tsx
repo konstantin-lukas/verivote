@@ -54,7 +54,9 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
         <BlockButton onClick={signedIn ? () => signOut({ callbackUrl: "/" }) : () => signIn()}>
             <span className="flex items-center justify-center">
                 {signedIn ? <MdLogout className="inline" size="1rem" /> : <MdLogin className="inline" size="1rem" />}
-                <span className="ml-1">{signedIn ? "Sign Out" : "Sign In"}</span>
+                <span className="ml-1" data-test-id="sign-in-out-button-text">
+                    {signedIn ? "Sign Out" : "Sign In"}
+                </span>
             </span>
         </BlockButton>
     );
