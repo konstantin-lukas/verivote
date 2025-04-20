@@ -10,38 +10,40 @@ function PollOption({
     selected,
     setSelected,
     idx,
+    disabled,
 }: {
     children: React.ReactNode;
-    selected: number;
-    setSelected: (idx: number) => void;
+    selected: boolean[];
+    setSelected: (scores: boolean[]) => void;
     idx: number;
+    disabled: boolean;
 }) {
+    const toggle = () => {
+        const copy = [...selected];
+        copy[idx] = !copy[idx];
+        setSelected(copy);
+    };
     return (
         <li className="py-3" data-cy="pollOption">
-            <label className="flex cursor-pointer">
+            <label className="flex" style={{ cursor: disabled ? "wait" : "pointer" }}>
                 <input
-                    type="radio"
-                    name="choice"
+                    type="checkbox"
+                    checked={selected[idx]}
+                    onChange={toggle}
                     className="peer hidden"
-                    checked={selected === idx}
-                    onChange={e => {
-                        if (e.target.checked) setSelected(idx);
-                    }}
+                    disabled={disabled}
                 />
                 <span
                     className="peer-checked:bg-verivote-turquoise relative mr-4 block size-10 shrink-0 grow rounded-full bg-red-500"
-                    role="radio"
+                    role="checkbox"
                     tabIndex={0}
-                    aria-label={children as string}
+                    aria-checked={selected[idx]}
                     onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            setSelected(idx);
-                        }
+                        if (e.key === "Enter") toggle();
                     }}
-                    aria-checked={selected === idx}
                 >
-                    {selected === idx && <IoMdCheckmark className="center-absolute size-6 text-white" />}
-                    {selected !== idx && <IoMdClose className="center-absolute size-6 text-white" />}
+                    {selected[idx] && <IoMdCheckmark className="center-absolute size-6 text-white" />}
+                    {!selected[idx] && <IoMdClose className="center-absolute size-6 text-white" />}
                 </span>
                 <span className="inset-shadow-3d dark:inset-shadow-dark-3d relative block w-full overflow-hidden text-ellipsis text-nowrap rounded-full bg-neutral-100 px-10 py-2 transition-all placeholder:text-neutral-500 dark:bg-neutral-900">
                     {children}
@@ -51,16 +53,16 @@ function PollOption({
     );
 }
 
-export default function PluralityVoting({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
-    const [selected, setSelected] = useState(-1);
+export default function ApprovalVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
+    const [selected, setSelected] = useState(poll.options.map(() => false));
     const [disabled] = useState(false);
     return (
         <form method="POST" className="my-24">
-            <H3>Check the choice you like the most</H3>
-            <span>You can only choose one option</span>
+            <H3>Check all choices you approve</H3>
+            <span>You can check as many options as you like</span>
             <ul className="mt-4">
                 {poll.options.map((x, i) => (
-                    <PollOption key={i} idx={i} selected={selected} setSelected={setSelected}>
+                    <PollOption key={i} disabled={disabled} idx={i} selected={selected} setSelected={setSelected}>
                         {x}
                     </PollOption>
                 ))}

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
 
-import DeleteAccountForm from "@/components/forms/DeleteAccountForm";
+import DeleteAccountForm from "@/components/forms/account/DeleteAccountForm";
 import WrapperSmall from "@/components/layout/WrapperSmall";
 import illustration from "@/public/undraw_throw_away_re_x60k.svg";
 

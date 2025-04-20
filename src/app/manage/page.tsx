@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
 
-import UpdatePollsForm from "@/components/forms/UpdatePollsForm";
+import UpdatePollsForm from "@/components/forms/polls/UpdatePollsForm";
 import Wrapper from "@/components/layout/Wrapper";
 import { findPollsByUserIdentifier } from "@/database/poll";
 import type { Poll } from "@/types/poll";

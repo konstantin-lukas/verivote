@@ -61,7 +61,7 @@ function PollOption({
     );
 }
 
-export default function ScoreVoting({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
+export default function ScoreVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
     const [scores, setScores] = useState(poll.options.map(() => 1));
     const [disabled] = useState(false);
     return (

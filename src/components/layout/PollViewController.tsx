@@ -5,20 +5,20 @@ import React, { useState } from "react";
 import { LuChartPie } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
 
+import ApprovalVotingForm from "@/components/forms/voting/ApprovalVotingForm";
+import PluralityVotingForm from "@/components/forms/voting/PluralityVotingForm";
+import RankedVotingForm from "@/components/forms/voting/RankedVotingForm";
+import ScoreVotingForm from "@/components/forms/voting/ScoreVotingForm";
 import BlockButton from "@/components/interaction/BlockButton";
 import ShareButton from "@/components/interaction/ShareButton";
 import Wrapper from "@/components/layout/Wrapper";
 import WrapperSmall from "@/components/layout/WrapperSmall";
-import ApprovalVoting from "@/components/routes/poll/ApprovalVoting";
-import PluralityVoting from "@/components/routes/poll/PluralityVoting";
-import RankedVoting from "@/components/routes/poll/RankedVoting";
-import ScoreVoting from "@/components/routes/poll/ScoreVoting";
 import H1 from "@/components/typography/H1";
 import { LONG_DATE_FORMAT } from "@/const/date";
 import type { Poll, PollSummary } from "@/types/poll";
 import type { VotingMethodDetails } from "@/types/votingMethod";
 
-export default function ViewController({
+export default function PollViewController({
     poll,
     info,
     defaultHasVoted,
@@ -82,16 +82,16 @@ export default function ViewController({
                     !hasVoted &&
                     !showResults &&
                     ["Instant-Runoff", "Positional Voting"].includes(info.name) && (
-                        <RankedVoting poll={poll} setHasVoted={setHasVoted} />
+                        <RankedVotingForm poll={poll} setHasVoted={setHasVoted} />
                     )}
                 {date >= new Date() && !hasVoted && !showResults && info.name === "Score Voting" && (
-                    <ScoreVoting poll={poll} setHasVoted={setHasVoted} />
+                    <ScoreVotingForm poll={poll} setHasVoted={setHasVoted} />
                 )}
                 {date >= new Date() && !hasVoted && !showResults && info.name === "Approval Voting" && (
-                    <ApprovalVoting poll={poll} setHasVoted={setHasVoted} />
+                    <ApprovalVotingForm poll={poll} setHasVoted={setHasVoted} />
                 )}
                 {date >= new Date() && !hasVoted && !showResults && info.name === "Plurality Voting" && (
-                    <PluralityVoting poll={poll} setHasVoted={setHasVoted} />
+                    <PluralityVotingForm poll={poll} setHasVoted={setHasVoted} />
                 )}
                 {/*{(date < new Date() || hasVoted || showResults) && <PollResults poll={poll} results={pollResults} />}*/}
             </WrapperSmall>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 
-import CreatePollForm from "@/components/forms/CreatePollForm";
+import CreatePollForm from "@/components/forms/polls/CreatePollForm";
 import Wrapper from "@/components/layout/Wrapper";
 import H1 from "@/components/typography/H1";
 import { VOTING_METHODS } from "@/const/misc";

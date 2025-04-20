@@ -2,9 +2,9 @@ import { notFound } from "next/navigation";
 import React from "react";
 import { MdArrowForward } from "react-icons/md";
 
+import PollViewController from "@/components/layout/PollViewController";
 import WrapperSmall from "@/components/layout/WrapperSmall";
 import BlockLink from "@/components/navigation/BlockLink";
-import ViewController from "@/components/routes/poll/ViewController";
 import H3 from "@/components/typography/H3";
 import { VOTING_METHODS } from "@/const/misc";
 import { findPollById } from "@/database/poll";
@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
     return (
         <div className="min-h-main-height-mobile desktop:min-h-main-height py-24">
-            <ViewController poll={poll} results={results} info={matchingInfo} defaultHasVoted={hasVoted} />
+            <PollViewController poll={poll} results={results} info={matchingInfo} defaultHasVoted={hasVoted} />
             <WrapperSmall>
                 <div>
                     <H3>How does this poll work?</H3>
