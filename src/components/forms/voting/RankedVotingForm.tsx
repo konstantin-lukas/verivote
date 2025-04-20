@@ -1,7 +1,10 @@
+import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { MdArrowDownward, MdArrowUpward, MdDragIndicator } from "react-icons/md";
 import { default as Sortable } from "sortablejs";
 
+import ErrorList from "@/components/alert/ErrorList";
+import Snackbar from "@/components/alert/Snackbar";
 import VoteButton from "@/components/interaction/VoteButton";
 import H3 from "@/components/typography/H3";
 import useCreateVote from "@/hooks/actions/useCreateVote";
@@ -15,7 +18,7 @@ function PollOption({
     setOptions,
     disabled,
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
     id: string;
     sortable?: Sortable;
     options: string[];
@@ -78,7 +81,10 @@ function PollOption({
 export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
     const [options, setOptions] = useState(poll.options.map((_, i) => i.toString()));
     const [sortable, setSortable] = useState<Sortable>();
-    const { pending, action } = useCreateVote();
+    const { pending, action, error } = useCreateVote(
+        poll.id,
+        options.map(o => +o),
+    );
 
     const list = useRef(null);
     useEffect(() => {
@@ -110,6 +116,7 @@ export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v
                 ))}
             </ul>
             <VoteButton disabled={pending} />
+            <Snackbar message={error && <ErrorList errors={error} />} toggle={pending} />
         </form>
     );
 }

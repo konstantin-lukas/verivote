@@ -46,7 +46,7 @@ db.createCollection("polls", {
                     items: {
                         bsonType: "object",
                         title: "Vote Validation",
-                        required: ["ip", "pollId", "selection"],
+                        required: ["ip", "selection"],
                         properties: {
                             ip: {
                                 bsonType: "string",

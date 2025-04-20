@@ -1,8 +1,11 @@
 import type { ObjectId } from "bson";
 import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
+import type { z } from "zod";
 
+import mongo from "@/database/connection";
 import { AuthProvider } from "@/enum/auth";
+import type { PollCreateServerSchema } from "@/schemas/poll";
 
 /**
  * @returns the user's identifier or null if the user is not logged in or the identifier is invalid.
@@ -42,4 +45,9 @@ export async function getIpAddress() {
         }
     }
     return ip;
+}
+
+export function getPollCollection() {
+    const db = mongo.db("verivote");
+    return db.collection<z.infer<typeof PollCreateServerSchema>>("polls");
 }

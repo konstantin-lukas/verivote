@@ -4,6 +4,7 @@ import { z } from "zod";
 import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_OPTIONS, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
 import { AuthProvider } from "@/enum/auth";
 import { VotingMethod } from "@/enum/poll";
+import { BaseVoteCreateSchema } from "@/schemas/vote";
 
 export const PollOptionSchema = z
     .string({ message: "Each option's name must be string" })
@@ -49,16 +50,5 @@ export const PollCreateServerSchema = PollCreateClientSchema.extend({
         message: "The creation time cannot lie in the future",
     }),
     votingMethod: z.nativeEnum(VotingMethod, { message: "No valid voting method was provided" }),
-    votes: z.array(
-        z.object({
-            ip: z
-                .string({ message: "No IP address was provided" })
-                .ip({ message: "The provided IP address is invalid" }),
-            selection: z.array(
-                z.number({ message: "A choice has to be selected by its order in the list of options" }),
-                { message: "A vote must have a selection of choices" },
-            ),
-        }),
-        { message: "The poll must have a list of votes" },
-    ),
+    votes: z.array(BaseVoteCreateSchema, { message: "The poll must have a list of votes" }),
 });
