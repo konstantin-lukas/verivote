@@ -11,7 +11,7 @@ import illustration from "@/public/undraw_election_day_w842.svg";
 export default async function Page() {
     const bannerText = (
         <div className="md:w-1/2 md:-translate-y-16 [@media(max-height:530px)]:translate-y-0">
-            <H1>Voting Matters</H1>
+            <H1 customSizes="text-4xl sm:text-5xl md:text-6xl">Voting Matters</H1>
             <p className="my-2 leading-relaxed [@media(max-height:420px)]:hidden">
                 Want to create a poll and try out different voting methods? We’ve got you covered! From ranked choice to
                 approval voting, we make it easy to build and share polls with friends, and we’ll even help you learn
