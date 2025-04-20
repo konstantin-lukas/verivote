@@ -12,9 +12,11 @@
 Verivote is a free open source website that offers a hands-on approach for educating people about
 alternative voting systems. You are welcome to deploy this website yourself or fork it and make it your own.
 
-# Deploying the app yourself
+# OAuth
 
-## Setting Up OAuth
+For testing the project comes with a containerized KeyCloak that is only used for development and tests.
+For production, you can choose which OAuth providers you want to use.
+
 To use an OAuth provider, you need to register the app in the developer portal of each provider you
 would like to use and make sure it is registered in `@/app/auth/[...nextauth]/route.ts`. Since the login page has
 custom styling, you will also need to add a button for each provider you use. You can add these buttons in
@@ -31,7 +33,7 @@ provider that doesn't provide the user email, please edit the backend code so th
 cannot overlap with a Reddit username. To avoid collision between people with the same username on different provider's
 websites, each user identifier is suffixed with the name of the provider.
 
-## Environment Variables
+# Environment Variables
 Please make sure you override all environment variables you need inside a `.env.local`. For the database password, 
 change `MONGODB_PASSWORD`. Also put the same password in the first line of `@/database/init.d/mongo-init.js`. In 
 `@/docker-compose.yml`, please set `MONGO_INITDB_ROOT_PASSWORD` to a different but equally strong password. This just 
@@ -39,12 +41,12 @@ ensures that the root user of the MongoDB instance is secured. The app doesn't a
 intend to make your database directly reachable from the outside, a strong root password is essential.
 
 
-## Deploying The Containers
-The project comes with a docker compose config to run the website and/or the database in a container.
+# Docker Containers
+The project comes with a docker compose config to run the database, tests, and KeyCloak in a container. Please note that
+the KeyCloak is not intended for production.
 
-Once you have set all environment variables correctly, you can proceed to run `docker compose up`.
-This will start the app which will be reachable under `localhost:3001` by default. Keep in mind that
-the MongoDB container uses a volume so restarting the container will still persist your data.
+To run tests inside the Playwright container with the use, you can just run `npm run e2e`. You might have to run
+`xhost +local:docker` on your host machine to allow docker to open a window.
 
 If you're running a reverse proxy like Nginx, consider turning of proxy buffering as this may affect
 the performance of streaming components in Next.js.
