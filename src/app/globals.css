@@ -95,7 +95,7 @@
     }
 
     ::selection {
-        background: rgba(18,212,174,.5);
+        background: var(--color-verivote-turquoise);
         color: white;
     }
 
