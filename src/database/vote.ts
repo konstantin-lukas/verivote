@@ -14,3 +14,9 @@ export async function insertVoteByPollId(pollId: string, vote: Vote) {
     );
     return !error && data?.matchedCount === 1;
 }
+
+export async function doesVoteExist(pollId: string, ip: string) {
+    const polls = getPollCollection();
+    const { data } = await tryCatch(polls.findOne({ _id: new ObjectId(pollId), votes: { $elemMatch: { ip } } }));
+    return !!data;
+}

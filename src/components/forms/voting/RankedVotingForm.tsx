@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MdArrowDownward, MdArrowUpward, MdDragIndicator } from "react-icons/md";
 import { default as Sortable } from "sortablejs";
 
@@ -78,14 +78,21 @@ function PollOption({
     );
 }
 
-export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
+export default function RankedVotingForm({
+    poll,
+    setSuccessMessage,
+}: {
+    poll: Poll;
+    setSuccessMessage: (v: string) => void;
+}) {
     const [options, setOptions] = useState(poll.options.map((_, i) => i.toString()));
     const [sortable, setSortable] = useState<Sortable>();
-    const { pending, action, error } = useCreateVote(
+    const { pending, action, error, data } = useCreateVote(
         poll.id,
         options.map(o => +o),
     );
 
+    const errorList = useMemo(() => error && <ErrorList errors={error} />, [error]);
     const list = useRef(null);
     useEffect(() => {
         if (!list.current || pending) return;
@@ -96,6 +103,9 @@ export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v
             if (s) s.destroy();
         };
     }, [pending]);
+    useEffect(() => {
+        if (!pending && data) setSuccessMessage(data);
+    }, [pending, data, setSuccessMessage]);
 
     return (
         <form className="my-24" action={action}>
@@ -116,7 +126,7 @@ export default function RankedVotingForm({ poll }: { poll: Poll; setHasVoted: (v
                 ))}
             </ul>
             <VoteButton disabled={pending} />
-            <Snackbar message={error && <ErrorList errors={error} />} />
+            <Snackbar message={errorList} />
         </form>
     );
 }

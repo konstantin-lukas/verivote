@@ -1,10 +1,11 @@
 "use client";
 
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuChartPie } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
 
+import Snackbar from "@/components/alert/Snackbar";
 import ApprovalVotingForm from "@/components/forms/voting/ApprovalVotingForm";
 import PluralityVotingForm from "@/components/forms/voting/PluralityVotingForm";
 import RankedVotingForm from "@/components/forms/voting/RankedVotingForm";
@@ -28,9 +29,12 @@ export default function PollViewController({
     info: VotingMethodDetails;
     defaultHasVoted: boolean;
 }) {
-    const date = new Date(poll.closingTime);
     const [showResults, setShowResults] = useState(false);
     const [hasVoted, setHasVoted] = useState(defaultHasVoted);
+    const [successMessage, setSuccessMessage] = useState("");
+    useEffect(() => {
+        if (successMessage) setHasVoted(true);
+    }, [successMessage]);
     // const [pollResults, setPollResults] = useState(results);
     // useEffect(() => {
     //     setShowResults(hasVoted);
@@ -59,17 +63,18 @@ export default function PollViewController({
                     {info.name}
                 </h2>
                 <span className="text-center text-neutral-500">
-                    {date >= new Date() ? "Closing time" : "This poll ended on"}: {format(date, LONG_DATE_FORMAT)}
+                    {poll.closingTime >= new Date() ? "Closing time" : "This poll ended on"}:{" "}
+                    {format(poll.closingTime, LONG_DATE_FORMAT)}
                 </span>
                 <div className="mt-6 flex flex-wrap justify-center gap-6">
                     <ShareButton url={`${process.env.NEXT_PUBLIC_ORIGIN}/poll/${poll.id}`} />
-                    {date >= new Date() && !showResults && !hasVoted && (
+                    {poll.closingTime >= new Date() && !showResults && !hasVoted && (
                         <BlockButton className="flex items-center justify-center" onClick={() => setShowResults(true)}>
                             <LuChartPie className="mr-1 inline-block size-4 translate-y-[-.1rem]" />
                             <span>See results</span>
                         </BlockButton>
                     )}
-                    {date >= new Date() && showResults && !hasVoted && (
+                    {poll.closingTime >= new Date() && showResults && !hasVoted && (
                         <BlockButton className="flex items-center justify-center" onClick={() => setShowResults(false)}>
                             <MdOutlineHowToVote className="mr-1 inline-block size-4 translate-y-[-.1rem]" />
                             <span>Vote</span>
@@ -78,23 +83,24 @@ export default function PollViewController({
                 </div>
             </Wrapper>
             <WrapperSmall>
-                {date >= new Date() &&
+                {poll.closingTime >= new Date() &&
                     !hasVoted &&
                     !showResults &&
                     ["Instant-Runoff", "Positional Voting"].includes(info.name) && (
-                        <RankedVotingForm poll={poll} setHasVoted={setHasVoted} />
+                        <RankedVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                     )}
-                {date >= new Date() && !hasVoted && !showResults && info.name === "Score Voting" && (
+                {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Score Voting" && (
                     <ScoreVotingForm poll={poll} setHasVoted={setHasVoted} />
                 )}
-                {date >= new Date() && !hasVoted && !showResults && info.name === "Approval Voting" && (
+                {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Approval Voting" && (
                     <ApprovalVotingForm poll={poll} setHasVoted={setHasVoted} />
                 )}
-                {date >= new Date() && !hasVoted && !showResults && info.name === "Plurality Voting" && (
+                {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Plurality Voting" && (
                     <PluralityVotingForm poll={poll} setHasVoted={setHasVoted} />
                 )}
                 {/*{(date < new Date() || hasVoted || showResults) && <PollResults poll={poll} results={pollResults} />}*/}
             </WrapperSmall>
+            <Snackbar message={successMessage} />
         </>
     );
 }

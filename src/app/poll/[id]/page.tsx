@@ -7,8 +7,10 @@ import BlockLink from "@/components/navigation/BlockLink";
 import H3 from "@/components/typography/H3";
 import { VOTING_METHODS } from "@/const/misc";
 import { findPollById } from "@/database/poll";
+import { doesVoteExist } from "@/database/vote";
 import { VotingMethod } from "@/enum/poll";
 import type { PollSummary } from "@/types/poll";
+import { getIpAddress } from "@/utils/server";
 
 export async function generateMetadata(context: { params: Promise<{ id: string }> }) {
     const { id } = await context.params;
@@ -25,9 +27,11 @@ export async function generateMetadata(context: { params: Promise<{ id: string }
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
+    const ip = await getIpAddress();
+    if (!ip) notFound();
     const [poll, hasVoted, results] = await Promise.all([
         await findPollById(id),
-        Promise.resolve(false),
+        await doesVoteExist(id, ip),
         Promise.resolve<PollSummary>({
             title: "string",
             votingMethod: VotingMethod.INSTANT_RUNOFF_VOTING,
