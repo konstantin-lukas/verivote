@@ -9,9 +9,9 @@ COPY public public
 COPY package.json .
 COPY package-lock.json .
 COPY .env .
-COPY next.config.mjs .
+COPY .env.local .
+COPY next.config.ts .
 COPY postcss.config.mjs .
-COPY tailwind.config.ts .
 COPY tsconfig.json .
 
 RUN npm ci
