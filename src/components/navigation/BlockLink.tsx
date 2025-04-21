@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 export default function BlockLink({
     children,
@@ -7,7 +8,7 @@ export default function BlockLink({
     onClick,
     target,
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
     href: string;
     className?: string;
     onClick?: () => void;

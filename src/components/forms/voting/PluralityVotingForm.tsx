@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
@@ -14,7 +15,7 @@ function PollOption({
     setSelected,
     idx,
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
     selected: number;
     setSelected: (idx: number) => void;
     idx: number;

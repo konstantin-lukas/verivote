@@ -1,4 +1,4 @@
-import type { KeyboardEventHandler, MouseEventHandler } from "react";
+import type { KeyboardEventHandler, MouseEventHandler, ReactNode } from "react";
 
 export default function ButtonLink({
     children,
@@ -9,7 +9,7 @@ export default function ButtonLink({
     disabled,
     "data-test-id": testId,
 }: {
-    "children": React.ReactNode;
+    "children": ReactNode;
     "onClick"?: MouseEventHandler<HTMLButtonElement> | KeyboardEventHandler<HTMLButtonElement>;
     "className"?: string;
     "tabIndex"?: number;
