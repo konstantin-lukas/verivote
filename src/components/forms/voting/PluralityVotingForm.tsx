@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
+import ErrorList from "@/components/alert/ErrorList";
+import Snackbar from "@/components/alert/Snackbar";
 import VoteButton from "@/components/interaction/VoteButton";
 import H3 from "@/components/typography/H3";
+import useCreateVote from "@/hooks/actions/useCreateVote";
 import type { Poll } from "@/types/poll";
 
 function PollOption({
@@ -51,11 +54,22 @@ function PollOption({
     );
 }
 
-export default function PluralityVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
+export default function PluralityVotingForm({
+    poll,
+    setSuccessMessage,
+}: {
+    poll: Poll;
+    setSuccessMessage: (v: string) => void;
+}) {
     const [selected, setSelected] = useState(-1);
     const [disabled] = useState(false);
+    const { pending, action, error, data } = useCreateVote(poll.id, selected < 0 ? [] : [selected]);
+    const errorList = useMemo(() => error && <ErrorList errors={error} />, [error]);
+    useEffect(() => {
+        if (!pending && data) setSuccessMessage(data);
+    }, [pending, data, setSuccessMessage]);
     return (
-        <form method="POST" className="my-24">
+        <form action={action} className="my-24">
             <H3>Check the choice you like the most</H3>
             <span>You can only choose one option</span>
             <ul className="mt-4">
@@ -66,6 +80,7 @@ export default function PluralityVotingForm({ poll }: { poll: Poll; setHasVoted:
                 ))}
             </ul>
             <VoteButton disabled={disabled} />
+            <Snackbar message={errorList} />
         </form>
     );
 }

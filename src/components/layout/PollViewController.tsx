@@ -96,7 +96,7 @@ export default function PollViewController({
                     <ApprovalVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                 )}
                 {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Plurality Voting" && (
-                    <PluralityVotingForm poll={poll} setHasVoted={setHasVoted} />
+                    <PluralityVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                 )}
                 {/*{(date < new Date() || hasVoted || showResults) && <PollResults poll={poll} results={pollResults} />}*/}
             </WrapperSmall>

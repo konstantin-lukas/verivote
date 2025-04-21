@@ -17,11 +17,10 @@ import { parseSchema } from "@/utils/shared";
 export async function createVote(pollId: string, selection: number[]): ActionResult<string> {
     const [ip, poll] = await Promise.all([getIpAddress(), findPollById(pollId)]);
     if (!poll) return { data: null, error: ["Unknown poll ID"] };
-    console.log(selection);
     let schema;
     switch (poll.votingMethod) {
         case VotingMethod.PLURALITY_VOTING:
-            schema = PluralityVoteCreateSchema;
+            schema = PluralityVoteCreateSchema(poll.options.length);
             break;
         case VotingMethod.SCORE_VOTING:
             schema = ScoreVoteCreateSchema(poll.options.length);
@@ -30,7 +29,8 @@ export async function createVote(pollId: string, selection: number[]): ActionRes
             schema = ApprovalVoteCreateSchema(poll.options.length);
             break;
         default:
-            schema = RankedVoteCreateSchema;
+            schema = RankedVoteCreateSchema(poll.options.length);
+            break;
     }
     const vote = {
         ip,

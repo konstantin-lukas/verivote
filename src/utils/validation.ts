@@ -25,3 +25,7 @@ export function isValidApprovalSelection(selection: number[], maxLength: number)
     }
     return true;
 }
+
+export function isValidPluralitySelection(selection: number[], maxIndex: number) {
+    return !(selection.length !== 1 || selection[0] < 0 || selection[0] > maxIndex);
+}
