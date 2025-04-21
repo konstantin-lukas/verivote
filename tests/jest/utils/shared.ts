@@ -36,7 +36,7 @@ describe("utils/shared", () => {
     describe("parseSchema", () => {
         test("should catch top level errors and return them as values", async () => {
             const errors = parseSchema(PollCreateClientSchema, {});
-            expect(errors).toEqual([
+            expect(errors).toStrictEqual([
                 "The poll must have a title",
                 "The closing time must be a valid date",
                 "The poll must have options",

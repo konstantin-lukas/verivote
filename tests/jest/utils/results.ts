@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 
 import type { Vote } from "@/types/vote";
-import { getInstantRunoffResults } from "@/utils/results";
+import { getApprovalOrPluralityResults, getInstantRunoffResults } from "@/utils/results";
 
 describe("utils/shared", () => {
     describe("getInstantRunoffResults", () => {
@@ -64,8 +64,50 @@ describe("utils/shared", () => {
                 expected: [0, 0],
                 choiceCount: 2,
             },
-        ])("should calculate instant-runoff results correctly", ({ votes, choiceCount, expected }) =>
-            expect(getInstantRunoffResults(votes as Vote[], choiceCount)).toEqual(expected),
-        );
+        ])("should calculate instant-runoff results correctly", ({ votes, choiceCount, expected }) => {
+            expect(getInstantRunoffResults(votes as Vote[], choiceCount)).toStrictEqual(expected);
+        });
+    });
+    describe("getApprovalOrPluralityResults", () => {
+        test.each([
+            // NO VOTES (PLURALITY)
+            {
+                votes: [],
+                expected: [0, 0, 0, 0],
+                choiceCount: 4,
+            },
+            // SINGLE VOTE (PLURALITY)
+            {
+                votes: [{ selection: [3] }],
+                expected: [0, 0, 0, 1],
+                choiceCount: 4,
+            },
+            // REGULAR VOTES (PLURALITY)
+            {
+                votes: [{ selection: [3] }, { selection: [0] }, { selection: [2] }, { selection: [0] }],
+                expected: [2, 0, 1, 1],
+                choiceCount: 4,
+            },
+            // NO VOTES (APPROVAL)
+            {
+                votes: [],
+                expected: [0, 0, 0, 0],
+                choiceCount: 4,
+            },
+            // SINGLE VOTE (APPROVAL)
+            {
+                votes: [{ selection: [3] }],
+                expected: [0, 0, 0, 1],
+                choiceCount: 4,
+            },
+            // REGULAR VOTES (APPROVAL)
+            {
+                votes: [{ selection: [3, 2] }, { selection: [3, 0] }, { selection: [1, 2, 3] }, { selection: [0, 3] }],
+                expected: [2, 1, 2, 4],
+                choiceCount: 4,
+            },
+        ])("should calculate approval or plurality results correctly", ({ votes, choiceCount, expected }) => {
+            expect(getApprovalOrPluralityResults(votes as Vote[], choiceCount)).toStrictEqual(expected);
+        });
     });
 });

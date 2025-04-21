@@ -17,7 +17,7 @@ export function getPositionalResults(votes: Vote[], choiceCount: number) {
 export function getApprovalOrPluralityResults(votes: Vote[], choiceCount: number) {
     const results = new Array<number>(choiceCount).fill(0);
     for (const vote of votes) {
-        for (const i of [...Array(choiceCount).keys()]) {
+        for (const i of [...Array(vote.selection.length).keys()]) {
             const choice = vote.selection[i];
             results[choice]++;
         }
