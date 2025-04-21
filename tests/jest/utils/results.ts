@@ -1,0 +1,71 @@
+import { describe, expect, test } from "@jest/globals";
+
+import type { Vote } from "@/types/vote";
+import { getInstantRunoffResults } from "@/utils/results";
+
+describe("utils/shared", () => {
+    describe("getInstantRunoffResults", () => {
+        test.each([
+            // REGULAR VOTES
+            {
+                votes: [
+                    { selection: [1, 0, 3, 2] },
+                    { selection: [1, 2, 0, 3] },
+                    { selection: [2, 3, 0, 1] },
+                    { selection: [2, 3, 1, 0] },
+                    { selection: [0, 3, 2, 1] },
+                ],
+                expected: [0, 2, 3, 0],
+                choiceCount: 4,
+            },
+            // SINGLE VOTE
+            {
+                votes: [{ selection: [1, 3, 2, 0] }],
+                expected: [0, 1, 0, 0],
+                choiceCount: 4,
+            },
+            // VOTES WHERE LAST CANDIDATE FROM FIRST ROUND APPEARS AS SECOND OPTION IN SOME VOTES
+            {
+                votes: [{ selection: [1, 0, 3, 2] }, { selection: [2, 0, 1, 3] }, { selection: [3, 0, 2, 1] }],
+                expected: [0, 1, 1, 1],
+                choiceCount: 4,
+            },
+            // VOTES WHERE TWO ELIMINATED CANDIDATES ARE FOUND IN THE SECOND ROUND
+            {
+                votes: [{ selection: [0, 3, 4, 1, 2] }, { selection: [1, 3, 4, 0, 2] }, { selection: [2, 3, 4, 0, 1] }],
+                expected: [2, 1, 0, 0, 0],
+                choiceCount: 5,
+            },
+            {
+                votes: [
+                    { selection: [5, 3, 4, 1, 0, 2] },
+                    { selection: [0, 3, 4, 1, 2, 5] },
+                    { selection: [1, 3, 4, 0, 2, 5] },
+                    { selection: [2, 3, 4, 0, 1, 5] },
+                ],
+                expected: [2, 2, 0, 0, 0, 0],
+                choiceCount: 6,
+            },
+            // TWO LOSING CANDIDATES IN FIRST ROUND
+            {
+                votes: [{ selection: [0, 1, 2] }, { selection: [2, 1, 0] }],
+                expected: [1, 0, 1],
+                choiceCount: 3,
+            },
+            // TIE
+            {
+                votes: [{ selection: [0, 1] }, { selection: [1, 0] }],
+                expected: [1, 1],
+                choiceCount: 2,
+            },
+            // NO VOTES
+            {
+                votes: [],
+                expected: [0, 0],
+                choiceCount: 2,
+            },
+        ])("should calculate instant-runoff results correctly", ({ votes, choiceCount, expected }) =>
+            expect(getInstantRunoffResults(votes as Vote[], choiceCount)).toEqual(expected),
+        );
+    });
+});
