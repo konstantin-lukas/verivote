@@ -9,16 +9,22 @@ export default function Checkbox({
     label,
     disabled,
     name,
+    "data-test-id": testId,
 }: {
-    onChange: ChangeEventHandler<HTMLInputElement>;
-    checked: boolean;
-    label: string;
-    disabled?: boolean;
-    name?: string;
+    "onChange": ChangeEventHandler<HTMLInputElement>;
+    "checked": boolean;
+    "label": string;
+    "disabled"?: boolean;
+    "name"?: string;
+    "data-test-id"?: string;
 }) {
     const ref = useRef(null);
     return (
-        <label className="mt-4 flex items-center justify-between" style={{ cursor: disabled ? "wait" : "pointer" }}>
+        <label
+            className="mt-4 flex items-center justify-between"
+            style={{ cursor: disabled ? "wait" : "pointer" }}
+            data-test-id={testId}
+        >
             <span className="mr-4">{label}</span>
             <input
                 ref={ref}

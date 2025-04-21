@@ -57,6 +57,7 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
                 required={true}
                 onChange={value => dispatch({ type: "optionsChange", value, index: i })}
                 placeholder={`Option ${i + 1}`}
+                data-test-id={`poll-option-${i + 1}`}
             />
             {i >= 2 && (
                 <button
@@ -82,6 +83,7 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
                     value: VOTING_METHODS[index].dbId,
                 })
             }
+            data-test-id="poll-type-select"
             ariaLabel="Select poll type"
         />
     );
@@ -96,6 +98,7 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
             disabled={pending}
             onChange={value => dispatch({ type: "title", value })}
             placeholder="Poll title"
+            data-test-id="poll-name-input"
         />
     );
 
@@ -120,6 +123,7 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
             label={`Winner needs majority: ${state.winnerNeedsMajority ? "yes" : "no"}`}
             disabled={pending}
             name="majority"
+            data-test-id="majority-checkbox"
         />
     );
 
@@ -140,11 +144,12 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
                     type="button"
                     disabled={pending}
                     aria-label="Add another poll option"
+                    data-test-id="add-poll-option-button"
                 >
                     <IoAddSharp aria-hidden="true" className="size-7 transition-transform group-hover:scale-90" />
                 </button>
             )}
-            <BlockButton className="grow" type="submit" disabled={pending}>
+            <BlockButton className="grow" type="submit" disabled={pending} data-test-id="submit-create-poll-button">
                 Create
             </BlockButton>
         </div>

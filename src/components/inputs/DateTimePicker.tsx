@@ -13,13 +13,15 @@ export default function DateTimePicker({
     disabled,
     style,
     valid,
+    "data-test-id": testId,
 }: {
-    value?: Date;
-    onChange?: (value: Date | null) => void;
-    minDateTime?: Date;
-    disabled?: boolean;
-    style?: CSSProperties;
-    valid?: boolean;
+    "value"?: Date;
+    "onChange"?: (value: Date | null) => void;
+    "minDateTime"?: Date;
+    "disabled"?: boolean;
+    "style"?: CSSProperties;
+    "valid"?: boolean;
+    "data-test-id"?: string;
 }) {
     const [pickerOpen, setPickerOpen] = useState(false);
     const date = value && isValid(value) ? format(value, SHORT_DATE_FORMAT) : "";
@@ -34,6 +36,7 @@ export default function DateTimePicker({
                 valid={valid}
                 disabled={disabled}
                 style={{ cursor: "pointer", ...style }}
+                data-test-id={testId}
             />
             <MobileDateTimePicker
                 open={pickerOpen}

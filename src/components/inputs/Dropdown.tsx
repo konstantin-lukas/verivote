@@ -8,12 +8,14 @@ export default function Dropdown({
     getValue,
     ariaLabel,
     disabled,
+    "data-test-id": testId,
 }: {
-    options: string[];
-    defaultOption: number;
-    getValue: (val: number) => void;
-    ariaLabel: string;
-    disabled?: boolean;
+    "options": string[];
+    "defaultOption": number;
+    "getValue": (val: number) => void;
+    "ariaLabel": string;
+    "disabled"?: boolean;
+    "data-test-id"?: string;
 }) {
     const [selectedOption, setSelectedOption] = useState(defaultOption);
     const [isOpen, setIsOpen] = useState(false);
@@ -41,6 +43,7 @@ export default function Dropdown({
                     onKeyDown={e => {
                         if (e.key === " " || e.key === "Enter") setSelected();
                     }}
+                    data-test-id={`${testId}-option-${index + 1}`}
                 >
                     <div data-nosnippet="true">{str}</div>
                 </div>
@@ -64,10 +67,15 @@ export default function Dropdown({
                 role="option"
                 className={`mb-6 rounded-full px-10 py-2 transition-all sm:min-w-60 ${shadowStyle} ${cursorStyle}`}
                 aria-selected="true"
+                data-test-id={testId}
                 tabIndex={0}
             >
                 <div className={`flex items-center justify-between transition-transform ${isOpen ? "scale-95" : ""}`}>
-                    <div data-nosnippet="true" className={disabled ? "text-[gray]" : ""}>
+                    <div
+                        data-nosnippet="true"
+                        className={disabled ? "text-[gray]" : ""}
+                        data-test-id={`${testId}-selected-text`}
+                    >
                         {options[selectedOption]}
                     </div>
                     <BiExpandVertical className={`ml-2${disabled ? "text-[gray]" : ""}`} />
