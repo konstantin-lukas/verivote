@@ -2,7 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import { addMinutes } from "date-fns";
 
 import { PollCreateClientSchema } from "@/schemas/poll";
-import { parseSchema, tryCatch, tryCatchSync } from "@/utils/shared";
+import { findLargestIndices, parseSchema, tryCatch, tryCatchSync } from "@/utils/shared";
 
 describe("utils/shared", () => {
     describe("tryCatchSync", () => {
@@ -57,6 +57,26 @@ describe("utils/shared", () => {
                 winnerNeedsMajority: true,
             });
             expect(errors).toBeNull();
+        });
+    });
+    describe("findLargestIndices", () => {
+        test.each([
+            [[], []],
+            [[1], [0]],
+            [[1, 2, 3], [2]],
+            [
+                [1, 2, 3, 3],
+                [2, 3],
+            ],
+            [
+                [951, 251, 623, 737, 951, 222, 951],
+                [0, 4, 6],
+            ],
+            [[-1, -2, -3], [0]],
+            [[-2, -3, NaN], [0]],
+            [[NaN, -2, -3], [1]],
+        ])("should the indices with the largest values from its input", (input, expected) => {
+            expect(findLargestIndices(input)).toStrictEqual(expected);
         });
     });
 });

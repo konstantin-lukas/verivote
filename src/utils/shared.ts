@@ -31,7 +31,7 @@ export function parseSchema(schema: ZodSchema, data: unknown) {
 }
 
 export function findLargestIndices(array: number[]) {
-    const maxValue = Math.max(...array);
+    const maxValue = Math.max(...array.filter(n => !isNaN(n)));
     return array.reduce((indices, value, index) => {
         if (value === maxValue) {
             indices.push(index);
