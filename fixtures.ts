@@ -12,6 +12,37 @@ function getRandomVotingMethod() {
     return enumValues[randomIndex];
 }
 
+function getRandomVotes(votingMethod: VotingMethod, optionCount: number) {
+    const voteCount = Math.floor(Math.random() * 30);
+    const votes = [];
+    for (let i = 0; i < voteCount; i++) {
+        let selection = [];
+        switch (votingMethod) {
+            case VotingMethod.APPROVAL_VOTING:
+                for (const i of [...Array(optionCount).keys()]) {
+                    if (Math.random() < 0.25) {
+                        selection.push(i);
+                    }
+                }
+                break;
+            case VotingMethod.PLURALITY_VOTING:
+                selection.push(Math.floor(Math.random() * optionCount));
+                break;
+            case VotingMethod.SCORE_VOTING:
+                for (let j = 0; j < optionCount; j++) {
+                    selection.push(Math.floor(Math.random() * 10) + 1);
+                }
+                break;
+            case VotingMethod.POSITIONAL_VOTING:
+            case VotingMethod.INSTANT_RUNOFF_VOTING:
+                selection = [...Array(optionCount).keys()].sort(() => 0.5 - Math.random());
+                break;
+        }
+        votes.push({ ip: `::ffff:127.0.0.${i + 2}`, selection });
+    }
+    return votes;
+}
+
 const username = encodeURIComponent(process.env.MONGODB_USER!);
 const password = encodeURIComponent(process.env.MONGODB_PASSWORD!);
 const connection = encodeURIComponent(process.env.MONGODB_DATABASE!);
@@ -67,16 +98,19 @@ const pollFixtures = [
 (async () => {
     await polls.deleteMany({});
     await polls.insertMany(
-        pollFixtures.map(fixture => ({
-            creationTime: new Date(),
-            closingTime: addDays(new Date(), Math.floor(Math.random() * 10) + 1),
-            title: fixture.title,
-            options: fixture.options,
-            userIdentifier: process.env.FIXTURE_USER_IDENTIFIER,
-            winnerNeedsMajority: true,
-            votingMethod: getRandomVotingMethod(),
-            votes: [],
-        })),
+        pollFixtures.map(fixture => {
+            const votingMethod = getRandomVotingMethod();
+            return {
+                creationTime: new Date(),
+                closingTime: addDays(new Date(), Math.floor(Math.random() * 10) + 1),
+                title: fixture.title,
+                options: fixture.options,
+                userIdentifier: process.env.FIXTURE_USER_IDENTIFIER,
+                winnerNeedsMajority: Math.random() < 0.5,
+                votes: getRandomVotes(votingMethod, fixture.options.length),
+                votingMethod,
+            };
+        }),
     );
     await client.close();
 })();
