@@ -7,8 +7,7 @@ import BlockLink from "@/components/navigation/BlockLink";
 import H3 from "@/components/typography/H3";
 import { VOTING_METHODS } from "@/const/misc";
 import { findPollById } from "@/database/poll";
-import { doesVoteExist } from "@/database/vote";
-import type { PollResult } from "@/types/poll";
+import { getPollResults } from "@/utils/results";
 import { getIpAddress } from "@/utils/server";
 
 export async function generateMetadata(context: { params: Promise<{ id: string }> }) {
@@ -28,20 +27,13 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     const { id } = await params;
     const ip = await getIpAddress();
     if (!ip) notFound();
-    const [poll, hasVoted, results] = await Promise.all([
-        await findPollById(id),
-        await doesVoteExist(id, ip),
-        Promise.resolve<PollResult>({
-            voterCount: 0,
-            winners: [],
-            options: ["Foo", "Bar"],
-            results: [0, 0],
-        }),
-    ]);
-
+    const poll = await findPollById(id);
     if (!poll) notFound();
     const matchingInfo = VOTING_METHODS.find(x => x.dbId === poll.votingMethod);
     if (!matchingInfo) notFound();
+
+    const hasVoted = poll.votes.some(vote => vote.ip === ip);
+    const results = getPollResults(poll);
 
     return (
         <div className="min-h-main-height-mobile desktop:min-h-main-height py-24">
