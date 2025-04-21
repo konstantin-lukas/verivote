@@ -3,9 +3,9 @@
 import { redirect } from "next/navigation";
 
 import { INVALID_CREDENTIALS_ERROR } from "@/const/error";
-import { deletePollByIdAndUserIdentifier, insertPoll } from "@/database/poll";
+import { deletePollByIdAndUserIdentifier, findPollById, insertPoll } from "@/database/poll";
 import { PollCreateServerSchema } from "@/schemas/poll";
-import type { PollFormState } from "@/types/poll";
+import type { Poll, PollFormState } from "@/types/poll";
 import type { ActionResult } from "@/types/result";
 import { getUserIdentifier } from "@/utils/server";
 import { parseSchema, tryCatch } from "@/utils/shared";
@@ -45,4 +45,10 @@ export async function deletePoll(id: string): ActionResult<string> {
     const ok = await deletePollByIdAndUserIdentifier(id, userIdentifier);
     if (ok) return { data: "Poll successfully deleted", error: null };
     return { data: null, error: ["An error occurred while deleting the poll"] };
+}
+
+export async function getPoll(id: string): ActionResult<Poll> {
+    const poll = await findPollById(id);
+    if (!poll) return { data: null, error: ["Poll not found"] };
+    return { data: poll, error: null };
 }

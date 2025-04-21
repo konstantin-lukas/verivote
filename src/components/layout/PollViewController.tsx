@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { LuChartPie } from "react-icons/lu";
 import { MdOutlineHowToVote } from "react-icons/md";
 
+import { getPoll } from "@/actions/poll";
 import Snackbar from "@/components/alert/Snackbar";
 import ApprovalVotingForm from "@/components/forms/voting/ApprovalVotingForm";
 import PluralityVotingForm from "@/components/forms/voting/PluralityVotingForm";
@@ -19,6 +20,7 @@ import H1 from "@/components/typography/H1";
 import { LONG_DATE_FORMAT } from "@/const/date";
 import type { Poll, PollResult } from "@/types/poll";
 import type { VotingMethodDetails } from "@/types/votingMethod";
+import { getPollResults } from "@/utils/results";
 
 export default function PollViewController({
     poll,
@@ -37,23 +39,15 @@ export default function PollViewController({
     useEffect(() => {
         if (successMessage) setHasVoted(true);
     }, [successMessage]);
-    const [pollResults] = useState(results);
-    // useEffect(() => {
-    //     setShowResults(hasVoted);
-    //     fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/results/" + poll.id)
-    //         .then(data => data.json())
-    //         .then(json => setPollResults(json))
-    //         .catch(() => window.location.reload());
-    // }, [hasVoted, poll.id]);
-    // useEffect(() => {
-    //     fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/voted/" + poll.id)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setShowResults(data.hasVoted);
-    //             setHasVoted(data.hasVoted);
-    //         })
-    //         .catch(() => setShowResults(true));
-    // }, [poll.id]);
+    const [pollResults, setPollResults] = useState(results);
+    useEffect(() => {
+        setShowResults(hasVoted);
+        getPoll(poll.id).then(({ data, error }) => {
+            if (!error) {
+                setPollResults(getPollResults(data));
+            }
+        });
+    }, [hasVoted, poll.id]);
 
     return (
         <>
