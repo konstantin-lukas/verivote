@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 
+import ErrorList from "@/components/alert/ErrorList";
+import Snackbar from "@/components/alert/Snackbar";
 import VoteButton from "@/components/interaction/VoteButton";
 import H3 from "@/components/typography/H3";
+import useCreateVote from "@/hooks/actions/useCreateVote";
 import type { Poll } from "@/types/poll";
 
 function PollOption({
@@ -54,11 +57,28 @@ function PollOption({
     );
 }
 
-export default function ApprovalVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
+export default function ApprovalVotingForm({
+    poll,
+    setSuccessMessage,
+}: {
+    poll: Poll;
+    setSuccessMessage: (v: string) => void;
+}) {
     const [selected, setSelected] = useState(poll.options.map(() => false));
     const [disabled] = useState(false);
+    const { pending, action, error, data } = useCreateVote(
+        poll.id,
+        selected.reduce((array, bool, i) => {
+            if (bool) array.push(i);
+            return array;
+        }, [] as number[]),
+    );
+    const errorList = useMemo(() => error && <ErrorList errors={error} />, [error]);
+    useEffect(() => {
+        if (!pending && data) setSuccessMessage(data);
+    }, [pending, data, setSuccessMessage]);
     return (
-        <form className="my-24">
+        <form className="my-24" action={action}>
             <H3>Check all choices you approve</H3>
             <span>You can check as many options as you like</span>
             <ul className="mt-4">
@@ -69,6 +89,7 @@ export default function ApprovalVotingForm({ poll }: { poll: Poll; setHasVoted: 
                 ))}
             </ul>
             <VoteButton disabled={disabled} />
+            <Snackbar message={errorList} />
         </form>
     );
 }

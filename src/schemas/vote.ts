@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { NO_IP_ADDRESS } from "@/const/error";
-import { isValidRankedSelection, isValidScoreSelection } from "@/utils/validation";
+import { isValidApprovalSelection, isValidRankedSelection, isValidScoreSelection } from "@/utils/validation";
 
 const IPSchema = z.string({ message: NO_IP_ADDRESS }).ip({ message: "The provided IP address is invalid" });
 const SelectionBaseSchema = z.array(
@@ -29,10 +29,14 @@ export const ScoreVoteCreateSchema = (optionCount: number) =>
         }),
     });
 
-export const ApprovalVoteCreateSchema = z.object({
-    ip: IPSchema,
-    selection: SelectionBaseSchema.refine(() => undefined, { message: "The selection contains invalid values" }),
-});
+export const ApprovalVoteCreateSchema = (optionCount: number) =>
+    z.object({
+        ip: IPSchema,
+        selection: SelectionBaseSchema.min(1, { message: "You have to vote for at least one choice" }).refine(
+            selection => isValidApprovalSelection(selection, optionCount),
+            { message: "The selection contains invalid values" },
+        ),
+    });
 
 export const PluralityVoteCreateSchema = z.object({
     ip: IPSchema,

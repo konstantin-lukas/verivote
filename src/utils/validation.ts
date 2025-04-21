@@ -17,3 +17,11 @@ export function isValidScoreSelection(selection: number[], expectedLength: numbe
     }
     return true;
 }
+
+export function isValidApprovalSelection(selection: number[], maxLength: number) {
+    if (selection.length > maxLength) return false;
+    for (const value of selection) {
+        if (value < 0 || value >= maxLength) return false;
+    }
+    return true;
+}
