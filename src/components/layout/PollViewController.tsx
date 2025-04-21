@@ -10,22 +10,24 @@ import ApprovalVotingForm from "@/components/forms/voting/ApprovalVotingForm";
 import PluralityVotingForm from "@/components/forms/voting/PluralityVotingForm";
 import RankedVotingForm from "@/components/forms/voting/RankedVotingForm";
 import ScoreVotingForm from "@/components/forms/voting/ScoreVotingForm";
+import PollResults from "@/components/informational/PollResults";
 import BlockButton from "@/components/interaction/BlockButton";
 import ShareButton from "@/components/interaction/ShareButton";
 import Wrapper from "@/components/layout/Wrapper";
 import WrapperSmall from "@/components/layout/WrapperSmall";
 import H1 from "@/components/typography/H1";
 import { LONG_DATE_FORMAT } from "@/const/date";
-import type { Poll, PollSummary } from "@/types/poll";
+import type { Poll, PollResult } from "@/types/poll";
 import type { VotingMethodDetails } from "@/types/votingMethod";
 
 export default function PollViewController({
     poll,
     info,
     defaultHasVoted,
+    results,
 }: {
     poll: Poll;
-    results: PollSummary;
+    results: PollResult;
     info: VotingMethodDetails;
     defaultHasVoted: boolean;
 }) {
@@ -35,7 +37,7 @@ export default function PollViewController({
     useEffect(() => {
         if (successMessage) setHasVoted(true);
     }, [successMessage]);
-    // const [pollResults, setPollResults] = useState(results);
+    const [pollResults] = useState(results);
     // useEffect(() => {
     //     setShowResults(hasVoted);
     //     fetch(process.env.NEXT_PUBLIC_API_ORIGIN + "/results/" + poll.id)
@@ -98,7 +100,9 @@ export default function PollViewController({
                 {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Plurality Voting" && (
                     <PluralityVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                 )}
-                {/*{(date < new Date() || hasVoted || showResults) && <PollResults poll={poll} results={pollResults} />}*/}
+                {(poll.closingTime < new Date() || hasVoted || showResults) && (
+                    <PollResults poll={poll} results={pollResults} />
+                )}
             </WrapperSmall>
             <Snackbar message={successMessage} />
         </>
