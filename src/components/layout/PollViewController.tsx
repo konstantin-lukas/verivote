@@ -49,6 +49,8 @@ export default function PollViewController({
         });
     }, [hasVoted, poll.id]);
 
+    const now = new Date();
+
     return (
         <>
             <Wrapper className="flex flex-col items-center">
@@ -59,18 +61,18 @@ export default function PollViewController({
                     {info.name}
                 </h2>
                 <span className="text-center text-neutral-500">
-                    {poll.closingTime >= new Date() ? "Closing time" : "This poll ended on"}:{" "}
+                    {poll.closingTime >= now ? "Closing time" : "This poll ended on"}:{" "}
                     {format(poll.closingTime, LONG_DATE_FORMAT)}
                 </span>
                 <div className="mt-6 flex flex-wrap justify-center gap-6">
                     <ShareButton url={`${process.env.NEXT_PUBLIC_ORIGIN}/poll/${poll.id}`} />
-                    {poll.closingTime >= new Date() && !showResults && !hasVoted && (
+                    {poll.closingTime >= now && !showResults && !hasVoted && (
                         <BlockButton className="flex items-center justify-center" onClick={() => setShowResults(true)}>
                             <LuChartPie className="mr-1 inline-block size-4 translate-y-[-.1rem]" />
                             <span>See results</span>
                         </BlockButton>
                     )}
-                    {poll.closingTime >= new Date() && showResults && !hasVoted && (
+                    {poll.closingTime >= now && showResults && !hasVoted && (
                         <BlockButton className="flex items-center justify-center" onClick={() => setShowResults(false)}>
                             <MdOutlineHowToVote className="mr-1 inline-block size-4 translate-y-[-.1rem]" />
                             <span>Vote</span>
@@ -79,22 +81,22 @@ export default function PollViewController({
                 </div>
             </Wrapper>
             <WrapperSmall>
-                {poll.closingTime >= new Date() &&
+                {poll.closingTime >= now &&
                     !hasVoted &&
                     !showResults &&
                     ["Instant-Runoff", "Positional Voting"].includes(info.name) && (
                         <RankedVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                     )}
-                {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Score Voting" && (
+                {poll.closingTime >= now && !hasVoted && !showResults && info.name === "Score Voting" && (
                     <ScoreVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                 )}
-                {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Approval Voting" && (
+                {poll.closingTime >= now && !hasVoted && !showResults && info.name === "Approval Voting" && (
                     <ApprovalVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                 )}
-                {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Plurality Voting" && (
+                {poll.closingTime >= now && !hasVoted && !showResults && info.name === "Plurality Voting" && (
                     <PluralityVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                 )}
-                {(poll.closingTime < new Date() || hasVoted || showResults) && (
+                {(poll.closingTime < now || hasVoted || showResults) && (
                     <PollResults poll={poll} results={pollResults} />
                 )}
             </WrapperSmall>
