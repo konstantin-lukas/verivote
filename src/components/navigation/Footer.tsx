@@ -1,4 +1,7 @@
+import getConfig from "next/config";
 import Link from "next/link";
+
+const { publicRuntimeConfig } = getConfig();
 
 export default function Footer() {
     return (
@@ -8,6 +11,9 @@ export default function Footer() {
             </Link>
             <Link href="/privacy-policy" className="inline-link">
                 Privacy policy
+            </Link>
+            <Link href={process.env.NEXT_PUBLIC_REPO!} className="inline-link" target="_blank">
+                Version {publicRuntimeConfig?.version}
             </Link>
         </footer>
     );
