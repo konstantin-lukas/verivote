@@ -29,3 +29,13 @@ export function parseSchema(schema: ZodSchema, data: unknown) {
     if (!errors) return null;
     return [...new Set(errors)];
 }
+
+export function findLargestIndices(array: number[]) {
+    const maxValue = Math.max(...array);
+    return array.reduce((indices, value, index) => {
+        if (value === maxValue) {
+            indices.push(index);
+        }
+        return indices;
+    }, [] as number[]);
+}

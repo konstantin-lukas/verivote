@@ -1,6 +1,7 @@
 import { VotingMethod } from "@/enum/poll";
 import type { Poll, PollResult } from "@/types/poll";
 import type { Vote } from "@/types/vote";
+import { findLargestIndices } from "@/utils/shared";
 
 export function getPositionalResults(votes: Vote[], choiceCount: number) {
     const results = new Array<number>(choiceCount).fill(0);
@@ -104,9 +105,15 @@ export function getPollResults(poll: Poll): PollResult {
             results = getInstantRunoffResults(poll.votes, poll.options.length);
             break;
     }
+    let winners = findLargestIndices(results);
+    if (poll.winnerNeedsMajority) {
+        const maxPossiblePoints = results.reduce((acc, points) => acc + points, 0);
+        const maxAchievedPoints = results[winners[0]];
+        if (maxAchievedPoints <= maxPossiblePoints / 2) winners = [];
+    }
     return {
         voterCount: poll.votes.length,
-        winners: [],
+        winners,
         options: poll.options,
         results,
     };
