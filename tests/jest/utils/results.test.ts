@@ -1,7 +1,12 @@
 import { describe, expect, test } from "@jest/globals";
 
 import type { Vote } from "@/types/vote";
-import { getApprovalOrPluralityResults, getInstantRunoffResults, getScoreResults } from "@/utils/results";
+import {
+    getApprovalOrPluralityResults,
+    getInstantRunoffResults,
+    getPositionalResults,
+    getScoreResults,
+} from "@/utils/results";
 
 describe("utils/shared", () => {
     describe("getInstantRunoffResults", () => {
@@ -110,7 +115,7 @@ describe("utils/shared", () => {
             expect(getApprovalOrPluralityResults(votes as Vote[], choiceCount)).toStrictEqual(expected);
         });
     });
-    describe("getApprovalOrPluralityResults", () => {
+    describe("getScoreResults", () => {
         test.each([
             // NO VOTES
             {
@@ -143,6 +148,42 @@ describe("utils/shared", () => {
             },
         ])("should calculate score voting results correctly", ({ votes, choiceCount, expected }) => {
             expect(getScoreResults(votes as Vote[], choiceCount)).toStrictEqual(expected);
+        });
+    });
+    describe("getPositionalResults", () => {
+        test.each([
+            // NO VOTES
+            {
+                votes: [],
+                expected: [0, 0, 0, 0],
+                choiceCount: 4,
+            },
+            // SINGLE VOTE
+            {
+                votes: [{ selection: [1, 3, 2, 0] }],
+                expected: [1, 4, 2, 3],
+                choiceCount: 4,
+            },
+            // REGULAR VOTES
+            {
+                votes: [
+                    { selection: [1, 3, 2, 0] },
+                    { selection: [2, 1, 0, 3] },
+                    { selection: [1, 2, 0, 3] },
+                    { selection: [3, 2, 0, 1] },
+                    { selection: [0, 3, 1, 2] },
+                ],
+                expected: [11, 14, 13, 12],
+                choiceCount: 4,
+            },
+            // TIE
+            {
+                votes: [{ selection: [0, 1] }, { selection: [1, 0] }],
+                expected: [3, 3],
+                choiceCount: 2,
+            },
+        ])("should calculate positional voting results correctly", ({ votes, choiceCount, expected }) => {
+            expect(getPositionalResults(votes as Vote[], choiceCount)).toStrictEqual(expected);
         });
     });
 });
