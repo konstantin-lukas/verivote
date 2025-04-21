@@ -9,3 +9,11 @@ export function isValidRankedSelection(selection: number[]) {
     }
     return true;
 }
+
+export function isValidScoreSelection(selection: number[], expectedLength: number) {
+    if (selection.length !== expectedLength) return false;
+    for (const value of selection) {
+        if (value < 1 || value > 10) return false;
+    }
+    return true;
+}

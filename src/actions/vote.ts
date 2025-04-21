@@ -23,7 +23,7 @@ export async function createVote(pollId: string, selection: number[]): ActionRes
             schema = PluralityVoteCreateSchema;
             break;
         case VotingMethod.SCORE_VOTING:
-            schema = ScoreVoteCreateSchema;
+            schema = ScoreVoteCreateSchema(poll.options.length);
             break;
         case VotingMethod.APPROVAL_VOTING:
             schema = ApprovalVoteCreateSchema;

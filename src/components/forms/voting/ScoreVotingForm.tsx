@@ -1,22 +1,13 @@
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+import ErrorList from "@/components/alert/ErrorList";
+import Snackbar from "@/components/alert/Snackbar";
 import VoteButton from "@/components/interaction/VoteButton";
 import H3 from "@/components/typography/H3";
+import { SCORE_VOTING_COLOR_STEPS } from "@/const/poll";
+import useCreateVote from "@/hooks/actions/useCreateVote";
 import type { Poll } from "@/types/poll";
-
-const colorSteps = [
-    "#f43f5e",
-    "#f55752",
-    "#f76a46",
-    "#f88d3a",
-    "#f9b230",
-    "#f9d727",
-    "#d3e242",
-    "#a7e75d",
-    "#74eb7a",
-    "#12d4ae",
-];
 
 function PollOption({
     children,
@@ -53,7 +44,7 @@ function PollOption({
             <div>
                 <span
                     className="relative block size-10 rounded-full"
-                    style={{ backgroundColor: colorSteps[scores[idx] - 1] }}
+                    style={{ backgroundColor: SCORE_VOTING_COLOR_STEPS[scores[idx] - 1] }}
                 >
                     <span className="center-absolute font-bold text-white">{scores[idx]}</span>
                 </span>
@@ -62,11 +53,22 @@ function PollOption({
     );
 }
 
-export default function ScoreVotingForm({ poll }: { poll: Poll; setHasVoted: (v: boolean) => void }) {
+export default function ScoreVotingForm({
+    poll,
+    setSuccessMessage,
+}: {
+    poll: Poll;
+    setSuccessMessage: (v: string) => void;
+}) {
     const [scores, setScores] = useState(poll.options.map(() => 1));
     const [disabled] = useState(false);
+    const { pending, action, error, data } = useCreateVote(poll.id, scores);
+    const errorList = useMemo(() => error && <ErrorList errors={error} />, [error]);
+    useEffect(() => {
+        if (!pending && data) setSuccessMessage(data);
+    }, [pending, data, setSuccessMessage]);
     return (
-        <form method="POST" className="my-24">
+        <form action={action} className="my-24">
             <H3>Assign each choice a score</H3>
             <span>Adjust the sliders based on how much you like each choice</span>
             <ul className="mt-4">
@@ -77,6 +79,7 @@ export default function ScoreVotingForm({ poll }: { poll: Poll; setHasVoted: (v:
                 ))}
             </ul>
             <VoteButton disabled={disabled} />
+            <Snackbar message={errorList} />
         </form>
     );
 }

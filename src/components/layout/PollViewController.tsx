@@ -90,7 +90,7 @@ export default function PollViewController({
                         <RankedVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                     )}
                 {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Score Voting" && (
-                    <ScoreVotingForm poll={poll} setHasVoted={setHasVoted} />
+                    <ScoreVotingForm poll={poll} setSuccessMessage={setSuccessMessage} />
                 )}
                 {poll.closingTime >= new Date() && !hasVoted && !showResults && info.name === "Approval Voting" && (
                     <ApprovalVotingForm poll={poll} setHasVoted={setHasVoted} />
