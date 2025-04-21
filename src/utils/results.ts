@@ -14,6 +14,17 @@ export function getPositionalResults(votes: Vote[], choiceCount: number) {
     return results;
 }
 
+export function getApprovalResults(votes: Vote[], choiceCount: number) {
+    const results = new Array<number>(choiceCount).fill(0);
+    for (const vote of votes) {
+        for (const i of [...Array(choiceCount).keys()]) {
+            const choice = vote.selection[i];
+            results[choice]++;
+        }
+    }
+    return results;
+}
+
 export function getPollResults(poll: Poll): PollResult {
     let results;
     switch (poll.votingMethod) {
@@ -24,7 +35,7 @@ export function getPollResults(poll: Poll): PollResult {
             results = getPositionalResults(poll.votes, poll.options.length);
             break;
         case VotingMethod.APPROVAL_VOTING:
-            results = getPositionalResults(poll.votes, poll.options.length);
+            results = getApprovalResults(poll.votes, poll.options.length);
             break;
         case VotingMethod.POSITIONAL_VOTING:
             results = getPositionalResults(poll.votes, poll.options.length);
