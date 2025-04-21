@@ -275,7 +275,7 @@ export const VOTING_METHODS: VotingMethodDetails[] = [
         illustration: illustrationPlurality,
         illustrationAlt: "A woman casting a ballot at a polling station.",
         bestFor:
-            "Small groups (less than 10 people) when simplicity important and there likely is a favorite candidate.",
+            "Small groups (less than 10 people) when simplicity is important and there is likely a favorite candidate.",
         pros: [
             <li key={0}>
                 <b>Widely used and familiar:</b> Many people are familiar with this method, as it’s the standard system
