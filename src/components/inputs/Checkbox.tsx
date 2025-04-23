@@ -25,7 +25,9 @@ export default function Checkbox({
             style={{ cursor: disabled ? "wait" : "pointer" }}
             data-test-id={testId}
         >
-            <span className="mr-4">{label}</span>
+            <span className="mr-4" data-test-id={`${testId}-label`}>
+                {label}
+            </span>
             <input
                 ref={ref}
                 type="checkbox"

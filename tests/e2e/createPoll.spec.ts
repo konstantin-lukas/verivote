@@ -11,10 +11,6 @@ test.describe("create poll", () => {
         await createPage.goto();
     });
     test.describe("the create page", () => {
-        test.beforeEach(async ({ page }) => {
-            const createPage = new CreatePage(page);
-            await createPage.goto();
-        });
         test("should not contain any automatically detectable accessibility issues", async ({ page }) => {
             expect((await new AxeBuilder({ page }).analyze()).violations).toStrictEqual([]);
         });
@@ -65,6 +61,49 @@ test.describe("create poll", () => {
             await Promise.all(
                 [...Array(18).keys()].map(i => expect(createPage.locators.optionDeleteButtons[i]).not.toBeVisible()),
             );
+        });
+        test("should allow selecting whether the winner needs a majority (should be disabled by default)", async ({
+            page,
+        }) => {
+            const createPage = new CreatePage(page);
+            await expect(createPage.locators.majorityCheckboxLabel).toHaveText("Winner needs majority: no");
+            await createPage.locators.majorityCheckbox.click();
+            await expect(createPage.locators.majorityCheckboxLabel).toHaveText("Winner needs majority: yes");
+            await createPage.locators.majorityCheckbox.click();
+            await expect(createPage.locators.majorityCheckboxLabel).toHaveText("Winner needs majority: no");
+        });
+        test("should allow a closing date", async ({ page }) => {
+            const createPage = new CreatePage(page);
+            await createPage.locators.dateInput.click();
+            await expect(page.locator(".MuiPickersLayout-root")).toBeVisible();
+            await page.locator(".MuiPickersArrowSwitcher-nextIconButton").click();
+            await page
+                .locator(
+                    ".MuiDayCalendar-monthContainer:last-of-type .MuiDayCalendar-weekContainer:first-of-type button:first-of-type",
+                )
+                .click();
+            await page.locator("[aria-label='pick time']").click();
+            await page.locator("[aria-label='11 hours']").click({ force: true });
+            await page.locator("[aria-label='55 minutes']").click({ force: true });
+            await page.locator("[title='PM']").click();
+            await page.locator(".MuiDialogActions-root").getByText("OK").click();
+            const now = new Date();
+            const upcomingMonth = now.getMonth() + 1;
+            const monthNames = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+            ];
+            await expect(createPage.locators.dateInput).toHaveValue(`01 ${monthNames[upcomingMonth]} 2025, 23:55 PM`);
         });
     });
     //test.describe("the create poll workflow", () => {});

@@ -14,6 +14,7 @@ export default class CreatePage {
             nameInput: page.getByTestId("poll-name-input"),
             dateInput: page.getByTestId("poll-date-input"),
             majorityCheckbox: page.getByTestId("majority-checkbox"),
+            majorityCheckboxLabel: page.getByTestId("majority-checkbox-label"),
             submitButton: page.getByTestId("submit-create-poll-button"),
             addButton: page.getByTestId("add-poll-option-button"),
             optionInputs: [...Array(20).keys()].map(i => page.getByTestId(`poll-option-${i + 1}`)),

@@ -115,6 +115,7 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
             }}
             disabled={pending}
             style={{ marginTop: "1rem" }}
+            data-test-id="poll-date-input"
         />
     );
 
