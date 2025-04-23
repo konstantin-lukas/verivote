@@ -29,7 +29,7 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
     if (!isDesktop) return <MobileMenu />;
 
     const navigation = signedIn && (
-        <nav className="flex items-center">
+        <nav className="flex items-center" aria-label="Main site navigation">
             <ul className="flex">
                 <li className="leading-none">
                     <Link href="/account" className="inline-link mr-8">
@@ -64,7 +64,7 @@ export default function Header({ signedIn }: { signedIn: boolean }) {
     const themeToggle = <ThemeToggle className="mr-8 size-10" />;
 
     const verivoteLogo = (
-        <nav className="flex h-full items-center">
+        <nav className="flex h-full items-center" aria-label="Home navigation">
             <Link href="/" className="h-10">
                 <Logo className="h-full w-auto" alt="Navigate to home page" />
             </Link>

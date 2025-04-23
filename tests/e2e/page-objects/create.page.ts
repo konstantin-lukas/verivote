@@ -16,7 +16,8 @@ export default class CreatePage {
             majorityCheckbox: page.getByTestId("majority-checkbox"),
             submitButton: page.getByTestId("submit-create-poll-button"),
             addButton: page.getByTestId("add-poll-option-button"),
-            optionsInputs: [...Array(20).keys()].map(i => page.getByTestId(`poll-option-${i + 1}`)),
+            optionInputs: [...Array(20).keys()].map(i => page.getByTestId(`poll-option-${i + 1}`)),
+            optionDeleteButtons: [...Array(18).keys()].map(i => page.getByTestId(`delete-poll-option-${i + 3}`)),
         };
     }
     async goto() {

@@ -61,7 +61,7 @@ export default function MobileMenu() {
     );
 
     const navigation = (
-        <nav className="w-full">
+        <nav className="w-full" aria-label="Site navigation">
             <ul
                 className={`flex w-full flex-col items-center landscape:mx-auto landscape:mt-8 landscape:grid landscape:w-96 landscape:gap-6 ${buttonsClass}`}
             >

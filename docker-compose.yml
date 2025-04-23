@@ -1,16 +1,16 @@
 services:
-    frontend:
-        container_name: verivote-webserver
-        build:
-            dockerfile: Dockerfile
-        expose:
-            - "3000"
-        ports:
-            - "127.0.0.1:3000:3000"
-        restart: unless-stopped
-        depends_on:
-            database:
-                condition: service_started
+#    frontend:
+#        container_name: verivote-webserver
+#        build:
+#            dockerfile: Dockerfile
+#        expose:
+#            - "3000"
+#        ports:
+#            - "127.0.0.1:3000:3000"
+#        restart: unless-stopped
+#        depends_on:
+#            database:
+#                condition: service_started
 
     database:
         container_name: verivote-database

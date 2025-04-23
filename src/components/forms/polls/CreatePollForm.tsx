@@ -45,15 +45,15 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
         }
     }, [successMessage, errorMessages, pending]);
 
-    const options = state.options.map((o, i) => (
+    const options = state.options.map((option, i) => (
         <div key={i} className="relative mt-4">
             <Input
-                value={o}
+                value={option}
                 disabled={pending}
                 className="w-full"
                 name="options"
                 maxLength={MAX_POLL_OPTION_TITLE_LENGTH}
-                valid={!parseSchema(PollOptionSchema, o)}
+                valid={!parseSchema(PollOptionSchema, option)}
                 required={true}
                 onChange={value => dispatch({ type: "optionsChange", value, index: i })}
                 placeholder={`Option ${i + 1}`}
@@ -65,6 +65,8 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
                     onClick={() => dispatch({ type: "optionsDelete", index: i })}
                     disabled={pending}
                     type="button"
+                    aria-label={`Delete poll option ${i + 1}: ${option}`}
+                    data-test-id={`delete-poll-option-${i + 1}`}
                 >
                     <IoMdClose className="size-6 transition-colors group-hover:text-rose-500" />
                 </button>
