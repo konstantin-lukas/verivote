@@ -57,7 +57,10 @@ export default function PollViewController({
                 <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">
                     {poll.title}
                 </H1>
-                <h2 className="text-dark-font dark:text-light-font mb-2 text-lg font-bold uppercase sm:text-xl md:text-2xl">
+                <h2
+                    data-test-id="poll-type-heading"
+                    className="text-dark-font dark:text-light-font mb-2 text-lg font-bold uppercase sm:text-xl md:text-2xl"
+                >
                     {info.name}
                 </h2>
                 <span className="text-center text-neutral-500">
