@@ -10,7 +10,7 @@
         "lint:fix": "next lint --fix",
         "prettier": "prettier -c \"src/**/*.{ts,tsx}\" \"*{.mjs,json}\"",
         "prettier:fix": "prettier --write -c \"src/**/*.{ts,tsx}\" \"*{.mjs,json}\"",
-        "fixtures": "tsx fixtures.ts",
+        "fixtures": "sudo rm -rf database/data && tsx apply-fixtures.ts",
         "e2e-tests": "docker compose run --rm playwright npx playwright test --ui",
         "unit-tests": "jest"
     },

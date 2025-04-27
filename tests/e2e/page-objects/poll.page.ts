@@ -6,10 +6,13 @@ export default class PollPage {
     constructor(page: Page) {
         this.page = page;
         this.locators = {
+            h1: page.getByTestId("poll-title"),
             h2: page.getByTestId("poll-type-heading"),
+            shareButton: page.getByTestId("share-button"),
+            shareButtonMessage: page.getByTestId("share-button-message"),
         };
     }
     async goto(id: string) {
-        await this.page.goto(`/poll/${id}`);
+        await this.page.goto(`/poll/${id}`, { waitUntil: "networkidle" });
     }
 }

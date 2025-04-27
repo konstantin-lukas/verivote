@@ -27,7 +27,11 @@ export default defineConfig({
         { name: "setup", testMatch: "auth.setup.ts" },
         {
             name: "chromium",
-            use: { ...devices["Desktop Chrome"], storageState: "tests/playwright/.auth/user.json" },
+            use: {
+                ...devices["Desktop Chrome"],
+                storageState: "tests/playwright/.auth/user.json",
+                permissions: ["clipboard-read", "clipboard-write"],
+            },
             dependencies: ["setup"],
         },
 
@@ -45,7 +49,11 @@ export default defineConfig({
 
         {
             name: "Mobile Chrome",
-            use: { ...devices["Pixel 5"], storageState: "tests/playwright/.auth/user.json" },
+            use: {
+                ...devices["Pixel 5"],
+                storageState: "tests/playwright/.auth/user.json",
+                permissions: ["clipboard-read", "clipboard-write"],
+            },
             dependencies: ["setup"],
         },
 

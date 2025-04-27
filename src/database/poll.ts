@@ -6,14 +6,14 @@ import { tryCatch } from "@/utils/shared";
 
 export async function findPollById(id: string) {
     const polls = getPollCollection();
-    const { data, error } = await tryCatch(polls.findOne<Poll>({ _id: new ObjectId(id) }));
-    if (error) return null;
+    const { data, error } = await tryCatch((async () => polls.findOne<Poll>({ _id: new ObjectId(id) }))());
+    if (error || !data) return null;
     return makeBSONSerializable(data);
 }
 
 export async function deletePollByIdAndUserIdentifier(id: string, userIdentifier: string) {
     const polls = getPollCollection();
-    const { data, error } = await tryCatch(polls.deleteOne({ _id: new ObjectId(id), userIdentifier }));
+    const { data, error } = await tryCatch((async () => polls.deleteOne({ _id: new ObjectId(id), userIdentifier }))());
     return !error && data.deletedCount === 1;
 }
 

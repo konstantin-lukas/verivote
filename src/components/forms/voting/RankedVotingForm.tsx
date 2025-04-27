@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MdArrowDownward, MdArrowUpward, MdDragIndicator } from "react-icons/md";
 import { default as Sortable } from "sortablejs";
@@ -18,7 +17,7 @@ function PollOption({
     setOptions,
     disabled,
 }: {
-    children: ReactNode;
+    children: string;
     id: string;
     sortable?: Sortable;
     options: string[];
@@ -40,6 +39,7 @@ function PollOption({
                 <button
                     type="button"
                     disabled={disabled}
+                    aria-label={`Move option labeled "${children}" up one spot`}
                     className="shadow-3d hover:enabled:shadow-3d-both dark:shadow-dark-3d dark:hover:enabled:shadow-dark-3d-both group relative size-8 rounded-full transition-shadow"
                     onClick={() => {
                         if (!sortable) return;
@@ -58,6 +58,7 @@ function PollOption({
                 <button
                     type="button"
                     disabled={disabled}
+                    aria-label={`Move option labeled "${children}" up down spot`}
                     className="shadow-3d hover:enabled:shadow-3d-both dark:shadow-dark-3d dark:hover:enabled:shadow-dark-3d-both group relative size-8 rounded-full transition-shadow"
                     onClick={() => {
                         if (!sortable) return;

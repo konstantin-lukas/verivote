@@ -23,7 +23,7 @@ export default class CreatePage {
         };
     }
     async goto() {
-        await this.page.goto("/create");
+        await this.page.goto("/create", { waitUntil: "networkidle" });
     }
     async selectMethod(votingMethod: VotingMethod) {
         await this.locators.methodSelect.click();

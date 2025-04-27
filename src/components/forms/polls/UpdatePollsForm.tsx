@@ -23,16 +23,18 @@ function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () =
     return (
         <div className="flex flex-col justify-between">
             <div>
-                <H2>{poll.title}</H2>
+                <div className="max-h-26 sm:max-h-29 after:bg-linear-0 sm:after:top-18 relative overflow-hidden after:absolute after:left-0 after:top-16 after:h-8 after:w-full after:from-neutral-100 after:to-neutral-100/50 after:content-[''] sm:after:h-10">
+                    <H2>{poll.title}</H2>
+                </div>
                 <span className="mb-2 block text-xl font-bold uppercase">{info?.name}</span>
-                <p>
+                <p className="line-clamp-2">
                     <b>Options:</b> {poll.options.join(", ")}
                 </p>
-            </div>
-            <div>
                 <span>
                     <b>Closing date:</b> {format(poll.closingTime, LONG_DATE_FORMAT)}
                 </span>
+            </div>
+            <div>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
                     <BlockLink href={`/poll/${poll.id}`} className="mt-6 flex grow justify-center">
                         <LuEye className="mr-1 inline translate-y-[-0.1em]" />

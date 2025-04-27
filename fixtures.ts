@@ -1,59 +1,8 @@
-import { addDays } from "date-fns";
-import * as dotenv from "dotenv";
-import { MongoClient } from "mongodb";
-
 import { VotingMethod } from "@/enum/poll";
 
-dotenv.config({ path: ".env", override: true });
-
-function getRandomVotingMethod() {
-    const enumValues = Object.values(VotingMethod).filter(value => typeof value === "number");
-    const randomIndex = Math.floor(Math.random() * enumValues.length);
-    return enumValues[randomIndex];
-}
-
-function getRandomVotes(votingMethod: VotingMethod, optionCount: number) {
-    const voteCount = Math.floor(Math.random() * 30);
-    const votes = [];
-    for (let i = 0; i < voteCount; i++) {
-        let selection = [];
-        switch (votingMethod) {
-            case VotingMethod.APPROVAL_VOTING:
-                for (const i of [...Array(optionCount).keys()]) {
-                    if (Math.random() < 0.25) {
-                        selection.push(i);
-                    }
-                }
-                break;
-            case VotingMethod.PLURALITY_VOTING:
-                selection.push(Math.floor(Math.random() * optionCount));
-                break;
-            case VotingMethod.SCORE_VOTING:
-                for (let j = 0; j < optionCount; j++) {
-                    selection.push(Math.floor(Math.random() * 10) + 1);
-                }
-                break;
-            case VotingMethod.POSITIONAL_VOTING:
-            case VotingMethod.INSTANT_RUNOFF_VOTING:
-                selection = [...Array(optionCount).keys()].sort(() => 0.5 - Math.random());
-                break;
-        }
-        votes.push({ ip: `::ffff:127.0.0.${i + 2}`, selection });
-    }
-    return votes;
-}
-
-const username = encodeURIComponent(process.env.MONGODB_USER!);
-const password = encodeURIComponent(process.env.MONGODB_PASSWORD!);
-const connection = encodeURIComponent(process.env.MONGODB_DATABASE!);
-const uri = `mongodb://${username}:${password}@${process.env.MONGODB_URI!}/${connection}?authMechanism=DEFAULT`;
-const client = new MongoClient(uri);
-
-const db = client.db("verivote");
-const polls = db.collection("polls");
-
-const pollFixtures = [
+export const POLL_FIXTURES = [
     {
+        id: "a3f9b7c2e4d8a1f5c9b60213",
         title: "What should we have for dinner?",
         options: [
             "Spaghetti",
@@ -77,12 +26,18 @@ const pollFixtures = [
             "Ceviche",
             "Chicken Tikka Masala",
         ],
+        winnerNeedsMajority: false,
+        votingMethod: VotingMethod.INSTANT_RUNOFF_VOTING,
     },
     {
+        id: "5f27d8c4a9b13e07c6d4a293",
         title: "Where should we go for vacation?",
         options: ["Beach", "Mountains", "City", "Countryside", "Desert"],
+        winnerNeedsMajority: true,
+        votingMethod: VotingMethod.INSTANT_RUNOFF_VOTING,
     },
     {
+        id: "c49a2e6f3d7b9a0e58f2c1a3",
         title: "Which game should we play?",
         options: [
             "I'm on Observation Duty 1-7",
@@ -93,57 +48,64 @@ const pollFixtures = [
             "Amogus",
             "Scribble",
         ],
+        winnerNeedsMajority: false,
+        votingMethod: VotingMethod.APPROVAL_VOTING,
     },
     {
+        id: "e78c3f129ab456de9c204a78",
         title: "Which movie should we watch this weekend?",
         options: ["Inception", "The Matrix", "Interstellar", "Parasite", "The Grand Budapest Hotel"],
+        winnerNeedsMajority: true,
+        votingMethod: VotingMethod.APPROVAL_VOTING,
     },
     {
+        id: "0d3f1c9a87b2e4d05c39f1ae",
         title: "What genre of music should we play at the party?",
         options: ["Pop", "Rock", "Jazz", "Hip Hop", "Classical"],
+        winnerNeedsMajority: false,
+        votingMethod: VotingMethod.SCORE_VOTING,
     },
     {
+        id: "9f13b7a5d60c2e8b374da0fc",
         title: "Which sport should we play this weekend?",
         options: ["Soccer", "Basketball", "Tennis", "Volleyball", "Cricket"],
+        winnerNeedsMajority: true,
+        votingMethod: VotingMethod.SCORE_VOTING,
     },
     {
+        id: "3ae7d902b1c4f85e2a97c013",
         title: "Which book should we read next in the book club?",
         options: ["1984", "To Kill a Mockingbird", "The Great Gatsby", "Pride and Prejudice", "Moby Dick"],
+        winnerNeedsMajority: false,
+        votingMethod: VotingMethod.POSITIONAL_VOTING,
     },
     {
+        id: "b2d5a6f9037c48ea1f60d389",
         title: "What type of cuisine should we try next?",
         options: ["Italian", "Chinese", "Indian", "Mexican", "Greek"],
+        winnerNeedsMajority: true,
+        votingMethod: VotingMethod.POSITIONAL_VOTING,
     },
     {
+        id: "8ec1b2d4f037a9c8e75b0193",
         title: "Which video game should we play for the tournament?",
         options: ["FIFA", "Call of Duty", "Fortnite", "Minecraft", "Mario Kart"],
+        winnerNeedsMajority: false,
+        votingMethod: VotingMethod.PLURALITY_VOTING,
     },
     {
+        id: "7f42c9e18d3b0a67b25cf0a2",
         title: "What should be the theme for our next event?",
         options: ["80s Retro", "Masquerade", "Beach Party", "Halloween", "Formal Gala"],
+        winnerNeedsMajority: true,
+        votingMethod: VotingMethod.PLURALITY_VOTING,
     },
+    // MEANT TO BE DELETED TO TEST BEHAVIOR OF DELETED IDS
     {
+        id: "2e93b7d10f58c4a6e7d20b9f",
         title: "What kind of workout should we try together?",
         options: ["Yoga", "HIIT", "Pilates", "Running", "Cycling"],
+        winnerNeedsMajority: false,
+        votingMethod: VotingMethod.PLURALITY_VOTING,
     },
 ];
-
-(async () => {
-    await polls.deleteMany({});
-    await polls.insertMany(
-        pollFixtures.map(fixture => {
-            const votingMethod = getRandomVotingMethod();
-            return {
-                creationTime: new Date(),
-                closingTime: addDays(new Date(), Math.floor(Math.random() * 10) + 1),
-                title: fixture.title,
-                options: fixture.options,
-                userIdentifier: process.env.FIXTURE_USER_IDENTIFIER,
-                winnerNeedsMajority: Math.random() < 0.5,
-                votes: getRandomVotes(votingMethod, fixture.options.length),
-                votingMethod,
-            };
-        }),
-    );
-    await client.close();
-})();

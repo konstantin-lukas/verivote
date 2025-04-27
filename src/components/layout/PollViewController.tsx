@@ -50,11 +50,15 @@ export default function PollViewController({
     }, [hasVoted, poll.id]);
 
     const now = new Date();
+    const [formattedDate, setFormattedDate] = useState<string | null>(null);
+    useEffect(() => {
+        setFormattedDate(format(poll.closingTime, LONG_DATE_FORMAT));
+    }, [poll.closingTime]);
 
     return (
         <>
             <Wrapper className="flex flex-col items-center">
-                <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center">
+                <H1 customSizes="text-2xl sm:text-3xl md:text-4xl" className="text-center" data-test-id="poll-title">
                     {poll.title}
                 </H1>
                 <h2
@@ -63,12 +67,16 @@ export default function PollViewController({
                 >
                     {info.name}
                 </h2>
-                <span className="text-center text-neutral-500">
-                    {poll.closingTime >= now ? "Closing time" : "This poll ended on"}:{" "}
-                    {format(poll.closingTime, LONG_DATE_FORMAT)}
+                <span className="animate-fade-in text-center text-neutral-600 dark:text-neutral-400">
+                    {formattedDate && (poll.closingTime >= now ? "Closing time: " : "This poll ended on: ")}
+                    {!formattedDate && <br />}
+                    {formattedDate}
                 </span>
                 <div className="mt-6 flex flex-wrap justify-center gap-6">
-                    <ShareButton url={`${process.env.NEXT_PUBLIC_ORIGIN}/poll/${poll.id}`} />
+                    <ShareButton
+                        url={`${process.env.NEXT_PUBLIC_ORIGIN}/poll/${poll.id}`}
+                        data-test-id="share-button"
+                    />
                     {poll.closingTime >= now && !showResults && !hasVoted && (
                         <BlockButton className="flex items-center justify-center" onClick={() => setShowResults(true)}>
                             <LuChartPie className="mr-1 inline-block size-4 translate-y-[-.1rem]" />
