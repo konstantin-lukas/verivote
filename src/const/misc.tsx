@@ -87,7 +87,7 @@ export const VOTING_METHODS: VotingMethodDetails[] = [
         shorthand: "pos",
         illustration: illustrationPositional,
         illustrationAlt: "A man ranking choices on a screen.",
-        bestFor: "Medium-sized polls (5-20 people) with multiple ch1oices, where detailed preferences matter.",
+        bestFor: "Medium-sized polls (5-20 people) with multiple choices, where detailed preferences matter.",
         pros: [
             <li key={0}>
                 <b>Reflects detailed preferences:</b> It captures not only the voters&#39; top choice but also their
