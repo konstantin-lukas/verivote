@@ -28,6 +28,8 @@ export const POLL_FIXTURES = [
         ],
         winnerNeedsMajority: false,
         votingMethod: VotingMethod.INSTANT_RUNOFF_VOTING,
+        hasLocalhostVoted: false,
+        voteCount: 0,
     },
     {
         id: "5f27d8c4a9b13e07c6d4a293",
@@ -35,6 +37,8 @@ export const POLL_FIXTURES = [
         options: ["Beach", "Mountains", "City", "Countryside", "Desert"],
         winnerNeedsMajority: true,
         votingMethod: VotingMethod.INSTANT_RUNOFF_VOTING,
+        hasLocalhostVoted: true,
+        voteCount: 12,
     },
     {
         id: "c49a2e6f3d7b9a0e58f2c1a3",
@@ -50,6 +54,8 @@ export const POLL_FIXTURES = [
         ],
         winnerNeedsMajority: false,
         votingMethod: VotingMethod.APPROVAL_VOTING,
+        hasLocalhostVoted: true,
+        voteCount: 10,
     },
     {
         id: "e78c3f129ab456de9c204a78",
@@ -57,6 +63,8 @@ export const POLL_FIXTURES = [
         options: ["Inception", "The Matrix", "Interstellar", "Parasite", "The Grand Budapest Hotel"],
         winnerNeedsMajority: true,
         votingMethod: VotingMethod.APPROVAL_VOTING,
+        hasLocalhostVoted: false,
+        voteCount: 0,
     },
     {
         id: "0d3f1c9a87b2e4d05c39f1ae",
@@ -64,6 +72,8 @@ export const POLL_FIXTURES = [
         options: ["Pop", "Rock", "Jazz", "Hip Hop", "Classical"],
         winnerNeedsMajority: false,
         votingMethod: VotingMethod.SCORE_VOTING,
+        hasLocalhostVoted: true,
+        voteCount: 19,
     },
     {
         id: "9f13b7a5d60c2e8b374da0fc",
@@ -71,6 +81,8 @@ export const POLL_FIXTURES = [
         options: ["Soccer", "Basketball", "Tennis", "Volleyball", "Cricket"],
         winnerNeedsMajority: true,
         votingMethod: VotingMethod.SCORE_VOTING,
+        hasLocalhostVoted: false,
+        voteCount: 4,
     },
     {
         id: "3ae7d902b1c4f85e2a97c013",
@@ -78,6 +90,8 @@ export const POLL_FIXTURES = [
         options: ["1984", "To Kill a Mockingbird", "The Great Gatsby", "Pride and Prejudice", "Moby Dick"],
         winnerNeedsMajority: false,
         votingMethod: VotingMethod.POSITIONAL_VOTING,
+        hasLocalhostVoted: true,
+        voteCount: 5,
     },
     {
         id: "b2d5a6f9037c48ea1f60d389",
@@ -85,6 +99,8 @@ export const POLL_FIXTURES = [
         options: ["Italian", "Chinese", "Indian", "Mexican", "Greek"],
         winnerNeedsMajority: true,
         votingMethod: VotingMethod.POSITIONAL_VOTING,
+        hasLocalhostVoted: false,
+        voteCount: 29,
     },
     {
         id: "8ec1b2d4f037a9c8e75b0193",
@@ -92,6 +108,8 @@ export const POLL_FIXTURES = [
         options: ["FIFA", "Call of Duty", "Fortnite", "Minecraft", "Mario Kart"],
         winnerNeedsMajority: false,
         votingMethod: VotingMethod.PLURALITY_VOTING,
+        hasLocalhostVoted: true,
+        voteCount: 55,
     },
     {
         id: "7f42c9e18d3b0a67b25cf0a2",
@@ -99,6 +117,8 @@ export const POLL_FIXTURES = [
         options: ["80s Retro", "Masquerade", "Beach Party", "Halloween", "Formal Gala"],
         winnerNeedsMajority: true,
         votingMethod: VotingMethod.PLURALITY_VOTING,
+        hasLocalhostVoted: false,
+        voteCount: 12,
     },
     // MEANT TO BE DELETED TO TEST BEHAVIOR OF DELETED IDS
     {
@@ -107,5 +127,7 @@ export const POLL_FIXTURES = [
         options: ["Yoga", "HIIT", "Pilates", "Running", "Cycling"],
         winnerNeedsMajority: false,
         votingMethod: VotingMethod.PLURALITY_VOTING,
+        hasLocalhostVoted: false,
+        voteCount: 21,
     },
 ];

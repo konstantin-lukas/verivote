@@ -9,8 +9,12 @@ import { POLL_FIXTURES } from "./fixtures";
 
 dotenv.config({ path: ".env", override: true });
 
-function getRandomVotes(votingMethod: VotingMethod, optionCount: number) {
-    const voteCount = Math.floor(Math.random() * 30);
+function getRandomVotes(
+    votingMethod: VotingMethod,
+    optionCount: number,
+    voteCount: number,
+    hasLocalhostVoted: boolean,
+) {
     const votes = [];
     for (let i = 0; i < voteCount; i++) {
         let selection = [];
@@ -35,7 +39,7 @@ function getRandomVotes(votingMethod: VotingMethod, optionCount: number) {
                 selection = [...Array(optionCount).keys()].sort(() => 0.5 - Math.random());
                 break;
         }
-        votes.push({ ip: `::ffff:127.0.0.${i + 2}`, selection });
+        votes.push({ ip: `127.0.0.${i + (hasLocalhostVoted ? 1 : 2)}`, selection });
     }
     return votes;
 }
@@ -60,7 +64,12 @@ const polls = db.collection("polls");
                 options: fixture.options,
                 userIdentifier: process.env.FIXTURE_USER_IDENTIFIER,
                 winnerNeedsMajority: fixture.winnerNeedsMajority,
-                votes: getRandomVotes(fixture.votingMethod, fixture.options.length),
+                votes: getRandomVotes(
+                    fixture.votingMethod,
+                    fixture.options.length,
+                    fixture.voteCount,
+                    fixture.hasLocalhostVoted,
+                ),
                 votingMethod: fixture.votingMethod,
             };
         }),

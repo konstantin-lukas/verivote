@@ -44,6 +44,15 @@ export async function getIpAddress() {
             }
         }
     }
+
+    if (ip && ip.startsWith("::ffff:")) {
+        ip = ip.replace("::ffff:", "");
+    }
+
+    if (ip === "::1") {
+        ip = "127.0.0.1";
+    }
+
     return ip;
 }
 

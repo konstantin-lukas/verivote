@@ -86,7 +86,7 @@ export default function PollResults({ poll, results }: { poll: Poll; results: Po
     const pollResults = (
         <>
             <div className="relative h-[20dvw] max-h-[50dvh] min-h-48 w-full">
-                <canvas ref={chartRef} aria-label="Poll result bar chart" role="img">
+                <canvas ref={chartRef} aria-label="Poll result bar chart" role="img" data-test-id="poll-result-chart">
                     <ul>
                         {results.options.map((x, i) => (
                             <li key={i}>

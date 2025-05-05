@@ -10,6 +10,7 @@ export default class PollPage {
             h2: page.getByTestId("poll-type-heading"),
             shareButton: page.getByTestId("share-button"),
             shareButtonMessage: page.getByTestId("share-button-message"),
+            canvas: page.getByTestId("poll-result-chart"),
         };
     }
     async goto(id: string) {
