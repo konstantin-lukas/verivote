@@ -79,7 +79,7 @@ export default function PollResults({ poll, results }: { poll: Poll; results: Po
     const noVotes = (
         <div className="my-24 flex flex-col items-center">
             <H2>Waiting for the first vote</H2>
-            <Image src={illustration} alt="Two empty clipboards" priority className="mt-8 h-auto w-1/2 max-w-60" />
+            <Image src={illustration} alt="" draggable={false} priority className="mt-8 h-auto w-1/2 max-w-60" />
         </div>
     );
 
