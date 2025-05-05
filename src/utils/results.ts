@@ -105,7 +105,7 @@ export function getPollResults(poll: Poll): PollResult {
             results = getInstantRunoffResults(poll.votes, poll.options.length);
             break;
     }
-    let winners = findLargestIndices(results);
+    let winners = poll.votes.length > 0 ? findLargestIndices(results) : [];
     if (poll.winnerNeedsMajority) {
         const maxPossiblePoints = results.reduce((acc, points) => acc + points, 0);
         const maxAchievedPoints = results[winners[0]];

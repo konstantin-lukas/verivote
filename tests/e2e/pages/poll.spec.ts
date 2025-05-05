@@ -38,5 +38,11 @@ test.describe("the poll page", () => {
             await expect(pollPage.locators.canvas.getByText(/^Countryside:/)).toHaveCount(1);
             await expect(pollPage.locators.canvas.getByText(/^Desert:/)).toHaveCount(1);
         });
+        test("should not declare a winner when there are no votes", async ({ page }) => {
+            const pollPage = new PollPage(page);
+            await pollPage.goto("a3f9b7c2e4d8a1f5c9b60213");
+            await pollPage.locators.resultsButton.click();
+            await expect(pollPage.locators.winners).toHaveText("None");
+        });
     });
 });

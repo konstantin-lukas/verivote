@@ -78,7 +78,11 @@ export default function PollViewController({
                         data-test-id="share-button"
                     />
                     {poll.closingTime >= now && !showResults && !hasVoted && (
-                        <BlockButton className="flex items-center justify-center" onClick={() => setShowResults(true)}>
+                        <BlockButton
+                            className="flex items-center justify-center"
+                            onClick={() => setShowResults(true)}
+                            data-test-id="see-results-button"
+                        >
                             <LuChartPie className="mr-1 inline-block size-4 translate-y-[-.1rem]" />
                             <span>See results</span>
                         </BlockButton>

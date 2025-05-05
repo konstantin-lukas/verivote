@@ -11,6 +11,8 @@ export default class PollPage {
             shareButton: page.getByTestId("share-button"),
             shareButtonMessage: page.getByTestId("share-button-message"),
             canvas: page.getByTestId("poll-result-chart"),
+            winners: page.getByTestId("winners"),
+            resultsButton: page.getByTestId("see-results-button"),
         };
     }
     async goto(id: string) {

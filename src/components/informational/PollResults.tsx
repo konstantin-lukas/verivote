@@ -114,7 +114,7 @@ export default function PollResults({ poll, results }: { poll: Poll; results: Po
                 <span className="font-bold uppercase after:mr-1 after:content-[':'] sm:after:content-none">
                     Winner{results.winners.length !== 1 && "s"}
                 </span>
-                <span className="break-words text-center sm:w-full">
+                <span className="break-words text-center sm:w-full" data-test-id="winners">
                     {results.winners.length === 0 ? "None" : results.winners.map(x => results.options[x]).join(", ")}
                 </span>
             </div>
