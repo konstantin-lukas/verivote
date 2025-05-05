@@ -40,7 +40,7 @@ export default async function Page() {
 
     const votingMethodsOverview = (
         <Wrapper>
-            <div className="py-32" id="anchor">
+            <div className="pb-32 pt-48" id="anchor">
                 <div className="grid grid-cols-1 gap-x-16 gap-y-24 md:grid-cols-2 xl:grid-cols-3">
                     {VOTING_METHODS.map(method => (
                         <Card votingMethod={method} key={method.name} />
