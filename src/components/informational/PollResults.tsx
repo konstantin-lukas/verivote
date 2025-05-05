@@ -60,8 +60,8 @@ export default function PollResults({ poll, results }: { poll: Poll; results: Po
                                     const index = i as number;
                                     const label = results.options[index];
                                     const maxLength = 10 + index;
-                                    if ((i as number) > 2 || label.length < maxLength) return label;
-                                    return `${label.slice(0, maxLength).trim()}...`;
+                                    if ((i as number) > 2 || label.length <= maxLength) return label;
+                                    return `${label.slice(0, maxLength).trim()}…`;
                                 },
                             },
                             grid: {
