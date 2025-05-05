@@ -6,7 +6,7 @@ import WrapperSmall from "@/components/layout/WrapperSmall";
 import BlockLink from "@/components/navigation/BlockLink";
 import H3 from "@/components/typography/H3";
 import { VOTING_METHODS } from "@/const/misc";
-import { findPollById } from "@/database/poll";
+import { findPollById, hasIpVotedOnPoll } from "@/database/poll";
 import { getPollResults } from "@/utils/results";
 import { getIpAddress } from "@/utils/server";
 
@@ -27,12 +27,11 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     const { id } = await params;
     const ip = await getIpAddress();
     if (!ip) notFound();
-    const poll = await findPollById(id);
+    const [poll, hasVoted] = await Promise.all([findPollById(id), hasIpVotedOnPoll(id, ip)]);
     if (!poll) notFound();
     const matchingInfo = VOTING_METHODS.find(x => x.dbId === poll.votingMethod);
     if (!matchingInfo) notFound();
 
-    const hasVoted = poll.votes.some(vote => vote.ip === ip);
     const results = getPollResults(poll);
 
     return (

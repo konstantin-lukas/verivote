@@ -6,9 +6,23 @@ import { tryCatch } from "@/utils/shared";
 
 export async function findPollById(id: string) {
     const polls = getPollCollection();
-    const { data, error } = await tryCatch((async () => polls.findOne<Poll>({ _id: new ObjectId(id) }))());
+    const { data, error } = await tryCatch(
+        (async () =>
+            polls.findOne<Poll>(
+                { _id: new ObjectId(id) },
+                { projection: { userIdentifier: false, votes: { ip: false } } },
+            ))(),
+    );
     if (error || !data) return null;
     return makeBSONSerializable(data);
+}
+
+export async function hasIpVotedOnPoll(pollId: string, ip: string) {
+    const polls = getPollCollection();
+    const { data, error } = await tryCatch(
+        (async () => polls.countDocuments({ _id: new ObjectId(pollId), votes: { $elemMatch: { ip } } }))(),
+    );
+    return !!(error || data > 0);
 }
 
 export async function deletePollByIdAndUserIdentifier(id: string, userIdentifier: string) {
@@ -19,7 +33,9 @@ export async function deletePollByIdAndUserIdentifier(id: string, userIdentifier
 
 export async function findPollsByUserIdentifier(userIdentifier: string) {
     const polls = getPollCollection();
-    const { data, error } = await tryCatch(polls.find<Poll>({ userIdentifier }).toArray());
+    const { data, error } = await tryCatch(
+        polls.find<Poll>({ userIdentifier }, { projection: { userIdentifier: false, votes: { ip: false } } }).toArray(),
+    );
     if (error) return [];
     return data.map(datum => makeBSONSerializable(datum));
 }
