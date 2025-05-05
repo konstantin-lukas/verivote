@@ -15,6 +15,8 @@ test.describe("the poll page", () => {
             await expect(page.locator("h1")).toHaveText("Page not found");
             await page.goto("/poll");
             await expect(page.locator("h1")).toHaveText("Page not found");
+            await page.goto("/poll/2e93b7d10f58c4a6e7d20b9f");
+            await expect(page.locator("h1")).toHaveText("Page not found");
         });
         test("should allow copying the page url", async ({ page, browserName }) => {
             const pollPage = new PollPage(page);
