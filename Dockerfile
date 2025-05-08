@@ -22,8 +22,6 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN if [ "$APP_ENV" = "test" ]; then tsx apply-fixtures.tsx; fi
-
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
