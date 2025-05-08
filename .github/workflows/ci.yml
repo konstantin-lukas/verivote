@@ -5,6 +5,28 @@ on:
     branches: [main]
 
 jobs:
+  install-deps:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.npm-cache.outputs.cache-hit }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cache node_modules
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
   code-quality:
     runs-on: ubuntu-latest
 
@@ -17,8 +39,12 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Restore node_modules cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Run Prettier Check
         run: npm run prettier
@@ -28,6 +54,7 @@ jobs:
 
       - name: Unit Tests
         run: npm run unit-tests
+
   e2e-tests:
     runs-on: ubuntu-latest
     steps:
@@ -42,8 +69,12 @@ jobs:
       - name: Start Containers
         run: docker compose -f compose.test.yml up -d
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Restore node_modules cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Apply fixtures
         run: npx tsx apply-fixtures.ts
