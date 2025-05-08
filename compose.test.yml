@@ -50,13 +50,10 @@ services:
         volumes:
             - .:/tests/e2e
         working_dir: /tests/e2e
-        environment:
-            - DISPLAY=${DISPLAY}
-            - TZ=UTC
-        network_mode: "host"
-        depends_on: [ ]
-        ipc: host
-        privileged: true
-        devices:
-            - /dev/dri
-        shm_size: 1gb
+        depends_on:
+            webserver:
+                condition: service_started
+            keycloak:
+                condition: service_started
+            database:
+                condition: service_started
