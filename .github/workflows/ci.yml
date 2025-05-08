@@ -5,30 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  install-deps:
-    runs-on: ubuntu-latest
-    outputs:
-      cache-hit: ${{ steps.npm-cache.outputs.cache-hit }}
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Cache node_modules
-        id: npm-cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install dependencies
-        run: npm ci
-
   code-quality:
-    needs: install-deps
     runs-on: ubuntu-latest
 
     steps:
@@ -40,29 +17,18 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Run Prettier Check
         run: npm run prettier
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Run Eslint Check
         run: npm run lint
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Unit Tests
         run: npm run unit-tests
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
   e2e-tests:
-    needs: install-deps
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -76,12 +42,11 @@ jobs:
       - name: Start Containers
         run: docker compose -f compose.test.yml up -d
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Apply fixtures
         run: tsx apply-fixtures.ts
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Run end-to-end tests
         run: docker compose -f compose.test.yml run --rm playwright npx playwright test
