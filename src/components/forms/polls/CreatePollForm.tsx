@@ -8,10 +8,10 @@ import { IoAddSharp } from "react-icons/io5";
 
 import ErrorList from "@/components/alert/ErrorList";
 import Modal from "@/components/alert/Modal";
-import Checkbox from "@/components/inputs/Checkbox";
 import DateTimePicker from "@/components/inputs/DateTimePicker";
 import Dropdown from "@/components/inputs/Dropdown";
 import Input from "@/components/inputs/Input";
+import Switch from "@/components/inputs/Switch";
 import BlockButton from "@/components/interaction/BlockButton";
 import { VOTING_METHODS } from "@/const/misc";
 import { MAX_POLL_OPTION_TITLE_LENGTH, MAX_POLL_OPTIONS, MAX_POLL_TITLE_LENGTH } from "@/const/poll";
@@ -120,7 +120,7 @@ export default function CreatePollForm({ defaultMethod }: { defaultMethod?: numb
     );
 
     const needsMajorityCheckbox = (
-        <Checkbox
+        <Switch
             onChange={e => dispatch({ type: "majority", value: e.target.checked })}
             checked={state.winnerNeedsMajority}
             label={`Winner needs majority: ${state.winnerNeedsMajority ? "yes" : "no"}`}

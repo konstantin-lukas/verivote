@@ -3,7 +3,7 @@
 import type { ChangeEventHandler } from "react";
 import { useRef } from "react";
 
-export default function Checkbox({
+export default function Switch({
     onChange,
     checked,
     label,
