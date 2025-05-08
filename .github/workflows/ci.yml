@@ -42,8 +42,5 @@ jobs:
       - name: Start Containers
         run: docker compose -f compose.test.yml up -d
 
-      - name: Apply fixtures
-        run: npx tsx apply-fixtures.ts
-
       - name: Run end-to-end tests
         run: docker compose -f compose.test.yml run --rm playwright npx playwright test
