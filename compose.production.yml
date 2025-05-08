@@ -1,0 +1,32 @@
+services:
+    webserver:
+        container_name: verivote-webserver
+        build:
+            args:
+                APP_ENV: "production"
+            dockerfile: Dockerfile
+        expose:
+            - "3000"
+        ports:
+            - "127.0.0.1:3000:3000"
+        restart: unless-stopped
+        depends_on:
+            database:
+                condition: service_started
+
+    database:
+        container_name: verivote-database
+        build:
+            dockerfile: ./database/Dockerfile
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+        expose:
+            - "27017"
+        ports:
+            - "127.0.0.1:3003:27017"
+        restart: unless-stopped
+        volumes:
+            - ./database/init.d:/docker-entrypoint-initdb.d:ro
+            - ./database/data/db:/data/db
+            - ./database/data/log:/var/log/mongodb
