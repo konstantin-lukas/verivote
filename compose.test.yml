@@ -46,7 +46,6 @@ services:
     playwright:
         image: mcr.microsoft.com/playwright:v1.52.0-noble
         container_name: verivote-playwright
-        entrypoint: [ "npx", "playwright", "test" ]
         volumes:
             - .:/tests/e2e
         working_dir: /tests/e2e
