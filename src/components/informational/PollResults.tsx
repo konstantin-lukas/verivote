@@ -6,7 +6,7 @@ import colors from "tailwindcss/colors";
 
 import H2 from "@/components/typography/H2";
 import { CHART_COLORS, CHART_HOVER_COLORS, CHART_PLUGINS } from "@/const/chart";
-import illustration from "@/public/undraw_no_data_re_kwbl.svg";
+import illustration from "@/static/undraw_no_data_re_kwbl.svg";
 import type { Poll, PollResult } from "@/types/poll";
 
 Chart.defaults.font.size = 16;

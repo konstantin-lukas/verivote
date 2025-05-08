@@ -4,8 +4,8 @@ import { useHasMounted } from "anzol";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
-import logo from "@/public/verivote_logo.svg";
-import logoDark from "@/public/verivote_logo_dark.svg";
+import logo from "@/static/verivote_logo.svg";
+import logoDark from "@/static/verivote_logo_dark.svg";
 
 export default function Logo({ className, alt }: { className?: string; alt: string }) {
     const mounted = useHasMounted();

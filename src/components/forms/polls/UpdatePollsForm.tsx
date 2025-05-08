@@ -15,7 +15,7 @@ import H2 from "@/components/typography/H2";
 import { LONG_DATE_FORMAT } from "@/const/date";
 import { VOTING_METHODS } from "@/const/misc";
 import useDeletePoll from "@/hooks/actions/useDeletePoll";
-import illustration from "@/public/undraw_the_search_s0xf.svg";
+import illustration from "@/static/undraw_the_search_s0xf.svg";
 import type { Poll } from "@/types/poll";
 
 function PollCard({ poll, setModalContent }: { poll: Poll; setModalContent: () => void }) {

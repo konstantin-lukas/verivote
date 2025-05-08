@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import Wrapper from "@/components/layout/Wrapper";
 import H1 from "@/components/typography/H1";
-import illustration from "@/public/undraw_page_not_found_re_e9o6.svg";
+import illustration from "@/static/undraw_page_not_found_re_e9o6.svg";
 
 export default async function NotFound() {
     return (

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import DeleteAccountForm from "@/components/forms/account/DeleteAccountForm";
 import WrapperSmall from "@/components/layout/WrapperSmall";
-import illustration from "@/public/undraw_throw_away_re_x60k.svg";
+import illustration from "@/static/undraw_throw_away_re_x60k.svg";
 
 export const metadata: Metadata = {
     title: "Account - Verivote",

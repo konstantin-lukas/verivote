@@ -5,7 +5,7 @@ import ScrollDownButton from "@/components/interaction/ScrollButton";
 import Wrapper from "@/components/layout/Wrapper";
 import H1 from "@/components/typography/H1";
 import { VOTING_METHODS } from "@/const/misc";
-import illustration from "@/public/undraw_election_day_w842.svg";
+import illustration from "@/static/undraw_election_day_w842.svg";
 
 export default async function Page() {
     const bannerText = (
