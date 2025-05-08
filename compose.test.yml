@@ -49,6 +49,8 @@ services:
         volumes:
             - .:/tests/e2e
         working_dir: /tests/e2e
+        environment:
+            APP_ENV: "test"
         depends_on:
             webserver:
                 condition: service_started
