@@ -79,6 +79,7 @@ jobs:
   e2e-tests:
     needs: install-deps
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -88,15 +89,15 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Start Containers
-        run: docker compose -f compose.test.yml up -d
-
       - name: Restore node_modules cache
         uses: actions/cache@v4
         with:
           path: |
             **/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Start Containers
+        run: docker compose -f compose.test.yml up -d
 
       - name: Apply fixtures
         run: npx tsx apply-fixtures.ts
