@@ -43,4 +43,4 @@ jobs:
         run: docker compose -f compose.test.yml up -d
 
       - name: Run end-to-end tests
-        run: docker compose run --rm playwright npx playwright test
+        run: docker compose -f compose.test.yml run --rm playwright npx playwright test
