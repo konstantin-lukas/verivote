@@ -49,7 +49,10 @@ export const CHART_PLUGINS = {
             y: 15,
         },
         callbacks: {
-            label: (context: TooltipItem<"bar">) => `${context.parsed.y} point${context.parsed.y !== 0 && "s"}`,
+            label: (context: TooltipItem<"bar">) => {
+                const parsed = window.innerWidth < 640 ? context.parsed.x : context.parsed.y;
+                return `${parsed} point${parsed !== 0 && "s"}`;
+            },
         },
         displayColors: false,
     },

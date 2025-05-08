@@ -1,7 +1,7 @@
 import { BarController, BarElement, CategoryScale, Chart, LinearScale, Tooltip } from "chart.js";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import colors from "tailwindcss/colors";
 
 import H2 from "@/components/typography/H2";
@@ -15,6 +15,46 @@ Chart.register(LinearScale, BarController, CategoryScale, BarElement, Tooltip);
 export default function PollResults({ poll, results }: { poll: Poll; results: PollResult }) {
     const chartRef = useRef(null);
     const { resolvedTheme } = useTheme();
+
+    const valueAxis = useMemo(
+        () => ({
+            beginAtZero: true,
+            ticks: {
+                precision: 0,
+                color: resolvedTheme === "dark" ? "white" : "black",
+                padding: 10,
+            },
+            grid: {
+                color: resolvedTheme === "dark" ? colors.neutral["700"] : colors.neutral["300"],
+                drawTicks: false,
+            },
+            border: {
+                display: false,
+            },
+        }),
+        [resolvedTheme],
+    );
+
+    const tickAxis = useMemo(
+        () => ({
+            ticks: {
+                color: resolvedTheme === "dark" ? "white" : "black",
+                callback(i: number | string) {
+                    if (window.innerWidth < 640) return "";
+                    const index = i as number;
+                    const label = results.options[index];
+                    const maxLength = 10 + index;
+                    if ((i as number) > 2 || label.length <= maxLength) return label;
+                    return `${label.slice(0, maxLength).trim()}…`;
+                },
+            },
+            grid: {
+                display: false,
+            },
+        }),
+        [resolvedTheme, results.options],
+    );
+
     useEffect(() => {
         if (chartRef.current) {
             const chart = new Chart(chartRef.current, {
@@ -32,49 +72,33 @@ export default function PollResults({ poll, results }: { poll: Poll; results: Po
                     ],
                 },
                 options: {
+                    indexAxis: "x",
                     responsive: true,
                     maintainAspectRatio: false,
                     interaction: {
                         mode: "nearest",
                     },
+                    onResize(chart) {
+                        if (window.innerWidth < 640) {
+                            chart.options.indexAxis = "y";
+                            chart.options.scales!.x = valueAxis;
+                            chart.options.scales!.y = tickAxis;
+                        } else {
+                            chart.options.indexAxis = "x";
+                            chart.options.scales!.x = tickAxis;
+                            chart.options.scales!.y = valueAxis;
+                        }
+                    },
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                precision: 0,
-                                color: resolvedTheme === "dark" ? "white" : "black",
-                                padding: 10,
-                            },
-                            grid: {
-                                color: resolvedTheme === "dark" ? colors.neutral["700"] : colors.neutral["300"],
-                                drawTicks: false,
-                            },
-                            border: {
-                                display: false,
-                            },
-                        },
-                        x: {
-                            ticks: {
-                                color: resolvedTheme === "dark" ? "white" : "black",
-                                callback(i) {
-                                    const index = i as number;
-                                    const label = results.options[index];
-                                    const maxLength = 10 + index;
-                                    if ((i as number) > 2 || label.length <= maxLength) return label;
-                                    return `${label.slice(0, maxLength).trim()}…`;
-                                },
-                            },
-                            grid: {
-                                display: false,
-                            },
-                        },
+                        y: valueAxis,
+                        x: tickAxis,
                     },
                     plugins: CHART_PLUGINS,
                 },
             });
             return () => chart.destroy();
         }
-    }, [resolvedTheme, results.options, results.results]);
+    }, [resolvedTheme, results.options, results.results, tickAxis, valueAxis]);
 
     const noVotes = (
         <div className="my-24 flex flex-col items-center">
@@ -83,9 +107,24 @@ export default function PollResults({ poll, results }: { poll: Poll; results: Po
         </div>
     );
 
+    const [chartHeight, setChartHeight] = useState<{ height: string } | undefined>();
+
+    useEffect(() => {
+        const resizeChart = () =>
+            setChartHeight(
+                ((typeof window !== "undefined" && window.innerWidth < 640) || undefined) && {
+                    height: `${results.options.length * 4}rem`,
+                },
+            );
+
+        resizeChart();
+        window.addEventListener("resize", resizeChart);
+        return () => window.removeEventListener("resize", resizeChart);
+    }, [results.options.length]);
+
     const pollResults = (
         <>
-            <div className="relative h-[20dvw] max-h-[50dvh] min-h-48 w-full">
+            <div className="relative h-64 w-full" style={chartHeight}>
                 <canvas ref={chartRef} aria-label="Poll result bar chart" role="img" data-test-id="poll-result-chart">
                     <ul>
                         {results.options.map((x, i) => (
