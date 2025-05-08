@@ -7,7 +7,7 @@ import RedditProvider from "next-auth/providers/reddit";
 
 const authOptions: AuthOptions = {
     providers:
-        process.env.NODE_ENV === "production"
+        process.env.APP_ENV === "production"
             ? [
                   GithubProvider({
                       clientId: process.env.GITHUB_ID ?? "",

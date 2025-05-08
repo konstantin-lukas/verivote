@@ -4,12 +4,14 @@
     "private": true,
     "scripts": {
         "dev": "next dev --turbopack",
-        "build": "next build",
-        "start": "next start",
+        "build": "APP_ENV='production' next build && cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/",
+        "build-test": "APP_ENV='test' next build && cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/",
+        "start": "APP_ENV='production' HOSTNAME='0.0.0.0' node .next/standalone/server.js",
+        "start-test": "APP_ENV='test' HOSTNAME='0.0.0.0' node .next/standalone/server.js",
         "lint": "next lint",
         "lint:fix": "next lint --fix",
-        "prettier": "prettier -c \"src/**/*.{ts,tsx}\" \"*{.mjs,json}\"",
-        "prettier:fix": "prettier --write -c \"src/**/*.{ts,tsx}\" \"*{.mjs,json}\"",
+        "prettier": "prettier -c 'src/**/*.{ts,tsx}' '*{.mjs,json}'",
+        "prettier:fix": "prettier --write -c 'src/**/*.{ts,tsx}' '*{.mjs,json}'",
         "fixtures": "sudo rm -rf database/data && tsx apply-fixtures.ts",
         "e2e-tests": "docker compose run --rm playwright npx playwright test --ui",
         "unit-tests": "jest"

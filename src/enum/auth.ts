@@ -1,5 +1,5 @@
 export const AuthProvider =
-    process.env.NODE_ENV === "production"
+    process.env.APP_ENV === "production"
         ? {
               DISCORD: "discord",
               GITHUB: "github",

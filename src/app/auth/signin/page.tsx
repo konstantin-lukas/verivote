@@ -18,7 +18,7 @@ export default async function SignIn(context: { searchParams: Promise<{ callback
     );
 
     const buttons =
-        process.env.NODE_ENV === "production" ? (
+        process.env.APP_ENV === "production" ? (
             <>
                 <SignInButton serviceName="discord">
                     <RiDiscordLine className="mr-2 inline" />
