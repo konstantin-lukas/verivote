@@ -14,6 +14,7 @@
         "prettier:fix": "prettier --write -c 'src/**/*.{ts,tsx}' '*{.mjs,json}'",
         "fixtures": "sudo rm -rf database/data && tsx apply-fixtures.ts",
         "e2e-tests": "docker compose run --rm playwright npx playwright test --ui",
+        "e2e-tests-headless": "docker compose run --rm playwright npx playwright test",
         "unit-tests": "jest"
     },
     "dependencies": {
