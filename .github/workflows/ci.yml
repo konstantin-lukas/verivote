@@ -42,12 +42,25 @@ jobs:
 
       - name: Run Prettier Check
         run: npm run prettier
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Run Eslint Check
         run: npm run lint
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Unit Tests
         run: npm run unit-tests
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
   e2e-tests:
     needs: install-deps
     runs-on: ubuntu-latest
@@ -65,6 +78,10 @@ jobs:
 
       - name: Apply fixtures
         run: tsx apply-fixtures.ts
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Run end-to-end tests
         run: docker compose -f compose.test.yml run --rm playwright npx playwright test
