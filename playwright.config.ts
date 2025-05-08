@@ -6,7 +6,7 @@ export default defineConfig({
     forbidOnly: process.env.APP_ENV === "test",
     retries: process.env.APP_ENV === "test" ? 2 : 0,
     workers: process.env.APP_ENV === "test" ? 1 : undefined,
-    reporter: "html",
+    reporter: "line",
     use: {
         baseURL: process.env.APP_ENV === "test" ? "http://webserver:3000" : "http://localhost:3000",
         testIdAttribute: "data-test-id",
