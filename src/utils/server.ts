@@ -53,6 +53,10 @@ export async function getIpAddress() {
         ip = "127.0.0.1";
     }
 
+    if (process.env.ALLOW_LOOPBACK_VOTE === "false" && ip?.startsWith("127.")) {
+        return null;
+    }
+
     return ip;
 }
 
