@@ -46,7 +46,7 @@ jobs:
         run: npm ci
 
       - name: Apply fixtures
-        run: tsx apply-fixtures.ts
+        run: npx tsx apply-fixtures.ts
 
       - name: Run end-to-end tests
         run: docker compose -f compose.test.yml run --rm playwright npx playwright test
