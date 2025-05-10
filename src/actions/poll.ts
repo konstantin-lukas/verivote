@@ -35,7 +35,7 @@ export async function createPoll({
     if (errors) return { data: null, error: errors };
 
     const { data, error } = await tryCatch(insertPoll(newPoll));
-    if (error) return { data: null, error: ["An error occurred while creating poll"] };
+    if (error || data === null) return { data: null, error: ["An error occurred while creating poll"] };
     redirect(`/poll/${data}`);
 }
 
