@@ -4,7 +4,7 @@ export default defineConfig({
     testDir: "./tests/e2e",
     fullyParallel: true,
     forbidOnly: process.env.APP_ENV === "test",
-    retries: 0,
+    retries: process.env.APP_ENV === "test" ? 2 : 0,
     workers: process.env.APP_ENV === "test" ? 1 : undefined,
     reporter: "line",
     use: {
