@@ -5,10 +5,8 @@ services:
             args:
                 APP_ENV: "production"
             dockerfile: Dockerfile
-        expose:
-            - "3000"
         ports:
-            - "127.0.0.1:3000:3000"
+            - "127.0.0.1:3001:3000"
         restart: unless-stopped
         depends_on:
             database:
