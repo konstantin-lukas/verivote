@@ -29,17 +29,3 @@ services:
         volumes:
             - ./keycloak-config:/opt/keycloak/data/import
         command: start-dev --import-realm
-
-    playwright:
-        image: mcr.microsoft.com/playwright:v1.52.0-noble
-        container_name: verivote-playwright
-        volumes:
-            - .:/tests/e2e
-        working_dir: /tests/e2e
-        environment:
-            APP_ENV: "test"
-        depends_on:
-            keycloak:
-                condition: service_started
-            database:
-                condition: service_started

@@ -109,4 +109,4 @@ jobs:
         run: APP_ENV=test HOSTNAME='0.0.0.0' node .next/standalone/server.js &
 
       - name: Run end-to-end tests
-        run: docker compose -f compose.test.yml run --rm playwright npx playwright test
+        run: npx playwright test
