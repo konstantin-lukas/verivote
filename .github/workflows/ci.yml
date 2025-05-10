@@ -106,7 +106,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Build test instance
-        run: APP_ENV=test npm run build
+        run: APP_ENV=test npm run build && cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/
 
       - name: Start test instance
         run: APP_ENV=test HOSTNAME='0.0.0.0' node .next/standalone/server.js &
