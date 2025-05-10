@@ -1,19 +1,4 @@
 services:
-    webserver:
-        container_name: verivote-webserver
-        build:
-            args:
-                APP_ENV: "test"
-            dockerfile: Dockerfile
-        expose:
-            - "3000"
-        ports:
-            - "3000:3000"
-        restart: unless-stopped
-        depends_on:
-            database:
-                condition: service_started
-
     database:
         container_name: verivote-database
         build:
@@ -53,6 +38,8 @@ services:
         working_dir: /tests/e2e
         environment:
             APP_ENV: "test"
+            DISPLAY: ${DISPLAY}
+            TZ: UTC
         depends_on:
             webserver:
                 condition: service_started
@@ -60,3 +47,8 @@ services:
                 condition: service_started
             database:
                 condition: service_started
+        ipc: host
+        privileged: true
+        devices:
+            - /dev/dri
+        shm_size: 1gb

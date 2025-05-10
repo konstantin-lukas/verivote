@@ -26,10 +26,7 @@ const authOptions: AuthOptions = {
                   KeycloakProvider({
                       clientId: "nextauth-client",
                       clientSecret: "test-client-secret",
-                      issuer:
-                          process.env.APP_ENV === "test"
-                              ? "http://keycloak:8080/realms/dev-test"
-                              : "http://localhost:8080/realms/dev-test",
+                      issuer: "http://localhost:8080/realms/dev-test",
                   }),
               ],
     pages: {
