@@ -89,6 +89,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
       - name: Restore node_modules cache
         uses: actions/cache@v4
         with:
@@ -101,9 +104,6 @@ jobs:
 
       - name: Apply fixtures
         run: npx tsx apply-fixtures.ts
-
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
 
       - name: Build test instance
         run: APP_ENV=test npm run build
