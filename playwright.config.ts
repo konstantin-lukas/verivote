@@ -8,7 +8,7 @@ export default defineConfig({
     workers: process.env.APP_ENV === "test" ? 1 : undefined,
     reporter: "line",
     use: {
-        baseURL: process.env.APP_ENV === "test" ? "http://webserver:3000" : "http://localhost:3000",
+        baseURL: "http://localhost:3000",
         testIdAttribute: "data-test-id",
         trace: "on-first-retry",
     },
