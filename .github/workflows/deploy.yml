@@ -21,6 +21,6 @@ jobs:
             git checkout main
             git pull
             touch .env.local
-            echo ${{ secrets.ENV }} > .env.local
+            echo "${{ secrets.ENV }}" > .env.local
             docker compose -f compose.production.yml down
             docker compose -f compose.production.yml up -d --build
