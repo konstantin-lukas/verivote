@@ -22,7 +22,7 @@ jobs:
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
         run: npm ci
@@ -45,7 +45,7 @@ jobs:
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
       - name: Run Prettier Check
         run: npm run prettier
@@ -71,7 +71,7 @@ jobs:
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
       - name: Unit Tests
         run: npm run unit-tests
@@ -89,15 +89,15 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
       - name: Restore node_modules cache
         uses: actions/cache@v4
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
 
       - name: Start Containers
         run: docker compose -f compose.test.yml up -d
