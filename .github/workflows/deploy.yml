@@ -1,0 +1,26 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Execute remote SSH commands using SSH key
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            cd /home/${{ secrets.VPS_USER }}/git/verivote
+            git checkout main
+            git pull
+            touch .env.local
+            echo ${{ secrets.ENV }} > .env.local
+            docker compose -f compose.production.yml down
+            docker compose -f compose.production.yml up -d --build

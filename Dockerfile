@@ -1,34 +1,51 @@
-FROM node:23-alpine
+FROM node:23-alpine AS base
 
-WORKDIR /home/node/verivote
+ARG APP_ENV
+ENV APP_ENV=${APP_ENV}
 
+FROM base AS deps
 RUN apk add --no-cache libc6-compat
+WORKDIR /app
 
-COPY app app
-COPY components components
-COPY data data
-COPY public public
-COPY package.json .
-COPY package-lock.json .
-COPY .env.local .
-COPY hooks.ts .
-COPY middleware.ts .
-COPY next.config.mjs .
-COPY postcss.config.mjs .
-COPY tailwind.config.ts .
-COPY tsconfig.json .
-COPY utils.tsx .
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+RUN \
+  if [ -f package-lock.json ]; then npm ci; \
+  elif [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-RUN npm ci
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
-RUN npm run build
+ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV NODE_ENV=production
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+FROM base AS runner
+WORKDIR /app
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 
 EXPOSE 3000
 
-RUN mkdir -p /home/node/verivote/.next/cache/fetch-cache && chown -R node:node /home/node/verivote/.next/cache
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-USER node
-
-CMD ["npm", "run", "start"]
+CMD ["node", "server.js"]
