@@ -29,4 +29,4 @@ jobs:
             git pull
             touch .env.local
             echo "${{ secrets.ENV }}" > .env.local
-            docker compose -f compose.production.yml up -d --build
+            MONGO_ROOT_USER=$MONGO_ROOT_USER MONGO_ROOT_PASSWORD=$MONGO_ROOT_PASSWORD docker compose -f compose.production.yml up -d --build
