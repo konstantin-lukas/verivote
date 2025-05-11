@@ -14,11 +14,15 @@ jobs:
     steps:
       - name: Execute remote SSH commands using SSH key
         uses: appleboy/ssh-action@v1
+        env:
+          MONGO_ROOT_USER: ${{ secrets.MONGO_ROOT_USER }}
+          MONGO_ROOT_PASSWORD: ${{ secrets.MONGO_ROOT_PASSWORD }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
+          envs: MONGO_ROOT_USER,MONGO_ROOT_PASSWORD
           script: |
             cd /home/${{ secrets.VPS_USER }}/git/verivote
             git checkout main
