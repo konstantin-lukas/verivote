@@ -4,6 +4,7 @@ export const AuthProvider =
               DISCORD: "discord",
               GITHUB: "github",
               REDDIT: "reddit",
+              TWITCH: "twitch",
           }
         : {
               KEYCLOAK: "keycloak",
