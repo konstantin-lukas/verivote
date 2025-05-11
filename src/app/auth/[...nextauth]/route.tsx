@@ -4,6 +4,7 @@ import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import KeycloakProvider from "next-auth/providers/keycloak";
 import RedditProvider from "next-auth/providers/reddit";
+import SpotifyProvider from "next-auth/providers/spotify";
 import TwitchProvider from "next-auth/providers/twitch";
 
 const authOptions: AuthOptions = {
@@ -25,6 +26,10 @@ const authOptions: AuthOptions = {
                   TwitchProvider({
                       clientId: process.env.TWITCH_ID ?? "",
                       clientSecret: process.env.TWITCH_SECRET ?? "",
+                  }),
+                  SpotifyProvider({
+                      clientId: process.env.SPOTIFY_ID ?? "",
+                      clientSecret: process.env.SPOTIFY_SECRET ?? "",
                   }),
               ]
             : [

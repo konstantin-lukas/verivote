@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import React from "react";
 import { LuTwitch } from "react-icons/lu";
-import { PiRedditLogo } from "react-icons/pi";
+import { PiRedditLogo, PiSpotifyLogo } from "react-icons/pi";
 import { RiDiscordLine, RiGithubLine } from "react-icons/ri";
 import { SiKeycloak } from "react-icons/si";
 
@@ -37,6 +38,10 @@ export default async function SignIn(context: { searchParams: Promise<{ callback
                     <LuTwitch className="mr-2 inline" />
                     <span>Twitch</span>
                 </SignInButton>
+                <SignInButton serviceName="twitch">
+                    <PiSpotifyLogo className="mr-2 inline" />
+                    <span>Spotify</span>
+                </SignInButton>
             </>
         ) : (
             <SignInButton serviceName="keycloak">
@@ -48,7 +53,7 @@ export default async function SignIn(context: { searchParams: Promise<{ callback
     return (
         <div className="min-h-main-height-mobile desktop:min-h-main-height flex items-center justify-center">
             <Wrapper>
-                <div className="inset-shadow-3d dark:inset-shadow-dark-3d mx-auto box-border flex max-w-72 flex-col items-center justify-center p-8">
+                <div className="inset-shadow-3d dark:inset-shadow-dark-3d mx-auto my-8 box-border flex max-w-72 flex-col items-center justify-center p-8">
                     {heading}
                     {buttons}
                 </div>

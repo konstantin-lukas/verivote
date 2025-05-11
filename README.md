@@ -27,12 +27,13 @@ Providers require you to specify an Authorization callback URL like `http://loca
 Make sure to replace `http://localhost:3000` with the origin of your deployed website and `github` with the respective
 provider.
 
-One important notice about adding more providers: By default the project comes with support for Discord, GitHub and Reddit.
-Reddit unlike the other two doesn't provide you with the user email address. That's why the backend uses the Reddit
-username instead as a unique identifier. The name is only used as a fallback and assumed to be unique. If you add a new
-provider that doesn't provide the user email, please edit the backend code so that you use a unique identifier that
-cannot overlap with a Reddit username. To avoid collision between people with the same username on different provider's
-websites, each user identifier is suffixed with the name of the provider.
+One important notice about adding more providers: By default the project comes with support for Discord, GitHub, Twitch,
+Spotify, and Reddit. Reddit unlike the others doesn't provide you with the user email address. That's why the backend 
+uses the Reddit username instead as a unique identifier. The name is only used as a fallback and assumed to be unique. 
+If you add a new provider that doesn't provide the user email, please edit the backend code so that you use a unique 
+identifier that cannot overlap with a Reddit username. To avoid collision between people with the same username on 
+different provider's websites, each user identifier is suffixed with the name of the provider. To register the name of
+your provider add it to `@/enum/auth.ts`. This will ensure that schema validation can work.
 
 # Environment Variables
 Please make sure you override all environment variables you need inside a `.env.local`. For the database password, 
