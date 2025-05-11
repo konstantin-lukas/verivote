@@ -38,7 +38,7 @@ export default async function SignIn(context: { searchParams: Promise<{ callback
                     <LuTwitch className="mr-2 inline" />
                     <span>Twitch</span>
                 </SignInButton>
-                <SignInButton serviceName="twitch">
+                <SignInButton serviceName="spotify">
                     <PiSpotifyLogo className="mr-2 inline" />
                     <span>Spotify</span>
                 </SignInButton>
