@@ -4,6 +4,7 @@ import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import KeycloakProvider from "next-auth/providers/keycloak";
 import RedditProvider from "next-auth/providers/reddit";
+import TwitchProvider from "next-auth/providers/twitch";
 
 const authOptions: AuthOptions = {
     providers:
@@ -20,6 +21,10 @@ const authOptions: AuthOptions = {
                   RedditProvider({
                       clientId: process.env.REDDIT_ID ?? "",
                       clientSecret: process.env.REDDIT_SECRET ?? "",
+                  }),
+                  TwitchProvider({
+                      clientId: process.env.TWITCH_ID ?? "",
+                      clientSecret: process.env.TWITCH_SECRET ?? "",
                   }),
               ]
             : [

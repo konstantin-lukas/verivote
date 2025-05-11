@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { LuTwitch } from "react-icons/lu";
 import { PiRedditLogo } from "react-icons/pi";
 import { RiDiscordLine, RiGithubLine } from "react-icons/ri";
 import { SiKeycloak } from "react-icons/si";
@@ -31,6 +32,10 @@ export default async function SignIn(context: { searchParams: Promise<{ callback
                 <SignInButton serviceName="reddit">
                     <PiRedditLogo className="mr-2 inline" />
                     <span>Reddit</span>
+                </SignInButton>
+                <SignInButton serviceName="twitch">
+                    <LuTwitch className="mr-2 inline" />
+                    <span>Twitch</span>
                 </SignInButton>
             </>
         ) : (
