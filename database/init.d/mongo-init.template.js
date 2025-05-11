@@ -1,5 +1,5 @@
 const verivoteUser = "verivoteUser";
-const verivotePwd = "verivotePwd";
+const verivotePwd = "__VERIVOTE_PASSWORD__";
 
 db = db.getSiblingDB("verivote");
 

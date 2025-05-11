@@ -29,4 +29,5 @@ jobs:
             git pull
             touch .env.local
             echo "${{ secrets.ENV }}" > .env.local
+            sed "s/__VERIVOTE_PASSWORD__/${{ secrets.MONGO_USER_PASSWORD }}/g" database/init.d/mongo-init.template.js > database/init.d/mongo-init.js
             docker compose -f compose.production.yml up -d --build
