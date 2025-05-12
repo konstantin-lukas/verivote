@@ -21,7 +21,7 @@ export async function getUserIdentifier() {
     return identifier;
 }
 
-export function makeBSONSerializable<T>(obj: T): T {
+export function makeBSONSerializable<T>(obj: T): Omit<T, "_id"> & { id: string } {
     const objId = (obj as unknown as { _id: ObjectId })._id.toString();
     delete (obj as unknown as { _id?: ObjectId })._id;
     return { ...obj, id: objId };
