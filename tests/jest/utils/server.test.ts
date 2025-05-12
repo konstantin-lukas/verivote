@@ -116,18 +116,15 @@ describe("utils/server", () => {
         });
         test("should reject loopback ip addresses in production", async () => {
             process.env.APP_ENV = "production";
-            const mockHeaders = {
+            let mockHeaders = {
                 get: () => "::1",
             } as unknown as ReadonlyHeaders;
-            const mockGetHeaders = async () => mockHeaders;
+            let mockGetHeaders = async () => mockHeaders;
             expect(await getIpAddress(mockGetHeaders)).toBeNull();
-        });
-        test("should reject loopback ip addresses in production", async () => {
-            process.env.APP_ENV = "production";
-            const mockHeaders = {
+            mockHeaders = {
                 get: () => "127.0.0.1",
             } as unknown as ReadonlyHeaders;
-            const mockGetHeaders = async () => mockHeaders;
+            mockGetHeaders = async () => mockHeaders;
             expect(await getIpAddress(mockGetHeaders)).toBeNull();
         });
     });
