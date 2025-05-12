@@ -1,4 +1,5 @@
 import type { ObjectId } from "bson";
+import type { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import type { z } from "zod";
@@ -32,8 +33,8 @@ export function makeBSONSerializable<T>(obj: T): Omit<T, "_id"> & { id: string }
  * If that's not the case, modify the below function not to read any headers which can be set by the client.
  * More info: https://adam-p.ca/blog/2022/03/x-forwarded-for/
  */
-export async function getIpAddress() {
-    const h = await headers();
+export async function getIpAddress(getHeaders: () => Promise<ReadonlyHeaders> = headers) {
+    const h = await getHeaders();
     let ip = h.get("X-Real-IP");
     if (!ip) {
         const xForwardedFor = h.get("X-Forwarded-For");

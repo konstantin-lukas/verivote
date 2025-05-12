@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import { ObjectId } from "bson";
+import type { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 
-import { makeBSONSerializable } from "@/utils/server";
+import { getIpAddress, makeBSONSerializable } from "@/utils/server";
 
 jest.mock("next-auth", () => ({
     getServerSession: jest.fn(),
@@ -64,6 +65,70 @@ describe("utils/server", () => {
             expect(typeof someObj._id).toBe("object");
             const serializableObj = makeBSONSerializable(someObj);
             expect(typeof serializableObj.id).toBe("string");
+        });
+    });
+    describe("getIpAddress", () => {
+        const OLD_ENV = process.env;
+        beforeEach(() => {
+            jest.resetModules();
+            process.env = { ...OLD_ENV };
+        });
+
+        test("should use the X-Real-IP as first option", async () => {
+            const mockHeaders = {
+                get: (header: string) => (header === "X-Real-IP" ? "192.168.0.1" : "192.168.0.2"),
+            } as unknown as ReadonlyHeaders;
+            const mockGetHeaders = async () => mockHeaders;
+            expect(await getIpAddress(mockGetHeaders)).toBe("192.168.0.1");
+        });
+        test("should only use the last IP from the X-Forwarded-For header", async () => {
+            let mockHeaders = {
+                get: (header: string) => (header === "X-Forwarded-For" ? "192.168.0.1,192.168.0.2,192.168.0.3" : null),
+            } as unknown as ReadonlyHeaders;
+            let mockGetHeaders = async () => mockHeaders;
+            expect(await getIpAddress(mockGetHeaders)).toBe("192.168.0.3");
+
+            mockHeaders = {
+                get: (header: string) => (header === "X-Forwarded-For" ? "192.168.0.1" : null),
+            } as unknown as ReadonlyHeaders;
+            mockGetHeaders = async () => mockHeaders;
+            expect(await getIpAddress(mockGetHeaders)).toBe("192.168.0.1");
+
+            mockHeaders = {
+                get: (header: string) => (header === "X-Forwarded-For" ? "" : null),
+            } as unknown as ReadonlyHeaders;
+            mockGetHeaders = async () => mockHeaders;
+            expect(await getIpAddress(mockGetHeaders)).toBeNull();
+        });
+        test("should strip IPv6 mapped addresses", async () => {
+            const mockHeaders = {
+                get: () => "::ffff:192.168.0.1",
+            } as unknown as ReadonlyHeaders;
+            const mockGetHeaders = async () => mockHeaders;
+            expect(await getIpAddress(mockGetHeaders)).toBe("192.168.0.1");
+        });
+        test("should convert ::1 to 127.0.0.1", async () => {
+            const mockHeaders = {
+                get: () => "::1",
+            } as unknown as ReadonlyHeaders;
+            const mockGetHeaders = async () => mockHeaders;
+            expect(await getIpAddress(mockGetHeaders)).toBe("127.0.0.1");
+        });
+        test("should reject loopback ip addresses in production", async () => {
+            process.env.APP_ENV = "production";
+            const mockHeaders = {
+                get: () => "::1",
+            } as unknown as ReadonlyHeaders;
+            const mockGetHeaders = async () => mockHeaders;
+            expect(await getIpAddress(mockGetHeaders)).toBeNull();
+        });
+        test("should reject loopback ip addresses in production", async () => {
+            process.env.APP_ENV = "production";
+            const mockHeaders = {
+                get: () => "127.0.0.1",
+            } as unknown as ReadonlyHeaders;
+            const mockGetHeaders = async () => mockHeaders;
+            expect(await getIpAddress(mockGetHeaders)).toBeNull();
         });
     });
 });
